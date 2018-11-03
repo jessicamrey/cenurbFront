@@ -1,63 +1,46 @@
 <div [@routerTransition]>
-    <h2 class="text-muted">Dashboard <small>Statistics Overview</small></h2>
-    <div class="row">
-        <div class="col-md-12">
-            <ngb-carousel>
-                <ng-template ngbSlide *ngFor="let slider of sliders">
-                    <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
-                    <div class="carousel-caption">
-                        <h3>{{slider.label}}</h3>
-                        <p>{{slider.text}}</p>
-                    </div>
-                </ng-template>
-            </ngb-carousel>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'primary'" [icon]="'fa-comments'" [count]="26" [label]="'New Comments!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'warning'" [icon]="'fa-tasks'" [count]="12" [label]="'New task!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'New Orders!'" ></app-stat>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <app-stat [bgClass]="'danger'" [icon]="'fa-support'" [count]="13" [label]="'New Tickets!'"></app-stat>
-        </div>
-    </div>
-    <hr />
-    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
-    <hr />
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card card-default">
-                <div class="card-header">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+<div class="row" style="margin-top:10%;margin-left:20%">
+         <div class="col-sm-4">
+            <div class="card text-white  mb-3" style="background-color: #1d5d83">
+                <div class="card-header">{{ 'Menu.col' | translate }}</div>
+                <div class="card-body">
+                     <ul class="list-group">
+                        <li class="list-group-item" style="color:#1d5d83">Avión común</li>
+                        <li class="list-group-item" style="color:#1d5d83">Avión roquero</li>
+                        <li class="list-group-item" style="color:#1d5d83">Cigüeña blanca</li>
+                        <li class="list-group-item" style="color:#1d5d83">Golondrina común</li>
+                        <li class="list-group-item" style="color:#1d5d83">Vencejo común</li>
+                        <li class="list-group-item" style="color:#1d5d83">Gorrión común</li>
+                        <li class="list-group-item" style="color:#1d5d83">Gorrión moruno</li>
+                        <li class="list-group-item" style="color:#1d5d83">Gorrión molinero</li>
+                        <li class="list-group-item" style="color:#1d5d83">Gorrión chillón</li>
+                        <li class="list-group-item" style="color:#1d5d83">Cotoraa gris argentina</li>
+                        <li class="list-group-item" style="color:#1d5d83">Cotorra de kramer</li>
+                        <li class="list-group-item" style="color:#1d5d83">Estornino negro</li>
+                        <li class="list-group-item" style="color:#1d5d83">Estornino pinto</li>
+                        <li class="list-group-item" style="color:#1d5d83">Gaviota patiamarilla</li>
+                        <li class="list-group-item" style="color:#1d5d83">Paloma doméstica</li>
+                    </ul>
                 </div>
-                <!-- /.card-header -->
-                <app-timeline></app-timeline>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-            <div class="card card-default mb-3">
-                <div class="card-header">
-                    <i class="fa fa-bell fa-fw"></i> Notifications card
+        <div class="col-sm-4">
+            <div class="card text-white  mb-3" style="background-color: #1d5d83">
+                <div class="card-header">{{ 'Menu.terr' | translate }}</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="color:#1d5d83">Cernícalo común</li>
+                        <li class="list-group-item" style="color:#1d5d83">Halcón peregrino</li>
+                        <li class="list-group-item" style="color:#1d5d83">Búho real</li>
+                        <li class="list-group-item" style="color:#1d5d83">Colirrojo tizón</li>
+                        <li class="list-group-item" style="color:#1d5d83">Mirlo</li>
+                        <li class="list-group-item" style="color:#1d5d83">Carbonero común</li>
+                        <li class="list-group-item" style="color:#1d5d83">Carbonero garrapinos</li>
+                        <li class="list-group-item" style="color:#1d5d83">Paloma torcaz</li>
+                        <li class="list-group-item" style="color:#1d5d83">Paloma zurita</li>
+                    </ul>
                 </div>
-                <!-- /.card-header -->
-                <app-notification></app-notification>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
-
-            <app-chat></app-chat>
-            <!-- /.card .chat-card -->
         </div>
-        <!-- /.col-lg-4 -->
-    </div>
+        </div>
 </div>

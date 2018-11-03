@@ -28,5 +28,10 @@
     "Pending Task" : "Tarea pendiente",
     "In queue" : "En cola",
     "Mail" : "Correo",
-    "View All" : "Ver todo"
+    "View All" : "Ver todo",
+    "Menu":{
+        "title": "Censos urbanos",
+        "col": "Aves coloniales",
+        "terr": "Aves no coloniales"
+    }
 }
