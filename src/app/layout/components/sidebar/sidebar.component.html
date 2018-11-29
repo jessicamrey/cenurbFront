@@ -9,19 +9,19 @@
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLink]="['/registerCol']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>Registrar colonia</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLink]="['/viewCol']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>Ver colonias</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLink]="['/viewCloseCol']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>Ver colonias cercanas</span>
                         </a>
@@ -30,20 +30,20 @@
             </li>
         </div>
         <div class="nested-menu">
-            <a class="list-group-item" (click)="addExpandClass('pages')">
+            <a class="list-group-item" (click)="addExpandClass('visits')">
                 <i class="fa fa-plus"></i>&nbsp;
                 <span>Visitas</span>
             </a>
-            <li class="nested" [class.expand]="showMenu === 'pages'">
+            <li class="nested" [class.expand]="showMenu === 'visits'">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLink]="['/registerVisit']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>Registrar visita</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a [routerLink]="['/viewVisits']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>Ver mis visitas</span>
                         </a>

@@ -1,23 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import {DashboardTerrComponent} from './dashboard-terr/dashboard-terr.component';
+import {SelectorComponent} from '../selector/selector.component';
+import {RegisterColComponent} from './register-col/register-col.component';
+import {RegisterVisitComponent} from './register-visit/register-visit.component';
+import {ViewCloseColComponent} from './view-close-col/view-close-col.component';
+import {ViewColComponent} from './view-col/view-col.component';
+import {ViewVisitsComponent} from './view-visits/view-visits.component';
 
 const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
         children: [
+
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
-            { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-            { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
-            { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
-            { path: 'forms', loadChildren: './form/form.module#FormModule' },
-            { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
-            { path: 'grid', loadChildren: './grid/grid.module#GridModule' },
-            { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
-            { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' }
+            { path: 'registerCol', component: RegisterColComponent },
+            { path: 'registerVisit', component: RegisterVisitComponent },
+            { path: 'viewCloseCol', component: ViewCloseColComponent },
+            { path: 'viewCol', component: ViewColComponent },
+            { path: 'viewVisits', component: ViewVisitsComponent },
+            { path: 'dashboardTerr', component: DashboardTerrComponent },
+            { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' }
         ]
-    }
+    },
+    { path: 'selector', component: SelectorComponent }
 ];
 
 @NgModule({
