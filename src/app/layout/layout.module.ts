@@ -18,6 +18,7 @@ import { ViewColProfileComponent } from './view-col-profile/view-col-profile.com
 import { ViewVisitProfileComponent } from './view-visit-profile/view-visit-profile.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component';
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import { AgmCoreModule } from '@agm/core';
      RegisterVisitComponent,
      ViewVisitsComponent,
      ViewColProfileComponent,
-     ViewVisitProfileComponent]
+     ViewVisitProfileComponent,
+     FormNewVisitComponent]
 })
 export class LayoutModule {}
