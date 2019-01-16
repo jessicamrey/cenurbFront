@@ -9,6 +9,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { ApiProvider } from '../providers/api/api-provider';
+import { AuthService } from '../services/auth.service';
+import { SeoApisService } from '../services/seo-apis.service';
 
 
 // AoT requires an exported function for factories
@@ -35,10 +38,12 @@ export const createTranslateLoader = (http: HttpClient) => {
                 deps: [HttpClient]
             }
         }),
-        AppRoutingModule
+        AppRoutingModule,
+        AuthService,
+        SeoApisService
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
+    providers: [AuthGuard, ApiProvider],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
