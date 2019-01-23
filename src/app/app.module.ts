@@ -14,6 +14,11 @@ import { AuthService } from '../services/auth.service';
 import { SeoApisService } from '../services/seo-apis.service';
 
 
+ 
+// Import your library
+import { AlertModule } from 'ngx-alerts';
+
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -38,12 +43,14 @@ export const createTranslateLoader = (http: HttpClient) => {
                 deps: [HttpClient]
             }
         }),
-        AppRoutingModule,
-        AuthService,
-        SeoApisService
+        AlertModule.forRoot({maxMessages: 5, timeout: 5000, position: 'right'}),
+        AppRoutingModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard, ApiProvider],
+    providers: [AuthGuard, 
+                ApiProvider,
+                AuthService,
+                SeoApisService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

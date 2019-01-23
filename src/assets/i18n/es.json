@@ -1,37 +1,25 @@
 {
-    "Dashboard": "Principal",
-    "Charts": "Caracteres",
-    "Tables": "Tablas",
-    "Forms": "Formularios",
-    "Bootstrap Element": "Elementos Bootstrap",
-    "Bootstrap Grid": "Rejilla Bootstrap",
-    "Component": "Componentes",
-    "Menu": "Menú",
-    "Submenu": "Submenú",
-    "Blank Page": "Página en Blanco",
-    "More Theme": "Más temas",
-    "Download Now": "Descarga Ahora",
-    "Language": "Idioma",
-    "English": "Inglés",
-    "French": "Francés",
-    "Urdu": "Urdu",
-    "Spanish": "Español",
-    "Italian": "Italiano",
-    "Farsi": "Farsi",
-    "German": "Alemán",
-    "Simplified Chinese": "Chino simplificado",
-    "Search" : "Búsqueda",
-    "Settings" : "Ajustes",
-    "Profile" : "Profile",
-    "Inbox" : "Bandeja de entrada",
-    "Log Out" : "Cerrar Sesión",
-    "Pending Task" : "Tarea pendiente",
-    "In queue" : "En cola",
-    "Mail" : "Correo",
-    "View All" : "Ver todo",
+  
     "Menu":{
-        "title": "Censos urbanos",
-        "col": "Aves coloniales",
-        "terr": "Aves no coloniales"
+        "title":        "Censos urbanos",
+        "col":          "Aves coloniales",
+        "terr":         "Aves no coloniales"
+    },
+    "Login":{
+        "welcome":      "BIENVENIDO/A a Censos Urbanos",
+        "in":           "Entrar",
+        "inAno":        "Entrar sin usuario",
+        "register":     "Registrar",
+        "email":        "Correo electrónico",
+        "password":     "Contraseña",
+        "name":         "Nombre",
+        "lastName":     "Apellidos",
+        "phone":        "Teléfono",
+        "msg1":         "¿No tienes usuario?",
+        "msg2":         "Regístrate o entra sin usuario",
+        "msg3":         "¿Ya tienes usuario?",
+        "msg4":         "Entrar con usuario",
+        "errorLoginAno": "Ha ocurrido un error al intentar acceder. Inténtelo de nuevo más tarde"
+
     }
 }

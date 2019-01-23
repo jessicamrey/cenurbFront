@@ -1,22 +1,49 @@
 <div class="login-page" [@routerTransition]>
+<ngx-alerts></ngx-alerts>
     <div class="row justify-content-md-center">
         <div class="col-md-4">
             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>SB Admin BS4 Angular5</h1>
-            <form role="form">
+            <h1>{{ 'Login.welcome' | translate }}</h1>
+            <form role="form" id="loginForm">
                 <div class="form-content">
-                    <div class="form-group">
-                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="" placeholder="Email">
+                    <div class="form-group" >
+                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="email" placeholder="{{ 'Login.email' | translate }}">
                     </div>
 
-                    <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                    <div class="form-group" *ngIf="!isAnonymous">
+                        <input type="password" class="form-control input-underline input-lg" id="password" placeholder="{{ 'Login.password' | translate }}">
                     </div>
+
+                    <!-- Esta parte solo es visible cuando queremos entrar sin usuario-->
+                    <div class="form-group" *ngIf="isAnonymous">
+                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="name" placeholder="{{ 'Login.name' | translate }}">
+                    </div>
+
+                    <div class="form-group" *ngIf="isAnonymous">
+                        <input type="text" class="form-control input-underline input-lg" id="lastName" placeholder="{{ 'Login.lastName' | translate }}">
+                    </div>
+
+                    <div class="form-group" *ngIf="isAnonymous">
+                        <input type="text" class="form-control input-underline input-lg" id="phone" placeholder="{{ 'Login.phone' | translate }}">
+                    </div>
+
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/selector']" (click)="onLoggedin()"> Log in </a>
+                <a class="btn rounded-btn" *ngIf="!isAnonymous" [routerLink]="['/selector']" (click)="onLoggedin()"> {{ 'Login.in' | translate }} </a>
                 &nbsp;
-                <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
+                <a class="btn rounded-btn" *ngIf="isAnonymous" [routerLink]="['/selector']" (click)="loginAnonymous()"> {{ 'Login.inAno' | translate }} </a>
+                &nbsp;
+                <p></p>
+                <h5 *ngIf="!isAnonymous">{{ 'Login.msg1' | translate }}</h5>
+                <h5 *ngIf="!isAnonymous">{{ 'Login.msg2' | translate }}</h5>
+                <h5 *ngIf="isAnonymous">{{ 'Login.msg3' | translate }}</h5>
+                <p></p>
+                <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Login.register' | translate }}</a>
+                <a class="btn rounded-btn"  *ngIf="!isAnonymous" (click)="isAnonymous=true">{{ 'Login.inAno' | translate }}</a>
+                <a class="btn rounded-btn" *ngIf="isAnonymous" (click)="isAnonymous=false">{{ 'Login.msg4' | translate }}</a>
             </form>
         </div>
     </div>
+
+
+
 </div>
