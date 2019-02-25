@@ -12,6 +12,8 @@ import { AuthGuard } from './shared';
 import { ApiProvider } from '../providers/api/api-provider';
 import { AuthService } from '../services/auth.service';
 import { SeoApisService } from '../services/seo-apis.service';
+import { ColoniasService } from '../services/colonias.service';
+
 
 
  
@@ -50,7 +52,8 @@ export const createTranslateLoader = (http: HttpClient) => {
     providers: [AuthGuard, 
                 ApiProvider,
                 AuthService,
-                SeoApisService],
+                SeoApisService,
+                ColoniasService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

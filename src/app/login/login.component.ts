@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     	this.translate.addLangs(['en', 'es']);
         this.translate.setDefaultLang('es');
 
-        
+         localStorage.setItem('isLoggedin', 'true');
 
         localStorage.clear();
     }
