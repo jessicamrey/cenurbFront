@@ -1,97 +1,20 @@
-
     <div class="row" style="margin-top:2.5%">
-    
-        <div class="col-sm-3" style="height: 100px">
+       
+
+      
+        <div class="col-sm-3" style="height: 100px" *ngFor="let item of listaNoCol" id="{{item.ID_ESP}}">
+
             <div class="card text-white  mb-3" style="background-color: #1d5d83">
 
-                <img src= 'assets/images/cernicaloCom.jpg' style="max-width:100%;max-height: :100%"/>
+                <img src= '{{item.image}}' style="max-width:100%;max-height: :100%"/>
 
                 <div class="card-footer">
-                    Cernicalo comun
+                    {{item.DEN_ESP_CAS}}
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="card text-white  mb-3" style="background-color: #1d5d83">
+   
+  
 
-             <img src= 'assets/images/halcon1Com.jpg' style="max-width:100%;max-height: :100%" />
-
-             <div class="card-footer">
-                Halcon peregrino
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-            <img src= 'assets/images/buhoCom.jpg' style="max-width:100%;max-height: :100%"/>
-
-            <div class="card-footer">
-                Buho real
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-        <img src= 'assets/images/colirrojo1Com.jpg' style="max-width:100%;max-height: :100px"/>
-
-           <div class="card-footer">
-            Colirrojo tizon
-        </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-        <img src= 'assets/images/mirlo1Com.jpg' style="max-width:100%;max-height: :100px"/>
-
-           <div class="card-footer">
-            Mirlo
-        </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-        <img src= 'assets/images/carbonero1Com.jpg' style="max-width:100%;max-height: :100px"/>
-
-           <div class="card-footer">
-            Carbonero común
-        </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-        <img src= 'assets/images/colirrojo1Com.jpg' style="max-width:100%;max-height: :100px"/>
-
-           <div class="card-footer">
-            Carbonero garrapinos
-        </div>
-        </div>
-    </div>
-    <div class="col-sm-3" style="height: 100px">
-            <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-                <img src= 'assets/images/torcazCom.jpg' style="max-width:100%;max-height: :100%"/>
-
-                <div class="card-footer">
-                    Paloma torcaz
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card text-white  mb-3" style="background-color: #1d5d83">
-
-             <img src= 'assets/images/carbonero1Com.jpg' style="max-width:100%;max-height: :100%" />
-
-             <div class="card-footer">
-                Paloma zurita
-            </div>
-        </div>
-    </div>
-
-
+ 
 </div>
-

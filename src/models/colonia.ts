@@ -1,8 +1,7 @@
-import {BaseModel} from './base-model';
 import {LocNidos} from './loc-nidos';
 
 
-export class Colonia extends BaseModel{
+export class Colonia{
 	
 	private nombre:string;
 	private nombreCentro:string;
@@ -11,46 +10,133 @@ export class Colonia extends BaseModel{
   private municipio:string;
   private barrio:string;
   private calleNumPiso:string;
-  private tipoProp:string;
-  private tipoEd:string;
-  private temporada:string;
+  private tipoPropiedad:string;
+  private tipoEdificio:string;
+  private temporada:number;
   private locNidos: LocNidos;
-
+  private usuario: string;
+  private especie: number;
 
 
 
 
 	//getters and setters
 
-	public getName() {
-    	return this.name
+	public getNombre() {
+    	return this.nombre
   	}
 
-  	public setName(value: string) {
-    	this.name = value;
+  public setNombre(value: string) {
+    	this.nombre = value;
   	}
 
-  	public getLastName() {
-    	return this.lastName
-  	}
+  public getNombreCentro() {
+      return this.nombreCentro
+    }
 
-  	public setLastName(value: string) {
-    	this.lastName = value;
-  	}
+  public setNombreCentro(value: string) {
+      this.nombreCentro = value;
+    }
 
-  	public getEmail() {
-    	return this.email
-  	}
+  public getCcaa() {
+      return this.ccaa
+    }
 
-  	public setEmail(value: string) {
-    	this.email = value;
-  	}
+  public setCcaa(value: string) {
+      this.ccaa = value;
+    }
 
-  	public getPhone() {
-    	return this.phone
-  	}
+  public getProvincia() {
+      return this.provincia
+    }
 
-  	public setPhone(value: string) {
-    	this.phone = value;
-  	}
+  public setProvincia(value: string) {
+      this.provincia = value;
+    }
+
+  public getMunicipio() {
+      return this.municipio
+    }
+
+  public setMunicipio(value: string) {
+      this.municipio = value;
+    }
+
+  public getBarrio() {
+      return this.barrio
+    }
+
+  public setBarrio(value: string) {
+      this.barrio = value;
+    }
+
+  public getCalleNumPiso() {
+      return this.calleNumPiso
+    }
+
+  public setCalleNumPiso(value: string) {
+      this.calleNumPiso = value;
+    }
+
+  public getTipoPropiedad() {
+      return this.tipoPropiedad
+    }
+
+  public setTipoPropiedad(value: string) {
+      this.tipoPropiedad = value;
+    }
+
+  public getTipoEdificio() {
+      return this.tipoEdificio
+    }
+
+  public setTipoEdificio(value: string) {
+      this.tipoEdificio = value;
+    }
+
+  public getTemporada() {
+      return this.temporada
+    }
+
+  public setTemporada(value: number) {
+      this.temporada = value;
+    }
+
+  public getLocNidos() {
+      return this.locNidos
+    }
+
+  public setLocNidos(value: LocNidos) {
+      this.locNidos = value;
+    }
+
+  public getUsuario() {
+      return this.usuario
+    }
+
+  public setUsuario(value: string) {
+      this.usuario = value;
+    }
+
+  public getEspecie() {
+      return this.especie
+    }
+
+  public setEspecie(value: number) {
+      this.especie = value;
+    }
+
+
+    toString() {
+    var toRet = '';
+    let key: any;
+    for (key in this) {
+      if (typeof this[key] !== 'function') {
+        toRet += key + " => " + this[key] + "\n";
+      }
+    }
+    return toRet;
+  }
+
+
 }

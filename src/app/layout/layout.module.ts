@@ -20,11 +20,15 @@ import { ViewVisitProfileComponent } from './view-visit-profile/view-visit-profi
 import { AgmCoreModule } from '@agm/core';
 import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
     imports: [
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,
+        FormsModule,
+        ReactiveFormsModule,
         NgbDropdownModule.forRoot(),
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyBDfn3h8TWojAhZa2LxPr17zXkAAUSYtCU'

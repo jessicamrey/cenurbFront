@@ -21,5 +21,38 @@
         "msg4":         "Entrar con usuario",
         "errorLoginAno": "Ha ocurrido un error al intentar acceder. Inténtelo de nuevo más tarde"
 
+    },
+    "Dashboard":{
+        "errorGetCol":   "Ha ocurrido un error al intentar recuperar el listado de aves coloniales",
+        "errorGetNoCol": "Ha ocurrido un error al intentar recuperar el listado de aves no coloniales",
+        "errorGetCCAA":  "Ha ocurrido un error al intentar recuperar el listado de comunidades autónomas",
+        "errorGetProv":  "Ha ocurrido un error al intentar recuperar el listado de provincias",
+        "errorGetMun":   "Ha ocurrido un error al intentar recuperar el listado de municipios"
+
+
+
+    },
+    "RegisterCol":{
+        "name":         "Nombre",
+        "centerName":   "Nombre del centro",
+        "ccaa":         "Comunidad autónoma",
+        "prov":         "Provincia",
+        "mun":          "Municipio",
+        "street":       "Barrio",
+        "address":      "Calle, número y piso",
+        "tipoProp":     "Tipo de propiedad",
+        "tipoEd":       "Tipo de edificio",
+        "locNidos":     "Localización de los nidos",
+        "fachada":      "Fachada",
+        "trasera":      "Trasera",
+        "latIzq":       "Lateral izquierdo",
+        "latDer":       "Lateral derecho",
+        "temp":         "Temporada",
+        "submitMsg":    "Registrar colonia",
+        "resetMsg":     "Nuevo formulario",
+        "errorNewCol":  "Ha ocurrido un error al intentar registrar la colonia",
+        "otras":        "¿Se observan especies distintas en la colonia?",
+        "yes":          "Sí",
+        "no":           "No"
     }
 }

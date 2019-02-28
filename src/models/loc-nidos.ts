@@ -1,6 +1,5 @@
-import {BaseModel} from './base-model';
 
-export class LocNidos extends BaseModel{
+export class LocNidos{
 	
 	private fachada:boolean;
 	private trasera:boolean;
@@ -13,35 +12,37 @@ export class LocNidos extends BaseModel{
 
 	//getters and setters
 
-	public getName() {
-    	return this.name
+	public getFachada() {
+    	return this.fachada
   	}
 
-  	public setName(value: string) {
-    	this.name = value;
+  public setFachada(value: boolean) {
+    	this.fachada = value;
   	}
 
-  	public getLastName() {
-    	return this.lastName
-  	}
+  public getTrasera() {
+      return this.trasera
+    }
 
-  	public setLastName(value: string) {
-    	this.lastName = value;
-  	}
+  public setTrasera(value: boolean) {
+      this.trasera = value;
+    }
 
-  	public getEmail() {
-    	return this.email
-  	}
+  public getLatIzq() {
+      return this.latIzq
+    }
 
-  	public setEmail(value: string) {
-    	this.email = value;
-  	}
+  public setLatIzq(value: boolean) {
+      this.latIzq = value;
+    }
 
-  	public getPhone() {
-    	return this.phone
-  	}
+  public getLatDer() {
+      return this.latDer
+    }
 
-  	public setPhone(value: string) {
-    	this.phone = value;
-  	}
+  public setLatDer(value: boolean) {
+      this.latDer = value;
+    }
+
+  	
 }
