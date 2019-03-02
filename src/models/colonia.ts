@@ -10,8 +10,8 @@ export class Colonia{
   private municipio:string;
   private barrio:string;
   private calleNumPiso:string;
-  private tipoPropiedad:string;
-  private tipoEdificio:string;
+  private tipoPropiedadId:string;
+  private tipoEdificioId:string;
   private temporada:number;
   private locNidos: LocNidos;
   private usuario: string;
@@ -79,19 +79,19 @@ export class Colonia{
     }
 
   public getTipoPropiedad() {
-      return this.tipoPropiedad
+      return this.tipoPropiedadId
     }
 
   public setTipoPropiedad(value: string) {
-      this.tipoPropiedad = value;
+      this.tipoPropiedadId = value;
     }
 
   public getTipoEdificio() {
-      return this.tipoEdificio
+      return this.tipoEdificioId
     }
 
   public setTipoEdificio(value: string) {
-      this.tipoEdificio = value;
+      this.tipoEdificioId = value;
     }
 
   public getTemporada() {

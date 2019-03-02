@@ -16,7 +16,7 @@ private url: string = environment.backendUrl;
   nuevaColonia(colonia: Colonia) {
     let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
 
-    let response=this.api.post('api/colonias', JSON.stringify(colonia), config);
+    let response=this.http.post(this.url + '/api/colonias', JSON.stringify(colonia), config);
     return response;
   }
 

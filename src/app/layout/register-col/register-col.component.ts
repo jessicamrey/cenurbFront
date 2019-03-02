@@ -135,7 +135,7 @@ registerForm: FormGroup;
 
   	colonia.setNombre(this.registerForm.get("nombre").value);
   	colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);
-  	colonia.setTemporada(this.registerForm.get("temporada").value);
+  	colonia.setTemporada(parseInt(this.registerForm.get("temporada").value, 10));
   	colonia.setCcaa(this.registerForm.get("ccaa").value);
   	colonia.setProvincia(this.registerForm.get("provincia").value);
   	colonia.setMunicipio(this.registerForm.get("municipio").value);
@@ -143,13 +143,25 @@ registerForm: FormGroup;
   	colonia.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
   	colonia.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
   	colonia.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
-  	colonia.setLocNidos(locNidos);
+  	//colonia.setLocNidos(locNidos);
 
 
   	//ahora asiganamos la especie seleccionada y el usuario logeado.
+  	colonia.setUsuario("pruebaUsu");
+  	colonia.setEspecie(9);
+  	console.log("Colonia object: ");
+  	console.log(JSON.stringify(colonia));
 
-  	console.log(colonia);
 
+  	this.coloniasService.nuevaColonia(colonia).subscribe(
+              data => {
+                console.log(data);
+              },
+              error => {
+                 console.log(error);
+                  
+            }
+        );
 
   }
 
