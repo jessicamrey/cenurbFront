@@ -8,7 +8,7 @@ import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardTerrComponent } from './dashboard-terr/dashboard-terr.component';
-import {SelectorComponent} from '../selector/selector.component';
+import { SelectorComponent } from '../selector/selector.component';
 import { RegisterColComponent } from './register-col/register-col.component';
 import { ViewColComponent } from './view-col/view-col.component';
 import { ViewCloseColComponent } from './view-close-col/view-close-col.component';
@@ -22,8 +22,11 @@ import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ArchwizardModule } from 'angular-archwizard';
+
 @NgModule({
     imports: [
+        ArchwizardModule,
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,

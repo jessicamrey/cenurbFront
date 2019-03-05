@@ -21,9 +21,13 @@ export class RegisterColComponent implements OnInit {
   listaTipoProp:any[]= [];
   listaTipoEd:any[]= [];
   listaCol:any[]= [];
+  listaNidos:any[]= [];
+  listaEspecies:any[]= [];
+  listaEspeciesNombres:any[]= [];
   otras:boolean =false;
-
-registerForm: FormGroup;
+  colonia=new Colonia();
+  locNidos= new LocNidos();
+  registerForm: FormGroup;
 
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
@@ -121,48 +125,116 @@ registerForm: FormGroup;
 
   }
 
-  nuevaColonia(){
-  	let colonia=new Colonia();
-  	let locNidos= new LocNidos();
-  	//Iniciamos los valores para la nueva colonia:
+  prepararDatos(){
+  	
+  	//PASO 1 ->Información general de la colonia
 
-  	locNidos.setFachada($("#fachada").is(":checked"));
-  	locNidos.setTrasera($("#trasera").is(":checked"));
-  	locNidos.setLatDer($("#latDer").is(":checked"));
-  	locNidos.setLatIzq($("#latIzq").is(":checked"));
-
-  	console.log(locNidos);
-
-  	colonia.setNombre(this.registerForm.get("nombre").value);
-  	colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);
-  	colonia.setTemporada(parseInt(this.registerForm.get("temporada").value, 10));
-  	colonia.setCcaa(this.registerForm.get("ccaa").value);
-  	colonia.setProvincia(this.registerForm.get("provincia").value);
-  	colonia.setMunicipio(this.registerForm.get("municipio").value);
-  	colonia.setBarrio(this.registerForm.get("barrio").value);
-  	colonia.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
-  	colonia.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
-  	colonia.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
-  	//colonia.setLocNidos(locNidos);
+	
 
 
-  	//ahora asiganamos la especie seleccionada y el usuario logeado.
-  	colonia.setUsuario("pruebaUsu");
-  	colonia.setEspecie(9);
-  	console.log("Colonia object: ");
-  	console.log(JSON.stringify(colonia));
+  	//Esta info debe ser sacada de localstorage
+  	this.colonia.setUsuario("pruebaUsu");
+  	this.colonia.setEspecie(9);
+  	//
+
+  	
+  	this.colonia.setNombre(this.registerForm.get("nombre").value);
+  	this.colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);
+  	this.colonia.setTemporada(parseInt(this.registerForm.get("temporada").value, 10));
+  	this.colonia.setCcaa(this.registerForm.get("ccaa").value);
+  	this.colonia.setProvincia(this.registerForm.get("provincia").value);
+  	this.colonia.setMunicipio(this.registerForm.get("municipio").value);
+  	this.colonia.setBarrio(this.registerForm.get("barrio").value);
+  	this.colonia.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
+  	this.colonia.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
+  	this.colonia.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
 
 
-  	this.coloniasService.nuevaColonia(colonia).subscribe(
+  	//PASO 2 -> Información sobre los nidos
+
+  	
+
+  	this.locNidos.setFachada($("#fachada").is(":checked"));
+  	this.locNidos.setTrasera($("#trasera").is(":checked"));
+  	this.locNidos.setLatDer($("#latDer").is(":checked"));
+  	this.locNidos.setLatIzq($("#latIzq").is(":checked"));
+  	this.locNidos.setPatio($("#patio").is(":checked"));
+
+  	this.listaNidos=[];
+
+  	if($("#fachada").is(":checked")){
+  		this.listaNidos.push(this.translate.instant("RegisterCol.fachada"));
+  	}
+  	if($("#trasera").is(":checked")){
+  		this.listaNidos.push(this.translate.instant("RegisterCol.trasera"));
+  	}
+  	if($("#latDer").is(":checked")){
+  		this.listaNidos.push(this.translate.instant("RegisterCol.latDer"));
+  	}
+  	if($("#latIzq").is(":checked")){
+  		this.listaNidos.push(this.translate.instant("RegisterCol.latIzq"));
+  	}
+  	if($("#patio").is(":checked")){
+  		this.listaNidos.push(this.translate.instant("RegisterCol.patio"));
+  	}
+
+  	//PASO 3 -> Información sobre otras especies
+
+  	this.listaEspecies=[];
+  	this.listaEspeciesNombres=[];
+
+
+  		for (let item of this.listaCol){
+  			if($("#"+item.ID_ESP).is(":checked")){
+  				this.listaEspecies.push(item.ID_ESP);
+  				this.listaEspeciesNombres.push(item.DEN_ESP_CAS);
+
+  			}
+  		}
+  	
+	console.log(this.listaEspecies);
+  	console.log(this.listaEspeciesNombres);
+
+
+
+  }
+
+  registrarColonia(){
+
+  		//Empezamos registrando la colonia
+  	  	this.coloniasService.nuevaColonia(this.colonia).subscribe(
               data => {
+              	//Cuando la colonia es creada, obtenemos su id para completar los siguientes pasos
                 console.log(data);
+
+                //Completamos datos de nidos
+                this.coloniasService.completaColoniaNidos(this.locNidos,data["id"]).subscribe(
+                	dataNidos =>{
+                			console.log(dataNidos);
+                	},
+                	errorNidos=>{
+                			console.log(errorNidos);
+                	});
+
+
+               	//Completamos datos de especies en caso necesario
+               	if(this.listaEspecies.length>0){
+               		this.coloniasService.completaColoniaEspecies(this.listaEspecies,data["id"]).subscribe(
+                	dataEspecies =>{
+                			console.log(dataEspecies);
+                	},
+                	errorEspecies=>{
+                			console.log(errorEspecies);
+                	});
+               	}
+                
+
               },
               error => {
                  console.log(error);
                   
             }
         );
-
   }
 
 

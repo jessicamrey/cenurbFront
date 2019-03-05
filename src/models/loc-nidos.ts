@@ -5,6 +5,8 @@ export class LocNidos{
 	private trasera:boolean;
 	private latIzq:boolean;
 	private latDer:boolean;
+  private patio:boolean;
+
 
 
 
@@ -42,6 +44,14 @@ export class LocNidos{
 
   public setLatDer(value: boolean) {
       this.latDer = value;
+    }
+
+  public getPatio() {
+      return this.patio
+    }
+
+  public setPatio(value: boolean) {
+      this.patio = value;
     }
 
   	

@@ -47,12 +47,26 @@
         "trasera":      "Trasera",
         "latIzq":       "Lateral izquierdo",
         "latDer":       "Lateral derecho",
+        "patio":        "Patio inferior",
         "temp":         "Temporada",
         "submitMsg":    "Registrar colonia",
         "resetMsg":     "Nuevo formulario",
         "errorNewCol":  "Ha ocurrido un error al intentar registrar la colonia",
         "otras":        "¿Se observan especies distintas en la colonia?",
         "yes":          "Sí",
-        "no":           "No"
+        "no":           "No",
+        "step1Title":   "INFORMACIÓN",
+        "step2Title":   "NIDOS",
+        "step3Title":   "ESPECIES",
+        "step4Title":   "RESUMEN",
+        "step1Msg":     "Los campos con * son obligatorios",
+        "step2Msg":     "Por favor, marque todas las casillas correspondientes a la localización de los nidos de esta colonia",
+        "step3Msg":     "Marque todas aquellas especies que se observan en esta colonia",
+        "step3Msg2":    "En caso negativo, puede saltar este paso",
+        "step4Msg":     "Por favor, repase los datos antes de registrar la colonia",
+        "next":         "Siguiente",
+        "back":         "Atrás",
+        "end":          "Finalizar",
+        "save":         "Registrarcolonia"
     }
 }

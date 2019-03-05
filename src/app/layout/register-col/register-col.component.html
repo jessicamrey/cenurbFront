@@ -1,7 +1,15 @@
-<form role="form" [formGroup]="registerForm" (ngSubmit)="nuevaColonia()">
-               <p></p><p></p>
 
-                 <div class="form-group"  >
+<form role="form" [formGroup]="registerForm" (ngSubmit)="registrarColonia()">
+               <p></p><p></p>
+<aw-wizard #wizard  [navBarLayout]="'large-filled'">
+
+
+
+
+
+    <aw-wizard-step stepTitle="{{ 'RegisterCol.step1Title' | translate }}" >
+    
+                <div class="form-group"  >
                     <label>{{ 'RegisterCol.name' | translate }} *</label>
                     <input class="form-control" placeholder="Enter text" formControlName="nombre" >
                 </div>
@@ -9,7 +17,6 @@
                     <label>{{ 'RegisterCol.centerName' | translate }} *</label>
                     <input class="form-control" placeholder="Enter text" formControlName="nombreCentro" >
                 </div>
-
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.ccaa' | translate }} *</label>
@@ -54,48 +61,109 @@
                 </div>
 
                  <div class="form-group">
-                    <label>{{ 'RegisterCol.locNidos' | translate }}</label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="fachada">{{ 'RegisterCol.fachada' | translate }}
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="trasera">{{ 'RegisterCol.trasera' | translate }}
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="latDer">{{ 'RegisterCol.latDer' | translate }}
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="latIzq">{{ 'RegisterCol.latIzq' | translate }}
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>{{ 'RegisterCol.otras' | translate }} *</label>
-                    
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="yes" (click)="otras=true">{{ 'RegisterCol.yes' | translate }}
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="no">{{ 'RegisterCol.no' | translate }}
-                    </label>
-                </div>
-
-                <div *ngIf="otras">
-                    <select class="form-control"  multiple="">
-                        <option *ngFor="let col of listaCol" value="{{col.ID_ESP}}" >{{col.DEN_ESP_CAS}}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
                     <label>{{ 'RegisterCol.temp' | translate }} *</label>
                     <select class="form-control"  formControlName="temporada" >
                         
                         <option selected>2019</option>
                     </select>
                 </div>
+        <p style="color:red">{{ 'RegisterCol.step1Msg' | translate }}</p>
+        <button type="button" awNextStep>{{ 'RegisterCol.next' | translate }}</button>
+    </aw-wizard-step>
 
-                 <button type="submit" [disabled]="registerForm.invalid" class="btn btn-secondary" >{{ 'RegisterCol.submitMsg' | translate }}</button>
-                <button type="reset" class="btn btn-secondary">{{ 'RegisterCol.resetMsg' | translate }}</button>
 
-            </form>
-           
+
+
+                 
+    <aw-wizard-step stepTitle="{{ 'RegisterCol.step2Title' | translate }}"  >
+        
+        <div class="form-group">
+                    
+             <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.locNidos' | translate }}</p>
+              <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Msg' | translate }}</p>      
+                   
+            <p style="text-align: left;font-size: large;" >
+                <input type="checkbox" id="fachada">{{ 'RegisterCol.fachada' | translate }}</p>
+            <p style="text-align: left;font-size: large;" >
+                <input type="checkbox" id="trasera">{{ 'RegisterCol.trasera' | translate }}</p>
+            <p style="text-align: left;font-size: large;" >
+                <input type="checkbox" id="latDer">{{ 'RegisterCol.latDer' | translate }}</p>
+            <p style="text-align: left;font-size: large;" >
+                <input type="checkbox" id="latIzq">{{ 'RegisterCol.latIzq' | translate }}</p>
+            <p style="text-align: left;font-size: large;" >
+                <input type="checkbox" id="patio">{{ 'RegisterCol.patio' | translate }}</p>
+        </div>
+
+
+        <button type="button" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
+        <button type="button" awNextStep>{{ 'RegisterCol.next' | translate }}</button>
+    </aw-wizard-step>
+
+             
+
+
+
+                
+    <aw-wizard-step stepTitle="{{ 'RegisterCol.step3Title' | translate }}" >
+
+                 <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.otras' | translate }} </p>
+
+                 
+
+                <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Msg2' | translate }} </p>
+                <div >
+                    <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Msg' | translate }}</p> 
+                    <p style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
+                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAS}}
+                    </p>
+                </div>
+                   
+               
+
+
+                 
+        <button type="button" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
+        <button type="button" awNextStep (click)="prepararDatos()">{{ 'RegisterCol.next' | translate }}</button>
+    </aw-wizard-step>
+                 
+
+
+
+    <aw-wizard-step stepTitle="{{ 'RegisterCol.step4Title' | translate }}" >
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step4Msg' | translate }} </p>
+
+
+
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step1Title' | translate }} </p>
+
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.name' | translate }} *: {{colonia.nombre}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.centerName' | translate }} *: {{colonia.nombreCentro}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.ccaa' | translate }} *: {{colonia.ccaa}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.prov' | translate }} *: {{colonia.provincia}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.mun' | translate }} *: {{colonia.municipio}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.street' | translate }} *: {{colonia.barrio}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.address' | translate }} *: {{colonia.calleNumPiso}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.tipoProp' | translate }} *: {{colonia.tipoPropiedad}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.tipoEd' | translate }} *: {{colonia.tipoEdificio}}</p>
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.temp' | translate }} *: {{colonia.temporada}}</p>
+          
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Title' | translate }} </p>      
+        <p style="text-align: left;font-size: large;" *ngFor="let sitio of listaNidos">{{sitio}}</p>      
+
+        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Title' | translate }} </p>  
+        <p style="text-align: left;font-size: large;" *ngFor="let especie of listaEspeciesNombres">{{especie}}</p> 
+
+
+
+
+
+
+        <button type="submit" [disabled]="registerForm.invalid" class="btn btn-secondary" >{{ 'RegisterCol.submitMsg' | translate }}</button>
+
+        <button type="button" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
+
+    </aw-wizard-step>
+  
+</aw-wizard>
+
+     </form>
