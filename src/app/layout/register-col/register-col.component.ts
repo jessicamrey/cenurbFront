@@ -134,6 +134,7 @@ export class RegisterColComponent implements OnInit {
 
   	//Esta info debe ser sacada de localstorage
   	this.colonia.setUsuario("pruebaUsu");
+    this.locNidos.setUsuario("pruebaUsu");
   	this.colonia.setEspecie(9);
   	//
 
@@ -191,7 +192,8 @@ export class RegisterColComponent implements OnInit {
 
   			}
   		}
-  	
+
+
 	console.log(this.listaEspecies);
   	console.log(this.listaEspeciesNombres);
 
@@ -219,13 +221,19 @@ export class RegisterColComponent implements OnInit {
 
                	//Completamos datos de especies en caso necesario
                	if(this.listaEspecies.length>0){
-               		this.coloniasService.completaColoniaEspecies(this.listaEspecies,data["id"]).subscribe(
-                	dataEspecies =>{
-                			console.log(dataEspecies);
-                	},
-                	errorEspecies=>{
-                			console.log(errorEspecies);
-                	});
+                   for (let id_especie of this.listaEspecies){
+                     let params={
+                       especie: parseInt(id_especie,10)
+                     };
+                     this.coloniasService.completaColoniaEspecies(params,data["id"]).subscribe(
+                        dataEspecies =>{
+                            console.log(dataEspecies);
+                        },
+                        errorEspecies=>{
+                            console.log(errorEspecies);
+                        });
+                   }
+               		
                	}
                 
 

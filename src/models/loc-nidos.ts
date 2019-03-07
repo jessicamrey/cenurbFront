@@ -6,7 +6,7 @@ export class LocNidos{
 	private latIzq:boolean;
 	private latDer:boolean;
   private patio:boolean;
-
+  private usuario: string;
 
 
 
@@ -52,6 +52,14 @@ export class LocNidos{
 
   public setPatio(value: boolean) {
       this.patio = value;
+    }
+
+  public getUsuario() {
+      return this.usuario
+    }
+
+  public setUsuario(value: string) {
+      this.usuario = value;
     }
 
   	

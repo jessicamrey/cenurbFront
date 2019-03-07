@@ -47,6 +47,7 @@ private url: string = environment.backendUrl;
 
   completaColoniaEspecies(data:any, colId: number){
 
+
     let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
 
     let response=this.http.post(this.url + '/api/colonias/' + colId+ '/otras-especies', JSON.stringify(data), config);
