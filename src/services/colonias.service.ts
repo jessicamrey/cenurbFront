@@ -22,8 +22,8 @@ private url: string = environment.backendUrl;
     return response;
   }
 
-  recuperaColonias( ) {
-    return this.http.get<Colonia>(this.url + '/api/colonias');
+  recuperaColonias( page:number) {
+    return this.http.get<any>(this.url + '/api/colonias?page=' + page);
   }
 
   recuperaColonia( colId:number) {

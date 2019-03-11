@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +12,7 @@ import { DashboardTerrComponent } from './dashboard-terr/dashboard-terr.componen
 import { SelectorComponent } from '../selector/selector.component';
 import { RegisterColComponent } from './register-col/register-col.component';
 import { ViewColComponent } from './view-col/view-col.component';
+
 import { ViewCloseColComponent } from './view-close-col/view-close-col.component';
 import { RegisterVisitComponent } from './register-visit/register-visit.component';
 import { ViewVisitsComponent } from './view-visits/view-visits.component';
@@ -32,6 +34,7 @@ import { ArchwizardModule } from 'angular-archwizard';
         TranslateModule,
         FormsModule,
         ReactiveFormsModule,
+        NgbModule.forRoot(),
         NgbDropdownModule.forRoot(),
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyBDfn3h8TWojAhZa2LxPr17zXkAAUSYtCU'
@@ -49,6 +52,7 @@ import { ArchwizardModule } from 'angular-archwizard';
      ViewVisitsComponent,
      ViewColProfileComponent,
      ViewVisitProfileComponent,
-     FormNewVisitComponent]
+     FormNewVisitComponent,
+     ]
 })
 export class LayoutModule {}

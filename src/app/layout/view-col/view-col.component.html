@@ -1,62 +1,73 @@
- <p></p><p></p>
- <table class="table table-hover table-striped">
-                        <thead>
-                        <tr> <th>Nombre</th>
-                            <th>Comunidad Autonoma</th>
-                            <th>Provincia</th>
-                            <th>Municipio</th>
-                            <th>Temporada</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Colonia 1</td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>A Coruña</td>
-                            <td>2018</td>
-                        </tr>
-                        <tr>
-                            <td>Colonia 2</td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>A Coruña</td>
-                            <td>2018</td>
-                        </tr>
-                        <tr>
-                            <td>Colonia 3</td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>A Coruña</td>
-                            <td>2018</td>
-                        </tr>
-                        <tr>
-                            <td>Colonia 4</td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>Ferrol</td>
-                            <td>2018</td>
-                        </tr>
-                        <tr>
-                            <td>Colonia 5 </td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>Carballo</td>
-                            <td>2018</td>
-                        </tr>
-                        <tr>
-                            <td>Colonia 6</td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>Arteixo</td>
-                           <td>2018</td>
-                        </tr>
-                        <tr>
-                            <td>Colonia 7</td>
-                            <td>Galicia</td>
-                            <td>A Coruña</td>
-                            <td>Naron</td>
-                           <td>2018</td>
-                        </tr>
-                        </tbody>
-                    </table>
+ <p style="margin-top:40px;"></p>
+
+
+
+
+ <div class="row" *ngFor="let item of listaColonias" style="margin-top:15px;margin-bottom:15px;">
+
+<!-- este modal ya venia en la version original de la template-->
+ <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{item.nombre}}</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <agm-map [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
+                                      <agm-marker [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
+                                        <agm-info-window>{{item.nombre}}</agm-info-window>
+                                      </agm-marker>
+
+                                    </agm-map>
+                                </div>
+                                <div class="col-md-6">
+                                <p>Hola</p>
+                                <p>Adios</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+                        </div>
+                        </ng-template>
+
+
+    <div class="col-sm-12">
+
+
+        <div class="card">
+         <button class="transparentButton" (click)="openWindowCustomClass(content)"> 
+
+            <div class="card-header">{{item.nombre}}
+            </div>
+
+            <!-- Large modal -->
+            <div class="card-body">
+                {{item.nombre}}
+            </div>
+        </button>
+    </div>
+
+
+</div>
+
+</div> 
+
+                    
+
+                    <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="pageChanged($event)">
+                    </ngb-pagination>
+
+
+
+
+
+
