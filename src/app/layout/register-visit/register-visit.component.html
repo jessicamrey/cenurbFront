@@ -1,21 +1,191 @@
-<agm-map [latitude]=40.424818 [longitude]=-3.742133>
-  <agm-marker [latitude]=40.424818 [longitude]=-3.742133>
-  	<agm-info-window>Censo 1
-  		<p></p>
-  		<button [routerLink]="['/visitProfile']">Seleccionar</button>
-  	</agm-info-window>
-  </agm-marker>
-  <agm-marker [latitude]=40.427552 [longitude]=-3.712490>
-  	<agm-info-window>Censo 3
-  		<p></p>
-  		<button [routerLink]="['/visitProfile']">Seleccionar</button>
-  	</agm-info-window>
-  </agm-marker>
-  <agm-marker [latitude]=40.420884 [longitude]=-3.713850>
-  	<agm-info-window>Censo 2
-  		<p></p>
-  		<button [routerLink]="['/visitProfile']">Seleccionar</button>
-  	</agm-info-window>
-  </agm-marker>
+ <p style="margin-top:80px;"></p>
+<ngx-alerts></ngx-alerts>
+<div class="row">
+  <div class="col-sm-6">
+     <div class="card">
+        <div class="card-header">
+          {{ 'RegisterVisit.infoMsg1' | translate }}
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-xs-4">
+                    <input class="form-control" id="colId">
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-primary" (click)="buscarColonia()">
+                      <i class="fas fa-search"></i>
+                    </button>
 
-</agm-map>
+                </div>
+            </div>
+            <div *ngIf="found==true">
+              
+                <hr>
+                <p style="background-color: #A2DBFE;color:#1d5d83">{{ 'RegisterVisit.found2' | translate }}</p>
+                
+                <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{col.nombre}}</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <agm-map [latitude]="col.locNidos.lat" [longitude]="col.locNidos.lon">
+                                      <agm-marker [latitude]="col.locNidos.lat" [longitude]="col.locNidos.lon">
+                                        <agm-info-window>{{col.nombre}}</agm-info-window>
+                                      </agm-marker>
+
+                                    </agm-map>
+                                </div>
+                                <div class="col-md-6">
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.name' | translate }}</p>
+                                    <p style="text-align: center">{{col.nombre}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.cod' | translate }}</p>
+                                    <p style="text-align: center">{{col.id}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.nameCenter' | translate }}</p>
+                                    <p style="text-align: center">{{col.nombreCentro}}</p>                                
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.temp' | translate }}</p>
+                                    <p style="text-align: center">{{col.temporada}}</p>  
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.loc' | translate }}</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <p style="font-size: 10px">{{ 'ViewCol.ccaa' | translate }}</p>                                             
+                                        <p style="font-size: 10px">{{ 'ViewCol.prov' | translate }}</p> 
+                                        <p style="font-size: 10px">{{ 'ViewCol.mun' | translate }}</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <p style="text-align: right;font-size: 10px">{{col.ccaa}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{col.provincia}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{col.municipio}}</p> 
+                                    </div>
+
+                                </div>
+                                 <p style="text-align: center;font-size: 15px">{{ 'ViewCol.address' | translate }}</p>
+                                        <p style="text-align: center;font-size: 10px">{{col.calleNumPiso}}, {{col.barrio}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoEd' | translate }}</p>
+                                    <p style="text-align: center">{{col.tipoEdificio.descripcion}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoProp' | translate }}</p>
+                                    <p style="text-align: center">{{col.tipoPropiedad.Description}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.empty' | translate }}</p>
+                                    <p style="text-align: center">{{col.vacio}}</p> 
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <a [routerLink]="['/', col.id, 'visitProfile'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
+                            <a [routerLink]="['/', col.id, 'formNewVisit'] " (click)="c('Close click')">{{ 'ColoniaModal.register' | translate }}</a>
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+
+
+            
+                <button class="transparentButton" (click)="openLg(content)">
+                {{col.nombre}}, {{col.municipio}}, {{col.provincia}}
+              </button>
+              
+            </div>
+        </div>
+     </div>
+ </div>
+ <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        {{ 'RegisterVisit.favourites' | translate }}
+        </div>
+        <div class="card-body">
+          <div *ngFor="let item of listaCol">
+            
+
+
+             <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{item.nombre}}</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <agm-map [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
+                                      <agm-marker [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
+                                        <agm-info-window>{{item.nombre}}</agm-info-window>
+                                      </agm-marker>
+
+                                    </agm-map>
+                                </div>
+                                <div class="col-md-6">
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.name' | translate }}</p>
+                                    <p style="text-align: center">{{item.nombre}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.cod' | translate }}</p>
+                                    <p style="text-align: center">{{item.id}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.nameCenter' | translate }}</p>
+                                    <p style="text-align: center">{{item.nombreCentro}}</p>                                
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.temp' | translate }}</p>
+                                    <p style="text-align: center">{{item.temporada}}</p>  
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.loc' | translate }}</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <p style="font-size: 10px">{{ 'ViewCol.ccaa' | translate }}</p>                                             
+                                        <p style="font-size: 10px">{{ 'ViewCol.prov' | translate }}</p> 
+                                        <p style="font-size: 10px">{{ 'ViewCol.mun' | translate }}</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <p style="text-align: right;font-size: 10px">{{item.ccaa}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{item.provincia}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{item.municipio}}</p> 
+                                    </div>
+
+                                </div>
+                                 <p style="text-align: center;font-size: 15px">{{ 'ViewCol.address' | translate }}</p>
+                                        <p style="text-align: center;font-size: 10px">{{item.calleNumPiso}}, {{item.barrio}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoEd' | translate }}</p>
+                                    <p style="text-align: center">{{item.tipoEdificio.descripcion}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoProp' | translate }}</p>
+                                    <p style="text-align: center">{{item.tipoPropiedad.Description}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.empty' | translate }}</p>
+                                    <p style="text-align: center">{{item.vacio}}</p> 
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <a [routerLink]="['/', item.id, 'visitProfile'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
+                            <a [routerLink]="['/', item.id, 'formNewVisit'] " (click)="c('Close click')">{{ 'ColoniaModal.register' | translate }}</a>
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+                        
+              <button class="transparentButton" (click)="openLg(content)">
+                {{item.nombre}}, {{item.municipio}}, {{item.provincia}}
+              </button>
+           
+            <hr>
+          </div>
+        </div>
+   </div>
+ </div>
+ </div>
+ <p >{{ 'RegisterVisit.infoMsg3' | translate }}</p>

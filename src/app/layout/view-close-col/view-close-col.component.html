@@ -1,47 +1,99 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng">
-  	<agm-info-window>Börk</agm-info-window>
-  </agm-marker>
 
-</agm-map>
-
+ <p style="margin-top:40px;"></p>
 
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card mb-3">
-            <div class="card-header">Modal</div>
-            <!-- Large modal -->
-            <div class="card-body">
-                <button class="btn btn-primary" (click)="open(content)">Large modal</button>
-                <ng-template #content let-c="close" let-d="dismiss">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal title</h4>
-                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="col-sm-4">
+		<div class="card">
+			<div class="card-header">
+				<p style="text-align: center">{{ 'ViewCloseCol.infoMsg1' | translate }}</p>
+			</div>
+			<div class="card-body">
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getColoniasCercanas(1)">1 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getColoniasCercanas(5)">5 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getColoniasCercanas(10)">10 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getColoniasCercanas(15)">15 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getColoniasCercanas(20)">20 km</button></p>
+			</div>
+		</div>
+
+	</div>
+	<div class="col-sm-8">
+		<agm-map [latitude]="geolocationPosition.coords.latitude" [longitude]="geolocationPosition.coords.longitude">
+		  <agm-marker *ngFor="let item of listaColonias" [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
 
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card mb-3">
-            <div class="card-header">Buttons</div>
-            <div class="card-body">
-                <p *ngFor="let alert of alerts">
-                    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-                </p>
-            </div>
-        </div>
-    </div>
+		  	<ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{item.nombre}}</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                       
+                                
+                             
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.name' | translate }}</p>
+                                    <p style="text-align: center">{{item.nombre}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.cod' | translate }}</p>
+                                    <p style="text-align: center">{{item.id}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.nameCenter' | translate }}</p>
+                                    <p style="text-align: center">{{item.nombreCentro}}</p>                                
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.temp' | translate }}</p>
+                                    <p style="text-align: center">{{item.temporada}}</p>  
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.loc' | translate }}</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <p style="font-size: 10px">{{ 'ViewCol.ccaa' | translate }}</p>                                             
+                                        <p style="font-size: 10px">{{ 'ViewCol.prov' | translate }}</p> 
+                                        <p style="font-size: 10px">{{ 'ViewCol.mun' | translate }}</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <p style="text-align: right;font-size: 10px">{{item.ccaa}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{item.provincia}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{item.municipio}}</p> 
+                                    </div>
+
+                                </div>
+                                 <p style="text-align: center;font-size: 15px">{{ 'ViewCol.address' | translate }}</p>
+                                        <p style="text-align: center;font-size: 10px">{{item.calleNumPiso}}, {{item.barrio}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoEd' | translate }}</p>
+                                    <p style="text-align: center">{{item.tipoEdificio.descripcion}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoProp' | translate }}</p>
+                                    <p style="text-align: center">{{item.tipoPropiedad.Description}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.empty' | translate }}</p>
+                                    <p style="text-align: center">{{item.vacio}}</p> 
+
+
+                     
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <a [routerLink]="['/', item.id, 'visitProfile'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
+                            <a [routerLink]="['/', item.id, 'formNewVisit'] " (click)="c('Close click')">{{ 'ColoniaModal.register' | translate }}</a>
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+		  	<agm-info-window>
+
+		  		<p>{{item.nombre}}</p>
+		  		<p> <button class="btn btn-primary" (click)="openLg(content)"> Mostrar info</button>
+
+		  	</agm-info-window>
+		  </agm-marker>
+
+		</agm-map>
+	</div>
+	
 </div>
+

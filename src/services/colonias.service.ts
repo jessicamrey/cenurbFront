@@ -22,8 +22,20 @@ private url: string = environment.backendUrl;
     return response;
   }
 
+  recuperaColoniasCercanas( radio, lat, lon, especie) {
+    return this.http.get<any>(this.url + '/api/closeCol?rad=' + radio + '&lat=' + lat + '&lon=' + lon + '&especie=' + especie);
+  }
+
   recuperaColonias( page:number) {
     return this.http.get<any>(this.url + '/api/colonias?page=' + page);
+  }
+
+  recuperaFavoritos( userId:number) {
+    return this.http.get<any>(this.url + '/api/favCol/' + userId);
+  }
+
+  recuperaColoniasFiltered( page:number, busqueda:string) {
+    return this.http.get<any>(this.url + '/api/colonias?page=' + page + busqueda);
   }
 
   recuperaColonia( colId:number) {
@@ -53,6 +65,14 @@ private url: string = environment.backendUrl;
     let response=this.http.post(this.url + '/api/colonias/' + colId+ '/otras-especies', JSON.stringify(data), config);
     return response;
 
+  }
+
+  recuperaVisitas( userId:any, stringBusqueda:any) {
+    return this.http.get<any>(this.url + '/api/usuario/' + userId + '/visits'+stringBusqueda);
+  }
+
+  recuperaVisitasGeneral( stringBusqueda:any) {
+    return this.http.get<any>(this.url + '/api/visitas-colonias' +stringBusqueda);
   }
 
 }

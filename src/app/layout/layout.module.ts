@@ -26,9 +26,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ArchwizardModule } from 'angular-archwizard';
 
+
+import { AlertModule } from 'ngx-alerts';
+
 @NgModule({
     imports: [
         ArchwizardModule,
+        AlertModule.forRoot({maxMessages: 5, timeout: 5000, position: 'right'}),
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,

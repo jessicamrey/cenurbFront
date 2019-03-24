@@ -18,8 +18,8 @@ const routes: Routes = [
         children: [
 
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
-            { path: 'formNewVisit', component: FormNewVisitComponent },
-            { path: 'visitProfile', component: ViewVisitProfileComponent },
+            { path: ':colId/formNewVisit', component: FormNewVisitComponent },
+            { path: ':colId/visitProfile', component: ViewVisitProfileComponent },
             { path: 'registerCol', component: RegisterColComponent },
             { path: 'registerVisit', component: RegisterVisitComponent },
             { path: 'viewCloseCol', component: ViewCloseColComponent },

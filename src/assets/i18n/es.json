@@ -70,11 +70,53 @@
         "save":         "Registrarcolonia"
     },
     "ViewCol":{
-        "option1":      "Ver listado",
-        "option2":      "Ver en mapa",
         "filter":       "Filtrar por ...",
         "search":       "Buscar",
-        "searchMsg":    "Puedes buscar por el nombre de la colonia o por su código",
-        "errorMsg1":    "Ha ocurrido un error al intentar recuperar el listado de colonias"
+        "errorMsg1":    "Ha ocurrido un error al intentar recuperar el listado de colonias",
+        "name":         "Nombre de la colonia",
+        "cod":          "Código",
+        "nameCenter":   "Nombre del centro",
+        "loc":          "Localización",
+        "temp":         "Temporada",
+        "tipoEd":       "Tipo de edificio",
+        "tipoProp":     "Tipo de propiedad",
+        "empty":        "¿Colonia vacía?",
+        "ccaa":         "Cc.aa",
+        "prov":         "Provincia",
+        "mun":          "Municipio",
+        "address":      "Dirección",
+        "empty":        "Mostrar sólo colonias vacías",
+        "noData":       "No se han encontrado colonias"
+    },
+    "ViewCloseCol":{
+        "infoMsg1":     "Selecciona el radio de distancia en el que quieres buscar"
+    },
+    "RegisterVisit":{
+        "infoMsg1":     "Escribe el código de la colonia en el que quieres registrar una nueva visita",
+        "infoMsg2":     "Si no has marcado la colonia como favorita, o desconoces su código, por favor utiliza el buscador de colonias para registrar la visita",
+        "infoMsg3":     "Tienes que seleccionar una colonia primero para poder registrar una visita en ella",
+        "goToViewCol":  "Ir al buscador",
+        "favourites":   "Colonias favoritas",
+        "notFound":     "No se ha encontrado ninguna colonia con ese código",
+        "found":        "Se ha encontrado una colonia",
+        "found2":       "Colonia encontrada"
+    },
+    "ViewVisits":{
+        "numVisit":     "Visita número ",
+        "date":         "con fecha ",
+        "filter":       "Filtrar por colonia",
+        "all":          "Todas",
+        "dateVisit":    "Fecha",
+        "numNest":      "Número de nidos",
+        "numSuccess":   "Número de nidos con éxito",
+        "numTaken":     "Número de nidos ocupados",
+        "numEmpty":     "Número de nidos vacíos",
+        "visitNum":     "Número de visita",
+        "visit":        "Visita"
+    },
+    "ColoniaModal":{
+        "close":        "Cerrar",
+        "register":     "Nueva visita",
+        "visits":       "Ver visitas"
     }
 }

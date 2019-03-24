@@ -1,3 +1,93 @@
-<p>
-  view-visits works!
-</p>
+  <p style="margin-top:40px;"></p>
+
+<div class="card">
+
+    <div class="card-header" style="background-color: #A9A9A9">
+        {{ 'ViewVisits.filter' | translate }}
+    </div>
+    <div class="card-body" style="background-color: #A9A9A9">
+        <div class="row">
+            <div class="col-sm-2" *ngFor="let item of colonias">
+	           <button class="btn btn-primary" (click)="filtrar(item.id)">
+	            	
+	            	{{item.nombre}}
+	            	
+	            </button>
+            </div>
+        </div>
+        <div class="row">
+	        <div class="col-sm-12">
+	        	<button class="btn btn-secondary" (click)="recuperaVisitas()">
+	        	{{ 'ViewVisits.all' | translate }}
+	        	</button> 
+	        </div>
+        </div>
+    </div>
+
+</div>
+
+
+ <div class="row" *ngFor="let item of listaVisitas" style="margin-top:15px;margin-bottom:15px;">
+
+ <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title" >{{ 'ViewVisits.visit' | translate }} {{item.numVisita}}</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                                
+                                <div class="col-md-12">
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.visitNum' | translate }}</p>
+                                    <p style="text-align: center">{{item.numVisita}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.dateVisit' | translate }}</p>
+                                    <p style="text-align: center">{{item.fecha}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numNest' | translate }}</p>
+                                    <p style="text-align: center">{{item.numNidos}}</p>                                
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numSuccess' | translate }}</p>
+                                    <p style="text-align: center">{{item.numNidosExito}}</p>  
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numTaken' | translate }}</p>
+                                    <p style="text-align: center">{{item.numNidosOcupados}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numEmpty' | translate }}</p>
+                                    <p style="text-align: center">{{item.numNidosVacios}}</p> 
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+                        </div>
+                        </ng-template>
+
+
+    <div class="col-sm-12">
+
+
+        <div class="card">
+         
+        	<button class="transparentButton" (click)="openLg(content)">
+	            <div class="card-header">{{item.colonia.nombre}}
+	            </div>
+
+	            <!-- Large modal -->
+	            <div class="card-body">
+	                {{ 'ViewVisits.numVisit' | translate }}{{item.numVisita}}, {{ 'ViewVisits.date' | translate }} {{item.fecha}}
+	            </div>
+            </button>
+        
+    </div>
+
+
+</div>
+
+</div> 
+
+
+

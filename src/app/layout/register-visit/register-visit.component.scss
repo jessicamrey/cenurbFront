@@ -1,4 +1,13 @@
+
+.transparentButton {
+  background-color: transparent;
+  border:none;
+  text-align:center;
+  text-decoration:none;
+  display:inline-block;
+}
+
 agm-map {
-  height: 500px;
-  width:500px;
+  height: 600px;
+
 }
