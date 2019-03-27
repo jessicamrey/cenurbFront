@@ -20,7 +20,6 @@ import { ViewColProfileComponent } from './view-col-profile/view-col-profile.com
 import { ViewVisitProfileComponent } from './view-visit-profile/view-visit-profile.component';
 
 import { AgmCoreModule } from '@agm/core';
-import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -28,10 +27,16 @@ import { ArchwizardModule } from 'angular-archwizard';
 
 
 import { AlertModule } from 'ngx-alerts';
+import { NgxLoadingModule } from 'ngx-loading';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { ChartsModule as Ng2Charts } from 'ng2-charts';
+
 
 @NgModule({
     imports: [
         ArchwizardModule,
+        NgxLoadingModule.forRoot({}),
+        Ng2Charts,
         AlertModule.forRoot({maxMessages: 5, timeout: 5000, position: 'right'}),
         CommonModule,
         LayoutRoutingModule,
@@ -56,7 +61,7 @@ import { AlertModule } from 'ngx-alerts';
      ViewVisitsComponent,
      ViewColProfileComponent,
      ViewVisitProfileComponent,
-     FormNewVisitComponent,
+     StatisticsComponent,
      ]
 })
 export class LayoutModule {}

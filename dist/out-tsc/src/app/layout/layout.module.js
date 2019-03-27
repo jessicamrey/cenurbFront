@@ -25,9 +25,12 @@ var view_visits_component_1 = require("./view-visits/view-visits.component");
 var view_col_profile_component_1 = require("./view-col-profile/view-col-profile.component");
 var view_visit_profile_component_1 = require("./view-visit-profile/view-visit-profile.component");
 var core_3 = require("@agm/core");
-var form_new_visit_component_1 = require("./form-new-visit/form-new-visit.component");
 var forms_1 = require("@angular/forms");
 var angular_archwizard_1 = require("angular-archwizard");
+var ngx_alerts_1 = require("ngx-alerts");
+var ngx_loading_1 = require("ngx-loading");
+var statistics_component_1 = require("./statistics/statistics.component");
+var ng2_charts_1 = require("ng2-charts");
 var LayoutModule = /** @class */ (function () {
     function LayoutModule() {
     }
@@ -35,6 +38,9 @@ var LayoutModule = /** @class */ (function () {
         core_1.NgModule({
             imports: [
                 angular_archwizard_1.ArchwizardModule,
+                ngx_loading_1.NgxLoadingModule.forRoot({}),
+                ng2_charts_1.ChartsModule,
+                ngx_alerts_1.AlertModule.forRoot({ maxMessages: 5, timeout: 5000, position: 'right' }),
                 common_1.CommonModule,
                 layout_routing_module_1.LayoutRoutingModule,
                 core_2.TranslateModule,
@@ -58,7 +64,8 @@ var LayoutModule = /** @class */ (function () {
                 view_visits_component_1.ViewVisitsComponent,
                 view_col_profile_component_1.ViewColProfileComponent,
                 view_visit_profile_component_1.ViewVisitProfileComponent,
-                form_new_visit_component_1.FormNewVisitComponent]
+                statistics_component_1.StatisticsComponent,
+            ]
         })
     ], LayoutModule);
     return LayoutModule;

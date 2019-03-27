@@ -1,70 +1,233 @@
   <p style="margin-top:80px;"></p>
 
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+<ngx-alerts></ngx-alerts>
 
-<div [@routerTransition]>
+
+                         <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{ 'ViewVisitProfile.register' | translate }} *</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+
+                                    <form role="form" [formGroup]="registerForm" (ngSubmit)="registrarVisita()">
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th1' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="nombre" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th3' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidos" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th4' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidosExito" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th5' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidosOcupados" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th6' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidosVacios" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.numVisita' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numVisita" >
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <p> (*) {{ 'ViewVisitProfile.infoMsg1' | translate }}</p>
+                            <button  type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="registraVisita()" (click)="c('Close click')"> {{ 'ViewVisitProfile.register2' | translate }}</button>
+
+
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+
     <div class="row">
-        <div class="col col-xl-6 col-lg-12">
+        <div class="col-sm-12">
            
-            <div class="card mb-3">
-                <div class="card-header">Striped Rows</div>
+            <div class="card">
+                <div class="card-header">{{ 'ViewVisitProfile.title' | translate }} {{colId}}</div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>Page</th>
-                            <th>Visits</th>
-                            <th>% New Visits</th>
-                            <th>Revenue</th>
+                            <th>{{ 'ViewVisitProfile.th1' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.th2' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.th3' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.th4' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.th5' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.th6' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.th7' | translate }}</th>
+                            <th>{{ 'ViewVisitProfile.numVisita' | translate }}</th>
+
+
+
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>/index.html</td>
-                            <td>1265</td>
-                            <td>32.3%</td>
-                            <td>$321.33</td>
+                        <tr *ngFor="let item of listaVisitas">
+
+
+
+
+                         <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{ 'ViewVisitProfile.register' | translate }} *</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+
+                                    <form role="form" [formGroup]="registerForm" (ngSubmit)="registrarVisita()">
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th1' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="nombre" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th3' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidos" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th4' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidosExito" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th5' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidosOcupados" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.th6' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numNidosVacios" >
+                                        </div>
+                                        <div class="form-group"  >
+                                            <label>{{ 'ViewVisitProfile.numVisita' | translate }} </label>
+                                            <input class="form-control" placeholder="Enter text" formControlName="numVisita" >
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <p> (*) {{ 'ViewVisitProfile.infoMsg1' | translate }}</p>
+
+
+                            <button  type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="editaVisita(item)" (click)="c('Close click')"> {{ 'ViewVisitProfile.edit' | translate }}</button>
+
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+                        <ng-template #contentEliminar let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+                                    {{ 'ViewVisitProfile.infoMsg3' | translate }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')" (click)="eliminaVisita(item)"> {{ 'ViewVisitProfile.yes' | translate }}</button>
+
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ViewVisitProfile.no' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+
+
+                            <td>{{item.nombreUsuario}}</td>
+                            <td>{{item.fecha}}</td>
+                            <td>{{item.numNidos}}</td>
+                            <td>{{item.numNidosExito}}</td>
+                            <td>{{item.numNidosOcupados}}</td>
+                            <td>{{item.numNidosVacios}}</td>
+                            <td>{{item.numVisita}}</td>
+
+                            
+                            
+                            <td *ngIf="usuario==item.usuario">
+                                <button class="transparentButton" (click)="editaVisitaModal(item, content)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="transparentButton" (click)="eliminaVisitaModal(contentEliminar)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+
+                            </td>
+                            <td *ngIf="usuario!=item.usuario"> {{ 'ViewVisitProfile.noAction' | translate }}</td>
+
+
+
                         </tr>
-                        <tr>
-                            <td>/about.html</td>
-                            <td>261</td>
-                            <td>33.3%</td>
-                            <td>$234.12</td>
-                        </tr>
-                        <tr>
-                            <td>/sales.html</td>
-                            <td>665</td>
-                            <td>21.3%</td>
-                            <td>$16.34</td>
-                        </tr>
-                        <tr>
-                            <td>/blog.html</td>
-                            <td>9516</td>
-                            <td>89.3%</td>
-                            <td>$1644.43</td>
-                        </tr>
-                        <tr>
-                            <td>/404.html</td>
-                            <td>23</td>
-                            <td>34.3%</td>
-                            <td>$23.52</td>
-                        </tr>
-                        <tr>
-                            <td>/services.html</td>
-                            <td>421</td>
-                            <td>60.3%</td>
-                            <td>$724.32</td>
-                        </tr>
-                        <tr>
-                            <td>/blog/post.html</td>
-                            <td>1233</td>
-                            <td>93.2%</td>
-                            <td>$126.34</td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
-            </div>
+           </div>
           
         </div>
+        <div class="col-sm-12">
+            <div *ngIf="totalPages>0">
+                                <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                                (pageChange)="pageChanged($event)">
+                                </ngb-pagination>
+            </div>
+            <div *ngIf="totalPages<=0 && listaVisitas.length<=0" style="text-align: center">
+                {{ 'ViewVisitProfile.noData' | translate }}
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button class="btn btn-primary" (click)="openLg(content)">{{ 'ViewVisitProfile.register' | translate }}</button>
+        </div>
+
     </div>
-</div>
+

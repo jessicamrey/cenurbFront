@@ -17,16 +17,16 @@ var view_close_col_component_1 = require("./view-close-col/view-close-col.compon
 var view_col_component_1 = require("./view-col/view-col.component");
 var view_visits_component_1 = require("./view-visits/view-visits.component");
 var view_visit_profile_component_1 = require("./view-visit-profile/view-visit-profile.component");
-var form_new_visit_component_1 = require("./form-new-visit/form-new-visit.component");
+var statistics_component_1 = require("./statistics/statistics.component");
 var routes = [
     {
         path: '',
         component: layout_component_1.LayoutComponent,
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
-            { path: 'formNewVisit', component: form_new_visit_component_1.FormNewVisitComponent },
-            { path: 'visitProfile', component: view_visit_profile_component_1.ViewVisitProfileComponent },
+            { path: ':colId/visitProfile', component: view_visit_profile_component_1.ViewVisitProfileComponent },
             { path: 'registerCol', component: register_col_component_1.RegisterColComponent },
+            { path: 'statistics', component: statistics_component_1.StatisticsComponent },
             { path: 'registerVisit', component: register_visit_component_1.RegisterVisitComponent },
             { path: 'viewCloseCol', component: view_close_col_component_1.ViewCloseColComponent },
             { path: 'viewCol', component: view_col_component_1.ViewColComponent },

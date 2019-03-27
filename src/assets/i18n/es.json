@@ -5,6 +5,16 @@
         "col":          "Aves coloniales",
         "terr":         "Aves no coloniales"
     },
+    "Sidebar":{
+        "col":          "Colonias",
+        "register":     "Registrar colonia",
+        "view":         "Ver colonias",
+        "viewClose":    "Colonias cercanas",
+        "statistics":   "Estadísticas",
+        "visits":       "Visitas",
+        "registerVisit":"Registrar visita",
+        "myVisits":     "Ver mis visitas"
+    },
     "Login":{
         "welcome":      "BIENVENIDO/A a Censos Urbanos",
         "in":           "Entrar",
@@ -118,5 +128,39 @@
         "close":        "Cerrar",
         "register":     "Nueva visita",
         "visits":       "Ver visitas"
+    },
+    "ViewVisitProfile":{
+        "title":        "Visitas registradas en colonia ",
+        "th1":          "Nombre",
+        "th2":          "Fecha",
+        "th3":          "Número de nidos",
+        "th4":          "Número de nidos con éxito",
+        "th5":          "Número de nidos ocupados",
+        "th6":          "Número de nidos vacíos",
+        "th7":          "Acciones",
+        "noAction":     "Sin acciones",
+        "register":     "Registrar nueva visita",
+        "register2":    "Registrar",
+        "infoMsg1":     "Todos los campos son obligatorios",
+        "noData":       "No se ha encontrado ninguna visita registrada",
+        "numVisita":    "Número de la visita",
+        "success1":     "La visita se ha registrado correctamente",
+        "success2":     "La visita se ha modificado correctamente",
+        "success3":     "La visita se ha eliminado correctamente",
+        "error1":       "Ha ocurrido un error al intentar registrar la visita",
+        "error2":       "Ha ocurrido un error al intentar modificar la visita",
+        "error3":       "Ha ocurrido un error al intentar eliminar la visita",
+        "infoMsg2":     "Sólo puedes borrar o editar las visitas que has registrado tú"  ,
+        "infoMsg3":     "¿Estás seguro de que quieres borrar esta visita?",
+        "yes":          "Sí",
+        "no":           "No",
+        "edit":         "Modificar" ,
+        "delete":       "Eliminar"
+        
+    },
+    "Statistics":{
+        "anno":         "Por año",
+        "ccaa":         "Por Comunidad Autónoma",
+        "prov":         "Por provincia"
     }
 }

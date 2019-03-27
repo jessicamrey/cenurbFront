@@ -9,7 +9,8 @@ import {ViewCloseColComponent} from './view-close-col/view-close-col.component';
 import {ViewColComponent} from './view-col/view-col.component';
 import {ViewVisitsComponent} from './view-visits/view-visits.component';
 import {ViewVisitProfileComponent} from './view-visit-profile/view-visit-profile.component';
-import {FormNewVisitComponent} from './form-new-visit/form-new-visit.component';
+import {StatisticsComponent} from './statistics/statistics.component';
+
 
 const routes: Routes = [
     {
@@ -18,9 +19,9 @@ const routes: Routes = [
         children: [
 
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
-            { path: ':colId/formNewVisit', component: FormNewVisitComponent },
             { path: ':colId/visitProfile', component: ViewVisitProfileComponent },
             { path: 'registerCol', component: RegisterColComponent },
+            { path: 'statistics', component: StatisticsComponent },
             { path: 'registerVisit', component: RegisterVisitComponent },
             { path: 'viewCloseCol', component: ViewCloseColComponent },
             { path: 'viewCol', component: ViewColComponent },

@@ -11,63 +11,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
+var colonias_service_1 = require("../../../services/colonias.service");
+var ngx_alerts_1 = require("ngx-alerts");
+var core_2 = require("@ngx-translate/core");
 var ViewCloseColComponent = /** @class */ (function () {
-    function ViewCloseColComponent(modalService) {
+    function ViewCloseColComponent(coloniasService, alertService, translate, modalService) {
+        this.coloniasService = coloniasService;
+        this.alertService = alertService;
+        this.translate = translate;
         this.modalService = modalService;
         this.title = 'My first AGM project';
         this.lat = 51.678418;
         this.lng = 7.809007;
-        this.alerts = [];
-        this.defaultPagination = 1;
-        this.advancedPagination = 1;
-        this.paginationSize = 1;
-        this.disabledPagination = 1;
-        this.isDisabled = true;
-        this.alerts.push({
-            id: 1,
-            type: 'success',
-            message: 'This is an success alert',
-        }, {
-            id: 2,
-            type: 'info',
-            message: 'This is an info alert',
-        }, {
-            id: 3,
-            type: 'warning',
-            message: 'This is a warning alert',
-        }, {
-            id: 4,
-            type: 'danger',
-            message: 'This is a danger alert',
-        });
+        this.listaColonias = [];
     }
     ViewCloseColComponent.prototype.ngOnInit = function () {
+        this.getLocalizacion();
     };
-    ViewCloseColComponent.prototype.toggleDisabled = function () {
-        this.isDisabled = !this.isDisabled;
-    };
-    ViewCloseColComponent.prototype.open = function (content) {
+    ViewCloseColComponent.prototype.getLocalizacion = function () {
         var _this = this;
-        this.modalService.open(content).result.then(function (result) {
-            _this.closeResult = "Closed with: " + result;
-        }, function (reason) {
-            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        if (window.navigator && window.navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(function (position) {
+                _this.geolocationPosition = position,
+                    console.log(position);
+            }, function (error) {
+                switch (error.code) {
+                    case 1:
+                        console.log('Permission Denied');
+                        break;
+                    case 2:
+                        console.log('Position Unavailable');
+                        break;
+                    case 3:
+                        console.log('Timeout');
+                        break;
+                }
+            });
+        }
+        ;
+    };
+    ViewCloseColComponent.prototype.getColoniasCercanas = function (radio) {
+        var _this = this;
+        var lat = this.geolocationPosition["coords"]["latitude"];
+        var lon = this.geolocationPosition["coords"]["longitude"];
+        var especie = 9;
+        this.coloniasService.recuperaColoniasCercanas(radio, lat, lon, especie).subscribe(function (data) {
+            _this.listaColonias = data;
+            console.log(data);
+        }, function (error) {
+            _this.alertService.warning(_this.translate.instant("ViewCol.errorMsg1"));
         });
     };
-    ViewCloseColComponent.prototype.getDismissReason = function (reason) {
-        if (reason === ng_bootstrap_1.ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        }
-        else if (reason === ng_bootstrap_1.ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        }
-        else {
-            return "with: " + reason;
-        }
-    };
-    ViewCloseColComponent.prototype.closeAlert = function (alert) {
-        var index = this.alerts.indexOf(alert);
-        this.alerts.splice(index, 1);
+    ViewCloseColComponent.prototype.openLg = function (content) {
+        this.modalService.open(content, { size: 'lg' });
     };
     ViewCloseColComponent = __decorate([
         core_1.Component({
@@ -75,7 +71,10 @@ var ViewCloseColComponent = /** @class */ (function () {
             templateUrl: './view-close-col.component.html',
             styleUrls: ['./view-close-col.component.scss']
         }),
-        __metadata("design:paramtypes", [ng_bootstrap_1.NgbModal])
+        __metadata("design:paramtypes", [colonias_service_1.ColoniasService,
+            ngx_alerts_1.AlertService,
+            core_2.TranslateService,
+            ng_bootstrap_1.NgbModal])
     ], ViewCloseColComponent);
     return ViewCloseColComponent;
 }());

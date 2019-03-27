@@ -3,27 +3,33 @@
         
          <div class="nested-menu" style="margin-top:15%">
             <a class="list-group-item" (click)="addExpandClass('pages')">
-                <i class="fa fa-plus"></i>&nbsp;
-                <span>Colonias</span>
+                <i class="fas fa-crow"></i>&nbsp;
+                <span>{{ 'Sidebar.col' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
                     <li>
                         <a [routerLink]="['/registerCol']">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>Registrar colonia</span>
+                            <i class="fas fa-folder-plus"></i>&nbsp;
+                            <span>{{ 'Sidebar.register' | translate }}</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/viewCol']">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>Ver colonias</span>
+                            <i class="fas fa-th-list"></i>&nbsp;
+                            <span>{{ 'Sidebar.view' | translate }}</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/viewCloseCol']">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>Ver colonias cercanas</span>
+                            <i class="fas fa-map-marked"></i>&nbsp;
+                            <span>{{ 'Sidebar.viewClose' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/statistics']">
+                            <i class="fas fa-chart-bar"></i>&nbsp;
+                            <span>{{ 'Sidebar.statistics' | translate }}</span>
                         </a>
                     </li>
                 </ul>
@@ -31,21 +37,21 @@
         </div>
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('visits')">
-                <i class="fa fa-plus"></i>&nbsp;
+                <i class="fas fa-list"></i>&nbsp;
                 <span>Visitas</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'visits'">
                 <ul class="submenu">
                     <li>
                         <a [routerLink]="['/registerVisit']">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>Registrar visita</span>
+                           <i class="fas fa-folder-plus"></i>&nbsp;
+                            <span>{{ 'Sidebar.registerVisit' | translate }}</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/viewVisits']">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>Ver mis visitas</span>
+                            <i class="fas fa-address-card"></i>&nbsp;
+                            <span>{{ 'Sidebar.myVisits' | translate }}</span>
                         </a>
                     </li>                </ul>
             </li>
@@ -131,8 +137,5 @@
             </div>
         </div>
     </div>
-    <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
-        <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
-        <span>{{ 'Collapse Sidebar' | translate }}</span>
-    </div>
+    
 </nav>
