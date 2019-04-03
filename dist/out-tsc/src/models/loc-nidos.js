@@ -40,6 +40,28 @@ var LocNidos = /** @class */ (function () {
     LocNidos.prototype.setUsuario = function (value) {
         this.usuario = value;
     };
+    LocNidos.prototype.getLat = function () {
+        return this.lat;
+    };
+    LocNidos.prototype.setLat = function (value) {
+        this.lat = value;
+    };
+    LocNidos.prototype.getLon = function () {
+        return this.lon;
+    };
+    LocNidos.prototype.setLon = function (value) {
+        this.lon = value;
+    };
+    LocNidos.prototype.toString = function () {
+        var toRet = '';
+        var key;
+        for (key in this) {
+            if (typeof this[key] !== 'function') {
+                toRet += key + " => " + this[key] + "\n";
+            }
+        }
+        return toRet;
+    };
     return LocNidos;
 }());
 exports.LocNidos = LocNidos;

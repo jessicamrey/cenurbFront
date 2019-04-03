@@ -28,6 +28,8 @@ var StatisticsComponent = /** @class */ (function () {
         this.provChartData = [];
         this.provChartLabels = [];
         this.listaCCAA = [];
+        this.listaProvinciasLabels = [];
+        this.listaProvinciasLabels = [];
         // bar chart
         this.barChartOptions = {
             scaleShowVerticalLines: false,
@@ -42,7 +44,7 @@ var StatisticsComponent = /** @class */ (function () {
             '2011',
             '2012'
         ];
-        this.barChartType = 'bar';
+        this.barChartType = 'horizontalBar';
         this.barChartLegend = true;
         this.barChartData = [
             { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
@@ -169,7 +171,7 @@ var StatisticsComponent = /** @class */ (function () {
          */
     };
     StatisticsComponent.prototype.ngOnInit = function () {
-        this.statsAnno();
+        //this.statsAnno();
         this.statsCcca();
         this.statsProvincia();
     };
@@ -178,6 +180,7 @@ var StatisticsComponent = /** @class */ (function () {
         var dataList = [];
         //TODO: recuperar especie de localstorage, recuperar temporada de nueva entidad
         this.coloniasService.getStatsAnno(9, 2019).subscribe(function (data) {
+            console.log(data);
             for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
                 var item = data_1[_i];
                 dataList.push(item["1"]);
@@ -212,11 +215,17 @@ var StatisticsComponent = /** @class */ (function () {
         this.seoService.getCCAA().subscribe(function (data) {
             _this.listaCCAA = data;
             //Una vez que las hemos recuperado sin error, procedemos a obtener sus estadisticas
+            for (var _i = 0, data_3 = data; _i < data_3.length; _i++) {
+                var ccaa = data_3[_i];
+                _this.ccaaChartLabels.push(ccaa["DEN_COM"]);
+                _this.recuperaProvincia(ccaa["ID_COM"]);
+            }
+            console.log(_this.listaCCAA);
+            console.log(_this.listaProvincias);
             _this.coloniasService.getStatsCcaa(9, 2019).subscribe(function (data) {
-                for (var _i = 0, data_3 = data; _i < data_3.length; _i++) {
-                    var item = data_3[_i];
-                    dataList.push(item["1"]);
-                    _this.ccaaChartLabels.push(item["ccaa"]);
+                for (var _i = 0, data_4 = data; _i < data_4.length; _i++) {
+                    var item = data_4[_i];
+                    dataList[_this.ccaaChartLabels.indexOf(item["ccaa"])] = item["1"];
                 }
                 _this.ccaaChartData.push({ data: dataList, label: "Avion comun" });
             }, function (error) {
@@ -229,10 +238,18 @@ var StatisticsComponent = /** @class */ (function () {
     StatisticsComponent.prototype.recuperaProvincia = function (idCom) {
         var _this = this;
         this.seoService.getProvincia(idCom).subscribe(function (data) {
-            return data;
+            var lista = [];
+            for (var _i = 0, data_5 = data; _i < data_5.length; _i++) {
+                var item = data_5[_i];
+                lista.push(item["DEN_PROV"]);
+            }
+            console.log(lista);
+            _this.listaProvinciasLabels[idCom] = lista;
         }, function (error) {
             _this.alertService.warning(_this.translate.instant("Dashboard.errorGetProv"));
         });
+    };
+    StatisticsComponent.prototype.recuperaTemporadas = function () {
     };
     StatisticsComponent = __decorate([
         core_1.Component({

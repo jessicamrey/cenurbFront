@@ -5,12 +5,13 @@ import {environment} from "../environments/environment";
 import {Colonia} from '../models/colonia';
 import {VisitaColonia} from '../models/visita-colonia';
 import {LocNidos} from '../models/loc-nidos';
-
+import {EventEmitter} from '@angular/core';
 
 @Injectable()
 export class ColoniasService {
 
 private url: string = environment.backendUrl;
+public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
 
   constructor(private api: ApiProvider, private http: HttpClient) {
@@ -32,13 +33,22 @@ private url: string = environment.backendUrl;
 
   //recupera todas las colonias con paginacion
 
-  recuperaColonias( page:number) {
-    return this.http.get<any>(this.url + '/api/colonias?page=' + page);
+  recuperaColonias( page:number, especie:number) {
+    return this.http.get<any>(this.url + '/api/colonias?page=' + page + '&especie=' + especie);
   }
 
 //Recupera las colonias marcadas como favoritas por el usuario
   recuperaFavoritos( userId:number) {
-    return this.http.get<any>(this.url + '/api/favCol/' + userId);
+    return this.http.get<any>(this.url + '/api/colonias/favoritos/' + userId);
+  }
+
+ //Marca una nueva colonia como favorita
+  nuevoFavorito( data) {
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.url + '/api/colonias/favoritos', JSON.stringify(data), config);
+    return response;
+  
   }
 
 //Recuperamos colonias con un string de busqueda que incluye filtros
@@ -125,8 +135,22 @@ private url: string = environment.backendUrl;
 
   //Obtenemos las estadisticas por provincia
 
-  getStatsProvincia(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvincia?temporada=' + temp);
+  getStatsProvincia(especie, temp, ccaa){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvincia?temporada=' + temp + '&ccaa=' + ccaa);
+  }
+
+//Obtenemos las temporadas
+
+  getTemporadas(){
+    return this.http.get<any>(this.url + '/api/temporadas');
+  }
+
+  //Operación para dejar seleccionada una especie en memoria
+
+  selectColonia(data) {
+    localStorage.setItem('especie', JSON.stringify(data));
+    this.coloniaSelectedEvent.emit(data);  
+     return data;
   }
 
 }

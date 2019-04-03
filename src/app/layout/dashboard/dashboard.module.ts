@@ -11,6 +11,8 @@ import {
     ChatComponent
 } from './components';
 import { StatModule } from '../../shared';
+import { AlertModule } from 'ngx-alerts';
+
 
 @NgModule({
     imports: [
@@ -19,7 +21,8 @@ import { StatModule } from '../../shared';
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
         TranslateModule,
-        StatModule
+        StatModule,
+        AlertModule.forRoot({maxMessages: 5, timeout: 5000, position: 'right'})
     ],
     declarations: [
         DashboardComponent,

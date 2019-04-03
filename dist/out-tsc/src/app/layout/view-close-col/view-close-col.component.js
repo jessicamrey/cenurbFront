@@ -65,6 +65,17 @@ var ViewCloseColComponent = /** @class */ (function () {
     ViewCloseColComponent.prototype.openLg = function (content) {
         this.modalService.open(content, { size: 'lg' });
     };
+    ViewCloseColComponent.prototype.newFavorito = function (colId) {
+        var data = {
+            "usuario": "1",
+            "colonia": colId
+        };
+        this.coloniasService.nuevoFavorito(data).subscribe(function (message) {
+            console.log(message);
+        }, function (error) {
+            console.log(error);
+        });
+    };
     ViewCloseColComponent = __decorate([
         core_1.Component({
             selector: 'app-view-close-col',

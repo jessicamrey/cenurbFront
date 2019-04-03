@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoApisService } from '../../../services/seo-apis.service';
+import { ColoniasService } from '../../../services/colonias.service';
+
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 
@@ -15,6 +17,7 @@ export class DashboardComponent implements OnInit {
 
     constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
+                private coloniasService: ColoniasService,
                 public alertService: AlertService) {
       
        
@@ -31,9 +34,17 @@ export class DashboardComponent implements OnInit {
                 console.log(this.listaCol);
               },
               error => {
-                  this.alertService.warning(this.translate.instant("Dashboard.errorGetCol"));
+                  this.alertService.danger(this.translate.instant("Dashboard.errorGetCol"));
                   
             }
         );
+    }
+
+    seleccionar(nombre, id){
+        let data={
+            especie: nombre,
+            especie_id: id 
+        }
+        this.coloniasService.selectColonia(data);
     }
 }

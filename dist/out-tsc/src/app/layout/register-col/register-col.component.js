@@ -25,6 +25,7 @@ var RegisterColComponent = /** @class */ (function () {
         this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.listaCCAA = [];
+        this.listaTemporadas = [];
         this.listaProv = [];
         this.listaMun = [];
         this.listaTipoProp = [];
@@ -36,8 +37,12 @@ var RegisterColComponent = /** @class */ (function () {
         this.otras = false;
         this.colonia = new colonia_1.Colonia();
         this.locNidos = new loc_nidos_1.LocNidos();
+        this.loading = false;
+        this.markers = [];
     }
     RegisterColComponent.prototype.ngOnInit = function () {
+        this.getLocalizacion();
+        this.recuperaTemporadas();
         this.recuperaCCAA();
         this.recuperaTipoProp();
         this.recuperaTipoEd();
@@ -55,11 +60,54 @@ var RegisterColComponent = /** @class */ (function () {
             temporada: ['', forms_1.Validators.required]
         });
     };
+    RegisterColComponent.prototype.getLocalizacion = function () {
+        var _this = this;
+        if (window.navigator && window.navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(function (position) {
+                _this.latitude = position["coords"]["latitude"];
+                _this.longitude = position["coords"]["longitude"];
+                console.log(_this.latitude);
+                console.log(_this.longitude);
+            }, function (error) {
+                switch (error.code) {
+                    case 1:
+                        console.log('Permission Denied');
+                        break;
+                    case 2:
+                        console.log('Position Unavailable');
+                        break;
+                    case 3:
+                        console.log('Timeout');
+                        break;
+                }
+            });
+        }
+        ;
+    };
+    //https://mdbootstrap.com/docs/angular/advanced/google-maps/
+    RegisterColComponent.prototype.placeMarker = function (position) {
+        var lat = position.coords.lat;
+        var lng = position.coords.lng;
+        this.markers = [{ latitude: lat, longitude: lng }];
+    };
+    RegisterColComponent.prototype.recuperaTemporadas = function () {
+        var _this = this;
+        this.coloniasService.getTemporadas().subscribe(function (data) {
+            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                var item = data_1[_i];
+                if (item["abierta"] == true) {
+                    _this.listaTemporadas.push(item["anno"]);
+                }
+            }
+            console.log(_this.listaTemporadas);
+        }, function (error) {
+            console.log(error);
+        });
+    };
     RegisterColComponent.prototype.recuperaColoniales = function () {
         var _this = this;
         this.seoService.listaColoniales().subscribe(function (data) {
             _this.listaCol = data;
-            console.log(_this.listaCol);
         }, function (error) {
             _this.alertService.warning(_this.translate.instant("Dashboard.errorGetCol"));
         });
@@ -113,7 +161,7 @@ var RegisterColComponent = /** @class */ (function () {
         //
         this.colonia.setNombre(this.registerForm.get("nombre").value);
         this.colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);
-        this.colonia.setTemporada(parseInt(this.registerForm.get("temporada").value, 10));
+        this.colonia.setAnno(parseInt(this.registerForm.get("temporada").value, 10));
         this.colonia.setCcaa(this.registerForm.get("ccaa").value);
         this.colonia.setProvincia(this.registerForm.get("provincia").value);
         this.colonia.setMunicipio(this.registerForm.get("municipio").value);
@@ -127,6 +175,8 @@ var RegisterColComponent = /** @class */ (function () {
         this.locNidos.setLatDer($("#latDer").is(":checked"));
         this.locNidos.setLatIzq($("#latIzq").is(":checked"));
         this.locNidos.setPatio($("#patio").is(":checked"));
+        this.locNidos.setLat(this.markers["0"]["latitude"]);
+        this.locNidos.setLon(this.markers["0"]["longitude"]);
         this.listaNidos = [];
         if ($("#fachada").is(":checked")) {
             this.listaNidos.push(this.translate.instant("RegisterCol.fachada"));
@@ -158,15 +208,18 @@ var RegisterColComponent = /** @class */ (function () {
     };
     RegisterColComponent.prototype.registrarColonia = function () {
         var _this = this;
+        this.loading = true;
         //Empezamos registrando la colonia
         this.coloniasService.nuevaColonia(this.colonia).subscribe(function (data) {
             //Cuando la colonia es creada, obtenemos su id para completar los siguientes pasos
-            console.log(data);
+            _this.alertService.success(_this.translate.instant("RegisterCol.successMsg1"));
             //Completamos datos de nidos
             _this.coloniasService.completaColoniaNidos(_this.locNidos, data["id"]).subscribe(function (dataNidos) {
-                console.log(dataNidos);
+                _this.alertService.success(_this.translate.instant("RegisterCol.successMsg2"));
+                _this.loading = false;
             }, function (errorNidos) {
-                console.log(errorNidos);
+                _this.alertService.danger(_this.translate.instant("RegisterCol.errorMsg2"));
+                _this.loading = false;
             });
             //Completamos datos de especies en caso necesario
             if (_this.listaEspecies.length > 0) {
@@ -176,14 +229,16 @@ var RegisterColComponent = /** @class */ (function () {
                         especie: parseInt(id_especie, 10)
                     };
                     _this.coloniasService.completaColoniaEspecies(params, data["id"]).subscribe(function (dataEspecies) {
-                        console.log(dataEspecies);
+                        _this.alertService.success(_this.translate.instant("RegisterCol.successMsg3"));
+                        _this.loading = false;
                     }, function (errorEspecies) {
-                        console.log(errorEspecies);
+                        _this.alertService.danger(_this.translate.instant("RegisterCol.errorMsg3"));
+                        _this.loading = false;
                     });
                 }
             }
         }, function (error) {
-            console.log(error);
+            _this.alertService.danger(_this.translate.instant("RegisterCol.errorMsg1"));
         });
     };
     RegisterColComponent = __decorate([

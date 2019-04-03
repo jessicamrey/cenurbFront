@@ -35,7 +35,13 @@ var ColoniasService = /** @class */ (function () {
     };
     //Recupera las colonias marcadas como favoritas por el usuario
     ColoniasService.prototype.recuperaFavoritos = function (userId) {
-        return this.http.get(this.url + '/api/favCol/' + userId);
+        return this.http.get(this.url + '/api/colonias/favoritos/' + userId);
+    };
+    //Marca una nueva colonia como favorita
+    ColoniasService.prototype.nuevoFavorito = function (data) {
+        var config = { headers: new http_1.HttpHeaders().set("Content-Type", 'application/json') };
+        var response = this.http.post(this.url + '/api/colonias/favoritos', JSON.stringify(data), config);
+        return response;
     };
     //Recuperamos colonias con un string de busqueda que incluye filtros
     ColoniasService.prototype.recuperaColoniasFiltered = function (page, busqueda) {
@@ -96,6 +102,10 @@ var ColoniasService = /** @class */ (function () {
     //Obtenemos las estadisticas por provincia
     ColoniasService.prototype.getStatsProvincia = function (especie, temp) {
         return this.http.get(this.url + '/api/especies/' + especie + '/statsProvincia?temporada=' + temp);
+    };
+    //Obtenemos las temporadas
+    ColoniasService.prototype.getTemporadas = function () {
+        return this.http.get(this.url + '/api/temporadas');
     };
     ColoniasService = __decorate([
         core_1.Injectable(),

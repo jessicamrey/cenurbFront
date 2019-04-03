@@ -8,35 +8,25 @@
     <div class="collapse navbar-collapse">
         
         <ul class="navbar-nav ml-auto">
-       
+         <a class="navbar-brand" *ngIf="!selected">{{ 'Header.infoMsg1' | translate }} </a>
+         <a class="navbar-brand" *ngIf="selected">{{ 'Header.infoMsg2' | translate }} {{name}}</a>
+
             <li class="nav-item dropdown" ngbDropdown>
                 <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                    <i class="fa fa-language"></i> {{ 'Language' | translate }} <b class="caret"></b>
+                    <i class="fa fa-language"></i> {{ 'Header.language' | translate }} <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('en')">
-                        {{ 'English' | translate }}
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('gal')">
+                        {{ 'Galego' | translate }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('fr')">
-                        {{ 'French' | translate }}
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('cat')">
+                        {{ 'Català' | translate }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('ur')">
-                        {{ 'Urdu' | translate }}
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('ek')">
+                        {{ 'Euskera' | translate }}
                     </a>
                     <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('es')">
-                        {{ 'Spanish' | translate }}
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('it')">
-                        {{ 'Italian' | translate }}
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('fa')">
-                        {{ 'Farsi' | translate }}
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('de')">
-                        {{ 'German' | translate }}
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('zh-CHS')">
-                        {{ 'Simplified Chinese' | translate }}
+                        {{ 'Español' | translate }}
                     </a>
                 </div>
             </li>

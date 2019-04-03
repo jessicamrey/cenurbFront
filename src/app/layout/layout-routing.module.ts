@@ -10,6 +10,18 @@ import {ViewColComponent} from './view-col/view-col.component';
 import {ViewVisitsComponent} from './view-visits/view-visits.component';
 import {ViewVisitProfileComponent} from './view-visit-profile/view-visit-profile.component';
 import {StatisticsComponent} from './statistics/statistics.component';
+import {GeneralColComponent} from './general-col/general-col.component';
+import {GeneralTerrComponent} from './general-terr/general-terr.component';
+import {RegisterTerrComponent} from './register-terr/register-terr.component';
+import {ViewTerrComponent} from './view-terr/view-terr.component';
+import {ViewCloseTerrComponent} from './view-close-terr/view-close-terr.component';
+import {StatisticsTerrComponent} from './statistics-terr/statistics-terr.component';
+
+
+
+
+
+
 
 
 const routes: Routes = [
@@ -21,10 +33,16 @@ const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: ':colId/visitProfile', component: ViewVisitProfileComponent },
             { path: 'registerCol', component: RegisterColComponent },
+            { path: 'generalCol', component: GeneralColComponent },
+            { path: 'generalTerr', component: GeneralTerrComponent },
             { path: 'statistics', component: StatisticsComponent },
             { path: 'registerVisit', component: RegisterVisitComponent },
             { path: 'viewCloseCol', component: ViewCloseColComponent },
             { path: 'viewCol', component: ViewColComponent },
+            { path: 'registerTerr', component: RegisterTerrComponent },
+            { path: 'viewTerr', component: ViewTerrComponent },
+            { path: 'viewCloseTerr', component: ViewCloseTerrComponent },
+            { path: 'statisticsTerr', component: StatisticsTerrComponent },
             { path: 'viewVisits', component: ViewVisitsComponent },
             { path: 'dashboardTerr', component: DashboardTerrComponent },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' }

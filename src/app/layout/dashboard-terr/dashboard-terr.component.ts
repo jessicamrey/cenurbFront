@@ -3,6 +3,8 @@ import { routerTransition } from '../../router.animations';
 import { SeoApisService } from '../../../services/seo-apis.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
+import { TerritoriosService } from '../../../services/territorios.service';
+
 
 @Component({
   selector: 'app-dashboard-terr',
@@ -15,7 +17,8 @@ export class DashboardTerrComponent implements OnInit {
 
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
-                public alertService: AlertService) { }
+                public alertService: AlertService,
+                private territoriosService: TerritoriosService) { }
 
   ngOnInit() {
   	this.recuperaNoColoniales();
@@ -34,4 +37,12 @@ export class DashboardTerrComponent implements OnInit {
         );
     }
 
+
+    seleccionar(nombre, id){
+        let data={
+            especie: nombre,
+            especie_id: id 
+        }
+        this.territoriosService.selectTerritorio(data);
+    }
 }

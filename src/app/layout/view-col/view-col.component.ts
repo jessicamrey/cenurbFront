@@ -50,7 +50,8 @@ export class ViewColComponent implements OnInit {
 
 
   	recuperaColonias(pageNumber){
-  		this.coloniasService.recuperaColonias(pageNumber).subscribe(
+      let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
+  		this.coloniasService.recuperaColonias(pageNumber, especie).subscribe(
               data => {
                 this.listaColonias=data["hydra:member"];
                 let last=data["hydra:view"]["hydra:last"];
@@ -176,5 +177,22 @@ export class ViewColComponent implements OnInit {
 
 
   }
+
+  newFavorito(colId){
+    let data={
+      "usuario":"1",
+      "colonia":colId
+    };
+     this.coloniasService.nuevoFavorito(data).subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
+  
 
 }

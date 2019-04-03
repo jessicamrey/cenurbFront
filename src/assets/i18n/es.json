@@ -5,6 +5,12 @@
         "col":          "Aves coloniales",
         "terr":         "Aves no coloniales"
     },
+    "Header":{
+        "title":        "Censos urbanos",
+        "infoMsg1":     "No has seleccionado ninguna especie",
+        "infoMsg2":     "Especie seleccionada: ",
+        "language":     "Idioma"
+    },
     "Sidebar":{
         "col":          "Colonias",
         "register":     "Registrar colonia",
@@ -13,7 +19,14 @@
         "statistics":   "Estadísticas",
         "visits":       "Visitas",
         "registerVisit":"Registrar visita",
-        "myVisits":     "Ver mis visitas"
+        "myVisits":     "Ver mis visitas",
+        "terr":         "Territorios",
+        "general":      "Consultas generales",
+        "generalCol":   "Aves coloniales",
+        "generalTerr":  "Aves no coloniales",
+        "registerTerr": "Registrar territorio",
+        "viewTerr":     "Ver territorios",
+        "viewCloseTerr":"Territorios cercanos"
     },
     "Login":{
         "welcome":      "BIENVENIDO/A a Censos Urbanos",
@@ -37,7 +50,9 @@
         "errorGetNoCol": "Ha ocurrido un error al intentar recuperar el listado de aves no coloniales",
         "errorGetCCAA":  "Ha ocurrido un error al intentar recuperar el listado de comunidades autónomas",
         "errorGetProv":  "Ha ocurrido un error al intentar recuperar el listado de provincias",
-        "errorGetMun":   "Ha ocurrido un error al intentar recuperar el listado de municipios"
+        "errorGetMun":   "Ha ocurrido un error al intentar recuperar el listado de municipios",
+        "infoMsg1":      "Se ha seleccionado ",
+        "errorMsg1":     "Ha ocurrido un error al intentar seleciconar "
 
 
 
@@ -61,7 +76,12 @@
         "temp":         "Temporada",
         "submitMsg":    "Registrar colonia",
         "resetMsg":     "Nuevo formulario",
-        "errorNewCol":  "Ha ocurrido un error al intentar registrar la colonia",
+        "successMsg1":  "La colonia se ha registrado correctamente",
+        "successMsg2":  "Se han registrado los datos de los nidos",
+        "successMsg3":  "Se han añadido nuevas especies a la colonia",
+        "errorMsg1":    "Ha ocurrido un error al intentar registrar la colonia",
+        "errorMsg2":    "Ha ocurrido un error al completar la información sobre los nidos",
+        "errorMsg3":    "Ha ocurrido un error al intentar añadir otras especies a la colonia",
         "otras":        "¿Se observan especies distintas en la colonia?",
         "yes":          "Sí",
         "no":           "No",
@@ -77,7 +97,10 @@
         "next":         "Siguiente",
         "back":         "Atrás",
         "end":          "Finalizar",
-        "save":         "Registrarcolonia"
+        "save":         "Registrar colonia",
+        "coords":       "Coordenadas",
+        "lat":          "Latitud",
+        "lon":          "Longitud"
     },
     "ViewCol":{
         "filter":       "Filtrar por ...",

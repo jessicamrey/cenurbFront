@@ -12,7 +12,7 @@ export class Colonia{
   private calleNumPiso:string;
   private tipoPropiedadId:string;
   private tipoEdificioId:string;
-  private temporada:number;
+  private anno:number;
   private locNidos: LocNidos;
   private usuario: string;
   private especie: number;
@@ -94,12 +94,12 @@ export class Colonia{
       this.tipoEdificioId = value;
     }
 
-  public getTemporada() {
-      return this.temporada
+  public getAnno  () {
+      return this.anno
     }
 
-  public setTemporada(value: number) {
-      this.temporada = value;
+  public setAnno(value: number) {
+      this.anno = value;
     }
 
   public getLocNidos() {

@@ -76,6 +76,7 @@
 
                         </div>
                         <div class="modal-footer">
+                            <button class="transparentButton" (click)="newFavorito(item.id)"><i class="fas fa-heart"></i></button>
                             <a [routerLink]="['/', item.id, 'visitProfile'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
                             <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
                         </div>

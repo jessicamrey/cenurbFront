@@ -13,6 +13,8 @@ import { ApiProvider } from '../providers/api/api-provider';
 import { AuthService } from '../services/auth.service';
 import { SeoApisService } from '../services/seo-apis.service';
 import { ColoniasService } from '../services/colonias.service';
+import { TerritoriosService } from '../services/territorios.service';
+
 
 
 
@@ -53,7 +55,8 @@ export const createTranslateLoader = (http: HttpClient) => {
                 ApiProvider,
                 AuthService,
                 SeoApisService,
-                ColoniasService],
+                ColoniasService,
+                TerritoriosService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

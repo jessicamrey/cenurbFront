@@ -7,6 +7,8 @@ export class LocNidos{
 	private latDer:boolean;
   private patio:boolean;
   private usuario: string;
+  private lat:any;
+  private lon:any;
 
 
 
@@ -62,5 +64,31 @@ export class LocNidos{
       this.usuario = value;
     }
 
-  	
+  public getLat() {
+      return this.lat
+    }
+
+  public setLat(value: any) {
+      this.lat = value;
+    }
+
+  public getLon() {
+      return this.lon
+    }
+
+  public setLon(value: any) {
+      this.lon = value;
+    }  	
+
+
+     toString() {
+    var toRet = '';
+    let key: any;
+    for (key in this) {
+      if (typeof this[key] !== 'function') {
+        toRet += key + " => " + this[key] + "\n";
+      }
+    }
+    return toRet;
+  }
 }

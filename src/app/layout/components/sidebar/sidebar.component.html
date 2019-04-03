@@ -1,9 +1,9 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
         
-         <div class="nested-menu" style="margin-top:15%">
+         <div class="nested-menu" style="margin-top:15%" *ngIf="showCol">
             <a class="list-group-item" (click)="addExpandClass('pages')">
-                <i class="fas fa-crow"></i>&nbsp;
+                <i class="fas fa-dove"></i>&nbsp;
                 <span>{{ 'Sidebar.col' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
@@ -35,10 +35,44 @@
                 </ul>
             </li>
         </div>
+        <div class="nested-menu" style="margin-top:15%" *ngIf="showTerr">
+            <a class="list-group-item" (click)="addExpandClass('terr')">
+                <i class="fas fa-crow"></i>&nbsp;
+                <span>{{ 'Sidebar.terr' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'terr'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/registerTerr']">
+                            <i class="fas fa-folder-plus"></i>&nbsp;
+                            <span>{{ 'Sidebar.registerTerr' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/viewTerr']">
+                            <i class="fas fa-th-list"></i>&nbsp;
+                            <span>{{ 'Sidebar.viewTerr' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/viewCloseTerr']">
+                            <i class="fas fa-map-marked"></i>&nbsp;
+                            <span>{{ 'Sidebar.viewCloseTerr' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/statisticsTerr']">
+                            <i class="fas fa-chart-bar"></i>&nbsp;
+                            <span>{{ 'Sidebar.statistics' | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('visits')">
                 <i class="fas fa-list"></i>&nbsp;
-                <span>Visitas</span>
+                <span>{{ 'Sidebar.visits' | translate }}</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'visits'">
                 <ul class="submenu">
@@ -56,7 +90,27 @@
                     </li>                </ul>
             </li>
         </div>
-       
+       <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('general')">
+                <i class="fas fa-chart-pie"></i>&nbsp;
+                <span>{{ 'Sidebar.general' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'general'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/generalCol']">
+                           <i class="fas fa-dove"></i>&nbsp;
+                            <span>{{ 'Sidebar.generalCol' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/generalTerr']">
+                            <i class="fab fa-earlybirds"></i>&nbsp;
+                            <span>{{ 'Sidebar.generalTerr' | translate }}</span>
+                        </a>
+                    </li>                </ul>
+            </li>
+        </div>
 
         <div class="header-fields">
             <a (click)="rltAndLtr()" class="list-group-item">
@@ -64,45 +118,31 @@
             </a>
             <div class="nested-menu">
                 <a class="list-group-item" (click)="addExpandClass('languages')">
-                    <span><i class="fa fa-language"></i>&nbsp; {{ 'Language' | translate }} <b class="caret"></b></span>
+                    <span><i class="fa fa-language"></i>&nbsp; {{ 'Header.language' | translate }} <b class="caret"></b></span>
                 </a>
                 <li class="nested" [class.expand]="showMenu === 'languages'">
                     <ul class="submenu">
                         <li>
-                            <a href="javascript:void(0)" (click)="changeLang('en')">
-                                {{ 'English' | translate }}
+                            <a href="javascript:void(0)" (click)="changeLang('gal')">
+                                {{ 'Galego' | translate }}
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)" (click)="changeLang('fr')">
-                                {{ 'French' | translate }}
+                            <a href="javascript:void(0)" (click)="changeLang('cat')">
+                                {{ 'Català' | translate }}
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)" (click)="changeLang('ur')">
-                                {{ 'Urdu' | translate }}
+                            <a href="javascript:void(0)" (click)="changeLang('ek')">
+                                {{ 'Euskera' | translate }}
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void(0)" (click)="changeLang('es')">
-                                {{ 'Spanish' | translate }}
+                                {{ 'Español' | translate }}
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0)" (click)="changeLang('it')">
-                                {{ 'Italian' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" (click)="changeLang('fa')">
-                                {{ 'Farsi' | translate }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" (click)="changeLang('de')">
-                                {{ 'German' | translate }}
-                            </a>
-                        </li>
+                       
                     </ul>
                 </li>
             </div>

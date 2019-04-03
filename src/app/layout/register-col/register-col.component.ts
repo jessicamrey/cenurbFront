@@ -16,6 +16,7 @@ declare var $:any;
 export class RegisterColComponent implements OnInit {
 
   listaCCAA:any[]= [];
+  listaTemporadas:any[]= [];
   listaProv:any[]= [];
   listaMun:any[]= [];
   listaTipoProp:any[]= [];
@@ -28,6 +29,12 @@ export class RegisterColComponent implements OnInit {
   colonia=new Colonia();
   locNidos= new LocNidos();
   registerForm: FormGroup;
+  loading=false;
+  longitude :any;
+  latitude :any;
+
+  markers = [
+  ];
 
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
@@ -36,6 +43,8 @@ export class RegisterColComponent implements OnInit {
                 private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.getLocalizacion();
+    this.recuperaTemporadas();
   	this.recuperaCCAA();
   	this.recuperaTipoProp();
   	this.recuperaTipoEd();
@@ -54,11 +63,61 @@ export class RegisterColComponent implements OnInit {
         });
   }
 
+  getLocalizacion(){
+     if (window.navigator && window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+            position => {
+                this.latitude=position["coords"]["latitude"];
+                this.longitude=position["coords"]["longitude"];
+                console.log(this.latitude);
+                console.log(this.longitude);
+            },
+            error => {
+                switch (error.code) {
+                    case 1:
+                        console.log('Permission Denied');
+                        break;
+                    case 2:
+                        console.log('Position Unavailable');
+                        break;
+                    case 3:
+                        console.log('Timeout');
+                        break;
+                }
+            }
+        );
+    };
+  }
+//https://mdbootstrap.com/docs/angular/advanced/google-maps/
+placeMarker(position: any) {
+const lat = position.coords.lat;
+const lng = position.coords.lng;
+
+this.markers=[{ latitude: lat, longitude: lng }];
+}
+
+  recuperaTemporadas(){
+    this.coloniasService.getTemporadas().subscribe(
+      data=>{
+        
+        for (let item of data){
+          if (item["abierta"]==true){
+            this.listaTemporadas.push(item["anno"]);
+          }
+        }
+        console.log(this.listaTemporadas);
+      },
+      error=>{
+        console.log(error);
+      })
+  }
+
+
+
   recuperaColoniales(){
         this.seoService.listaColoniales().subscribe(
               data => {
                 this.listaCol=data;
-                console.log(this.listaCol);
               },
               error => {
                   this.alertService.warning(this.translate.instant("Dashboard.errorGetCol"));
@@ -135,13 +194,13 @@ export class RegisterColComponent implements OnInit {
   	//Esta info debe ser sacada de localstorage
   	this.colonia.setUsuario("pruebaUsu");
     this.locNidos.setUsuario("pruebaUsu");
-  	this.colonia.setEspecie(9);
+  	this.colonia.setEspecie(parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]));
   	//
 
   	
   	this.colonia.setNombre(this.registerForm.get("nombre").value);
   	this.colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);
-  	this.colonia.setTemporada(parseInt(this.registerForm.get("temporada").value, 10));
+  	this.colonia.setAnno(parseInt(this.registerForm.get("temporada").value, 10));
   	this.colonia.setCcaa(this.registerForm.get("ccaa").value);
   	this.colonia.setProvincia(this.registerForm.get("provincia").value);
   	this.colonia.setMunicipio(this.registerForm.get("municipio").value);
@@ -160,8 +219,12 @@ export class RegisterColComponent implements OnInit {
   	this.locNidos.setLatDer($("#latDer").is(":checked"));
   	this.locNidos.setLatIzq($("#latIzq").is(":checked"));
   	this.locNidos.setPatio($("#patio").is(":checked"));
+    this.locNidos.setLat(this.markers["0"]["latitude"]);
+    this.locNidos.setLon(this.markers["0"]["longitude"]);
+
 
   	this.listaNidos=[];
+
 
   	if($("#fachada").is(":checked")){
   		this.listaNidos.push(this.translate.instant("RegisterCol.fachada"));
@@ -202,20 +265,22 @@ export class RegisterColComponent implements OnInit {
   }
 
   registrarColonia(){
-
+    this.loading=true;
   		//Empezamos registrando la colonia
   	  	this.coloniasService.nuevaColonia(this.colonia).subscribe(
               data => {
               	//Cuando la colonia es creada, obtenemos su id para completar los siguientes pasos
-                console.log(data);
+                this.alertService.success(this.translate.instant("RegisterCol.successMsg1"));
 
                 //Completamos datos de nidos
                 this.coloniasService.completaColoniaNidos(this.locNidos,data["id"]).subscribe(
                 	dataNidos =>{
-                			console.log(dataNidos);
+                    this.alertService.success(this.translate.instant("RegisterCol.successMsg2"));
+                		this.loading=false;
                 	},
                 	errorNidos=>{
-                			console.log(errorNidos);
+                			this.alertService.danger(this.translate.instant("RegisterCol.errorMsg2"));
+                      this.loading=false;
                 	});
 
 
@@ -227,10 +292,12 @@ export class RegisterColComponent implements OnInit {
                      };
                      this.coloniasService.completaColoniaEspecies(params,data["id"]).subscribe(
                         dataEspecies =>{
-                            console.log(dataEspecies);
+                            this.alertService.success(this.translate.instant("RegisterCol.successMsg3"));
+                    this.loading=false;
                         },
                         errorEspecies=>{
-                            console.log(errorEspecies);
+                            this.alertService.danger(this.translate.instant("RegisterCol.errorMsg3"));
+                      this.loading=false;
                         });
                    }
                		
@@ -239,7 +306,7 @@ export class RegisterColComponent implements OnInit {
 
               },
               error => {
-                 console.log(error);
+                 this.alertService.danger(this.translate.instant("RegisterCol.errorMsg1"));
                   
             }
         );

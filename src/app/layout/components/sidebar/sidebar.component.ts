@@ -1,21 +1,30 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ColoniasService } from '../../../../services/colonias.service';
+import { TerritoriosService } from '../../../../services/territorios.service';
+
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
     isActive: boolean = false;
     collapsed: boolean = false;
     showMenu: string = '';
     pushRightClass: string = 'push-right';
 
+    showCol: boolean=false;
+    showTerr: boolean=false;
+
     @Output() collapsedEvent = new EventEmitter<boolean>();
     
-    constructor(private translate: TranslateService, public router: Router) {
+    constructor(private translate: TranslateService, 
+        public router: Router, 
+        private coloniasService: ColoniasService,
+        private territoriosService: TerritoriosService) {
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -30,6 +39,24 @@ export class SidebarComponent {
                 this.toggleSidebar();
             }
         });
+    }
+
+    ngOnInit(){
+        this.coloniasService.coloniaSelectedEvent.subscribe(
+            (data: any) => {
+                this.showCol=true;
+                this.showTerr=false;
+
+            }
+        );
+
+        this.territoriosService.territorioSelectedEvent.subscribe(
+            (data: any) => {
+                this.showCol=false;
+                this.showTerr=true;
+
+            }
+        );
     }
 
     eventCalled() {

@@ -132,6 +132,17 @@ var ViewColComponent = /** @class */ (function () {
             _this.alertService.warning(_this.translate.instant("ViewCol.errorMsg1"));
         });
     };
+    ViewColComponent.prototype.newFavorito = function (colId) {
+        var data = {
+            "usuario": "1",
+            "colonia": colId
+        };
+        this.coloniasService.nuevoFavorito(data).subscribe(function (message) {
+            console.log(message);
+        }, function (error) {
+            console.log(error);
+        });
+    };
     ViewColComponent = __decorate([
         core_1.Component({
             selector: 'app-view-col',

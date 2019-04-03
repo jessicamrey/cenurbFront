@@ -30,6 +30,12 @@ import { AlertModule } from 'ngx-alerts';
 import { NgxLoadingModule } from 'ngx-loading';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
+import { GeneralColComponent } from './general-col/general-col.component';
+import { GeneralTerrComponent } from './general-terr/general-terr.component';
+import { RegisterTerrComponent } from './register-terr/register-terr.component';
+import { ViewTerrComponent } from './view-terr/view-terr.component';
+import { ViewCloseTerrComponent } from './view-close-terr/view-close-terr.component';
+import { StatisticsTerrComponent } from './statistics-terr/statistics-terr.component';
 
 
 @NgModule({
@@ -62,6 +68,12 @@ import { ChartsModule as Ng2Charts } from 'ng2-charts';
      ViewColProfileComponent,
      ViewVisitProfileComponent,
      StatisticsComponent,
+     GeneralColComponent,
+     GeneralTerrComponent,
+     RegisterTerrComponent,
+     ViewTerrComponent,
+     ViewCloseTerrComponent,
+     StatisticsTerrComponent,
      ]
 })
 export class LayoutModule {}

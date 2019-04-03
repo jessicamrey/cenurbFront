@@ -55,7 +55,8 @@ export class ViewCloseColComponent implements OnInit {
   getColoniasCercanas(radio){
     let lat=this.geolocationPosition["coords"]["latitude"];
     let lon=this.geolocationPosition["coords"]["longitude"];
-    let especie=9;
+    let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
+
 
     this.coloniasService.recuperaColoniasCercanas(radio,lat,lon,especie).subscribe(
               data => {
@@ -74,6 +75,22 @@ export class ViewCloseColComponent implements OnInit {
    openLg(content) {
     this.modalService.open(content, { size: 'lg' });
   }
+
+  newFavorito(colId){
+    let data={
+      "usuario":"1",
+      "colonia":colId
+    };
+     this.coloniasService.nuevoFavorito(data).subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
 }
 
 

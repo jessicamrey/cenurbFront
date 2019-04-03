@@ -54,6 +54,17 @@ var RegisterVisitComponent = /** @class */ (function () {
             _this.alertService.warning(_this.translate.instant("RegisterVisit.notFound"));
         });
     };
+    RegisterVisitComponent.prototype.newFavorito = function (colId) {
+        var data = {
+            "usuario": "1",
+            "colonia": colId
+        };
+        this.coloniasService.nuevoFavorito(data).subscribe(function (message) {
+            console.log(message);
+        }, function (error) {
+            console.log(error);
+        });
+    };
     RegisterVisitComponent = __decorate([
         core_1.Component({
             selector: 'app-register-visit',

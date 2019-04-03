@@ -58,11 +58,11 @@ var Colonia = /** @class */ (function () {
     Colonia.prototype.setTipoEdificio = function (value) {
         this.tipoEdificioId = value;
     };
-    Colonia.prototype.getTemporada = function () {
-        return this.temporada;
+    Colonia.prototype.getAnno = function () {
+        return this.anno;
     };
-    Colonia.prototype.setTemporada = function (value) {
-        this.temporada = value;
+    Colonia.prototype.setAnno = function (value) {
+        this.anno = value;
     };
     Colonia.prototype.getLocNidos = function () {
         return this.locNidos;

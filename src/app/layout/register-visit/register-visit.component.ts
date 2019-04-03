@@ -61,4 +61,21 @@ export class RegisterVisitComponent implements OnInit {
 
   	}
 
+    
+  newFavorito(colId){
+    let data={
+      "usuario":"1",
+      "colonia":colId
+    };
+     this.coloniasService.nuevoFavorito(data).subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
+
 }
