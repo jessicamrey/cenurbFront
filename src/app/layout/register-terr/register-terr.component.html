@@ -1,5 +1,106 @@
-  <p style="margin-top:60px;"></p>
+  <p style="margin-top:80px;"></p>
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+<ngx-alerts></ngx-alerts>
+<form role="form" [formGroup]="registerForm" (ngSubmit)="registrarColonia()">
 
-<p>
-  register-terr works!
-</p>
+
+    <div class="row">
+        <div class="col-sm-6">
+                <div class="form-group"  >
+                    <label>{{ 'RegisterCol.name' | translate }} *</label>
+                    <input class="form-control" placeholder="Enter text" formControlName="nombre" >
+                </div>
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.centerName' | translate }} *</label>
+                    <input class="form-control" placeholder="Enter text" formControlName="nombreCentro" >
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.ccaa' | translate }} *</label>
+                    <select class="form-control" formControlName="ccaa"  (change)="recuperaProvincia()" id="selectCCAA" >
+                        <option *ngFor="let ccaa of listaCCAA" value="{{ccaa.DEN_COM}}" id="{{ccaa.ID_COM}}">{{ccaa.DEN_COM}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.prov' | translate }} *</label>
+                    <select class="form-control"  formControlName="provincia"  (change)="recuperaMunicipio()" id="selectProvincia" >
+                      <option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.mun' | translate }} *</label>
+                    <select class="form-control"  formControlName="municipio"  >
+                        <option *ngFor="let mun of listaMun" value="{{mun.DEN_POB}}" id="{{mun.ID_POB}}">{{mun.DEN_POB}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.street' | translate }} *</label>
+                    <input class="form-control" placeholder="Enter text" formControlName="barrio">
+                </div>
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.address' | translate }} *</label>
+                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso">
+                </div>
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.tipoProp' | translate }} *</label>
+                    <select class="form-control"  formControlName="tipoPropiedad" >
+                        <option *ngFor="let prop of listaTipoProp" value="{{prop.id}}" id="{{prop.id}}">{{prop.Description}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.tipoEd' | translate }} *</label>
+                    <select class="form-control"  formControlName="tipoEdificio"  >
+                        <option *ngFor="let ed of listaTipoEd" value="{{ed.id}}" id="{{ed.id}}">{{ed.descripcion}}</option>
+                    </select>
+                </div>
+
+                 <div class="form-group">
+                    <label>{{ 'RegisterCol.temp' | translate }} *</label>
+                    <select class="form-control"  formControlName="temporada" >
+                        
+                        <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
+                    </select>
+
+                </div>
+        <p style="color:red">{{ 'RegisterCol.step1Msg' | translate }}</p>
+
+
+        </div>
+
+
+                 
+        <div class="col-sm-6">
+        
+            <div class="form-group">
+                        
+                 <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.locNidos' | translate }}</p>
+                  <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Msg' | translate }}</p>      
+                       
+                <p style="text-align: left;font-size: large;" >
+                    <input type="checkbox" id="fachada">{{ 'RegisterCol.fachada' | translate }}</p>
+                <p style="text-align: left;font-size: large;" >
+                    <input type="checkbox" id="trasera">{{ 'RegisterCol.trasera' | translate }}</p>
+                <p style="text-align: left;font-size: large;" >
+                    <input type="checkbox" id="latDer">{{ 'RegisterCol.latDer' | translate }}</p>
+                <p style="text-align: left;font-size: large;" >
+                    <input type="checkbox" id="latIzq">{{ 'RegisterCol.latIzq' | translate }}</p>
+                <p style="text-align: left;font-size: large;" >
+                    <input type="checkbox" id="patio">{{ 'RegisterCol.patio' | translate }}</p>
+            </div>
+        </div>
+</div>
+
+<!--<agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
+  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+</agm-map>-->
+
+
+
+
+
+
+
+     </form>
