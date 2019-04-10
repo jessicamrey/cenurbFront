@@ -52,6 +52,11 @@ export class HeaderComponent implements OnInit {
 
             }
         );
+
+        if (JSON.parse(localStorage.getItem('especie'))){
+            this.selected=true;
+            this.name=JSON.parse(localStorage.getItem('especie'))["especie"];
+        }
     }
 
     isToggled(): boolean {

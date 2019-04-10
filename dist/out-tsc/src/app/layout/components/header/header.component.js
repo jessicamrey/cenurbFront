@@ -12,12 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var core_2 = require("@ngx-translate/core");
+var colonias_service_1 = require("../../../../services/colonias.service");
+var territorios_service_1 = require("../../../../services/territorios.service");
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent(translate, router) {
+    function HeaderComponent(translate, router, coloniasService, territoriosService) {
         var _this = this;
         this.translate = translate;
         this.router = router;
+        this.coloniasService = coloniasService;
+        this.territoriosService = territoriosService;
         this.pushRightClass = 'push-right';
+        this.selected = false;
+        this.name = "";
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         var browserLang = this.translate.getBrowserLang();
@@ -30,7 +36,17 @@ var HeaderComponent = /** @class */ (function () {
             }
         });
     }
-    HeaderComponent.prototype.ngOnInit = function () { };
+    HeaderComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.coloniasService.coloniaSelectedEvent.subscribe(function (data) {
+            _this.selected = true;
+            _this.name = data.especie;
+        });
+        this.territoriosService.territorioSelectedEvent.subscribe(function (data) {
+            _this.selected = true;
+            _this.name = data.especie;
+        });
+    };
     HeaderComponent.prototype.isToggled = function () {
         var dom = document.querySelector('body');
         return dom.classList.contains(this.pushRightClass);
@@ -55,7 +71,10 @@ var HeaderComponent = /** @class */ (function () {
             templateUrl: './header.component.html',
             styleUrls: ['./header.component.scss']
         }),
-        __metadata("design:paramtypes", [core_2.TranslateService, router_1.Router])
+        __metadata("design:paramtypes", [core_2.TranslateService,
+            router_1.Router,
+            colonias_service_1.ColoniasService,
+            territorios_service_1.TerritoriosService])
     ], HeaderComponent);
     return HeaderComponent;
 }());

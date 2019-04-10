@@ -20,6 +20,7 @@ var api_provider_1 = require("../providers/api/api-provider");
 var auth_service_1 = require("../services/auth.service");
 var seo_apis_service_1 = require("../services/seo-apis.service");
 var colonias_service_1 = require("../services/colonias.service");
+var territorios_service_1 = require("../services/territorios.service");
 // Import your library
 var ngx_alerts_1 = require("ngx-alerts");
 // AoT requires an exported function for factories
@@ -57,7 +58,8 @@ var AppModule = /** @class */ (function () {
                 api_provider_1.ApiProvider,
                 auth_service_1.AuthService,
                 seo_apis_service_1.SeoApisService,
-                colonias_service_1.ColoniasService],
+                colonias_service_1.ColoniasService,
+                territorios_service_1.TerritoriosService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

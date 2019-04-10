@@ -31,6 +31,12 @@ var ngx_alerts_1 = require("ngx-alerts");
 var ngx_loading_1 = require("ngx-loading");
 var statistics_component_1 = require("./statistics/statistics.component");
 var ng2_charts_1 = require("ng2-charts");
+var general_col_component_1 = require("./general-col/general-col.component");
+var general_terr_component_1 = require("./general-terr/general-terr.component");
+var register_terr_component_1 = require("./register-terr/register-terr.component");
+var view_terr_component_1 = require("./view-terr/view-terr.component");
+var view_close_terr_component_1 = require("./view-close-terr/view-close-terr.component");
+var statistics_terr_component_1 = require("./statistics-terr/statistics-terr.component");
 var LayoutModule = /** @class */ (function () {
     function LayoutModule() {
     }
@@ -65,6 +71,12 @@ var LayoutModule = /** @class */ (function () {
                 view_col_profile_component_1.ViewColProfileComponent,
                 view_visit_profile_component_1.ViewVisitProfileComponent,
                 statistics_component_1.StatisticsComponent,
+                general_col_component_1.GeneralColComponent,
+                general_terr_component_1.GeneralTerrComponent,
+                register_terr_component_1.RegisterTerrComponent,
+                view_terr_component_1.ViewTerrComponent,
+                view_close_terr_component_1.ViewCloseTerrComponent,
+                statistics_terr_component_1.StatisticsTerrComponent,
             ]
         })
     ], LayoutModule);

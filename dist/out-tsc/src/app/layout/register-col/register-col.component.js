@@ -157,7 +157,7 @@ var RegisterColComponent = /** @class */ (function () {
         //Esta info debe ser sacada de localstorage
         this.colonia.setUsuario("pruebaUsu");
         this.locNidos.setUsuario("pruebaUsu");
-        this.colonia.setEspecie(9);
+        this.colonia.setEspecie(parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]));
         //
         this.colonia.setNombre(this.registerForm.get("nombre").value);
         this.colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);

@@ -26,7 +26,7 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
 
 
    //Registra un nuevo territorio
-  nuevaTerritorio(territoio: Territorio) {
+  nuevoTerritorio(territoio: Territorio) {
     let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
 
     let response=this.http.post(this.url + '/api/territorios', JSON.stringify(territoio), config);
@@ -48,5 +48,89 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
   getTemporadas(){
     return this.http.get<any>(this.url + '/api/temporadas');
   }
+
+
+  //Obtenemos los emplazamientos
+
+  getEmplazamientos(){
+    return this.http.get<any>(this.url + '/api/emplazamientos');
+  }
+
+   //Obtenemos los emplazamientos
+
+  getObservaciones(){
+    return this.http.get<any>(this.url + '/api/observaciones-territorios');
+  }
+
+  //Obtenemos los tipos de territorio
+
+  getTipos(){
+    return this.http.get<any>(this.url + '/api/tipo-territorios');
+  }
+
+   //recupera todos los territorios con paginacion
+
+  recuperaTerritorios( page:number, especie:number) {
+    return this.http.get<any>(this.url + '/api/territorios?page=' + page + '&especie=' + especie);
+  }
+//Recuperamos territorios con un string de busqueda que incluye filtros
+  recuperaTerritoriosFiltered( page:number, busqueda:string) {
+    return this.http.get<any>(this.url + '/api/territorios?page=' + page + busqueda);
+  }
+
+  //Recupera los datos de un solo territorio
+
+  recuperaTerritorio( terrId:number) {
+
+    return this.http.get<Territorio>(this.url + '/api/territorios/'+terrId);
+  }
+
+
+  //Recupera los territorios marcados como favoritos por el usuario
+  recuperaFavoritos( userId:number) {
+    return this.http.get<any>(this.url + '/api/territorios/favoritos/' + userId);
+  }
+
+ //Marca un nuevo territorio como favorito
+  nuevoFavorito( data) {
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.url + '/api/territorios/favoritos', JSON.stringify(data), config);
+    return response;
+  
+  }
+
+
+  //Recupera las visitas para un territorio
+  recuperaVisitasGeneral( stringBusqueda:any) {
+    return this.http.get<any>(this.url + '/api/visitas-territorios'+stringBusqueda);
+  }
+
+
+//Registramos una nueva visita en un territorio
+  nuevaVisitaTerritorio(data:any, terrId: number){
+
+
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.url + '/api/territorios/' + terrId+ '/visitas', JSON.stringify(data), config);
+    return response;
+
+  }
+
+
+  //Editamos los datos de una visita ya creada
+  modificarVisita(visitaId:number, visita) {
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+    return this.api.put('api/visitas-coloniaterritorios/' + visitaId, JSON.stringify(visita), config);
+  }
+
+//Eliminamos una visita que hemos creado
+  eliminarVisita(visitaId:number) {
+    return this.api.delete('api/visitas-territorios/' + visitaId);
+  }
+
+
+
 
 }

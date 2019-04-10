@@ -180,7 +180,7 @@ export class ViewColComponent implements OnInit {
 
   newFavorito(colId){
     let data={
-      "usuario":"1",
+      "usuario":"0",
       "colonia":colId
     };
      this.coloniasService.nuevoFavorito(data).subscribe(

@@ -14,6 +14,7 @@ var dashboard_routing_module_1 = require("./dashboard-routing.module");
 var dashboard_component_1 = require("./dashboard.component");
 var components_1 = require("./components");
 var shared_1 = require("../../shared");
+var ngx_alerts_1 = require("ngx-alerts");
 var DashboardModule = /** @class */ (function () {
     function DashboardModule() {
     }
@@ -25,7 +26,8 @@ var DashboardModule = /** @class */ (function () {
                 ng_bootstrap_1.NgbAlertModule.forRoot(),
                 dashboard_routing_module_1.DashboardRoutingModule,
                 core_2.TranslateModule,
-                shared_1.StatModule
+                shared_1.StatModule,
+                ngx_alerts_1.AlertModule.forRoot({ maxMessages: 5, timeout: 5000, position: 'right' })
             ],
             declarations: [
                 dashboard_component_1.DashboardComponent,

@@ -9,6 +9,8 @@ import {ViewCloseColComponent} from './view-close-col/view-close-col.component';
 import {ViewColComponent} from './view-col/view-col.component';
 import {ViewVisitsComponent} from './view-visits/view-visits.component';
 import {ViewVisitProfileComponent} from './view-visit-profile/view-visit-profile.component';
+import {ViewVisitProfileTerrComponent} from './view-visit-profile-terr/view-visit-profile-terr.component';
+
 import {StatisticsComponent} from './statistics/statistics.component';
 import {GeneralColComponent} from './general-col/general-col.component';
 import {GeneralTerrComponent} from './general-terr/general-terr.component';
@@ -32,6 +34,7 @@ const routes: Routes = [
 
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: ':colId/visitProfile', component: ViewVisitProfileComponent },
+            { path: ':terrId/visitProfileTerr', component: ViewVisitProfileTerrComponent },
             { path: 'registerCol', component: RegisterColComponent },
             { path: 'generalCol', component: GeneralColComponent },
             { path: 'generalTerr', component: GeneralTerrComponent },

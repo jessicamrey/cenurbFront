@@ -13,11 +13,13 @@ var core_1 = require("@angular/core");
 var seo_apis_service_1 = require("../../../services/seo-apis.service");
 var core_2 = require("@ngx-translate/core");
 var ngx_alerts_1 = require("ngx-alerts");
+var territorios_service_1 = require("../../../services/territorios.service");
 var DashboardTerrComponent = /** @class */ (function () {
-    function DashboardTerrComponent(translate, seoService, alertService) {
+    function DashboardTerrComponent(translate, seoService, alertService, territoriosService) {
         this.translate = translate;
         this.seoService = seoService;
         this.alertService = alertService;
+        this.territoriosService = territoriosService;
         this.listaNoCol = [];
     }
     DashboardTerrComponent.prototype.ngOnInit = function () {
@@ -32,6 +34,13 @@ var DashboardTerrComponent = /** @class */ (function () {
             _this.alertService.warning(_this.translate.instant("Dashboard.errorGetNoCol"));
         });
     };
+    DashboardTerrComponent.prototype.seleccionar = function (nombre, id) {
+        var data = {
+            especie: nombre,
+            especie_id: id
+        };
+        this.territoriosService.selectTerritorio(data);
+    };
     DashboardTerrComponent = __decorate([
         core_1.Component({
             selector: 'app-dashboard-terr',
@@ -40,7 +49,8 @@ var DashboardTerrComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [core_2.TranslateService,
             seo_apis_service_1.SeoApisService,
-            ngx_alerts_1.AlertService])
+            ngx_alerts_1.AlertService,
+            territorios_service_1.TerritoriosService])
     ], DashboardTerrComponent);
     return DashboardTerrComponent;
 }());

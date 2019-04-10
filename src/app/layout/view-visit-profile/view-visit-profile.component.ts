@@ -130,9 +130,7 @@ export class ViewVisitProfileComponent implements OnInit {
     	this.recuperaVisitas(this.colId,page);
   	}
 
-  	borraVisita(id){
-
-  	}
+  	
 
   	editaVisitaModal(visita, content){
   		this.isEdit=true;

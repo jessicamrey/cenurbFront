@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ColoniasService } from '../../../services/colonias.service';
+import { TerritoriosService } from '../../../services/territorios.service';
+
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { Colonia } from '../../../models/colonia';
+import { Territorio } from '../../../models/territorio';
 import { Router } from '@angular/router';
 
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,15 +19,26 @@ declare var $:any;
 export class RegisterVisitComponent implements OnInit {
 
 	listaCol:any[]= [];
+  listaTerr:any=[];
 	col:Colonia= new Colonia();
-	found:boolean=false;
+  terr:Territorio= new Territorio();
+  found:boolean=false;
+  foundTerr:boolean=false;
+  selected:boolean=false;
+  name:any;
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
+                private territoriosService: TerritoriosService,
                 public alertService: AlertService,
                 private modalService: NgbModal) { }
 
   	ngOnInit() {
   		this.recuperaColoniasFavoritas(0);
+      this.recuperaTerritoriosFavoritas(0);
+      if (JSON.parse(localStorage.getItem('especie'))){
+            this.selected=true;
+            this.name=JSON.parse(localStorage.getItem('especie'))["especie"];
+        }
   	}
 
 
@@ -64,10 +78,54 @@ export class RegisterVisitComponent implements OnInit {
     
   newFavorito(colId){
     let data={
-      "usuario":"1",
+      "usuario":"0",
       "colonia":colId
     };
      this.coloniasService.nuevoFavorito(data).subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
+
+
+    buscarTerritorio(){
+      let id=$("#terrId").val();
+      this.territoriosService.recuperaTerritorio(id).subscribe(
+        data=>{
+          this.terr=data;
+          this.alertService.success(this.translate.instant("RegisterVisit.foundTerr"));
+          this.foundTerr=true;
+        },
+        error=>{
+          this.foundTerr=false;
+          this.alertService.warning(this.translate.instant("RegisterVisit.notFoundTerr"));
+        }
+      );
+
+    }
+
+    recuperaTerritoriosFavoritas(userId){
+      this.territoriosService.recuperaFavoritos(userId).subscribe(
+                        data =>{
+                          this.listaTerr=data;
+                            console.log(data);
+                        },
+                        error=>{
+                            console.log(error);
+                        });
+    }
+
+    newFavoritoTerr(terrId){
+    let data={
+      "usuario":"0",
+      "territorio":terrId
+    };
+     this.territoriosService.nuevoFavorito(data).subscribe(
               message => {
                 console.log(message);
               },

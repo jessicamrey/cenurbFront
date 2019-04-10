@@ -13,11 +13,13 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var api_provider_1 = require("../providers/api/api-provider");
 var environment_1 = require("../environments/environment");
+var core_2 = require("@angular/core");
 var ColoniasService = /** @class */ (function () {
     function ColoniasService(api, http) {
         this.api = api;
         this.http = http;
         this.url = environment_1.environment.backendUrl;
+        this.coloniaSelectedEvent = new core_2.EventEmitter();
     }
     //Registra una nueva colonia
     ColoniasService.prototype.nuevaColonia = function (colonia) {
@@ -30,8 +32,8 @@ var ColoniasService = /** @class */ (function () {
         return this.http.get(this.url + '/api/closeCol?rad=' + radio + '&lat=' + lat + '&lon=' + lon + '&especie=' + especie);
     };
     //recupera todas las colonias con paginacion
-    ColoniasService.prototype.recuperaColonias = function (page) {
-        return this.http.get(this.url + '/api/colonias?page=' + page);
+    ColoniasService.prototype.recuperaColonias = function (page, especie) {
+        return this.http.get(this.url + '/api/colonias?page=' + page + '&especie=' + especie);
     };
     //Recupera las colonias marcadas como favoritas por el usuario
     ColoniasService.prototype.recuperaFavoritos = function (userId) {
@@ -100,12 +102,18 @@ var ColoniasService = /** @class */ (function () {
         return this.http.get(this.url + '/api/especies/' + especie + '/statsCcaa?temporada=' + temp);
     };
     //Obtenemos las estadisticas por provincia
-    ColoniasService.prototype.getStatsProvincia = function (especie, temp) {
-        return this.http.get(this.url + '/api/especies/' + especie + '/statsProvincia?temporada=' + temp);
+    ColoniasService.prototype.getStatsProvincia = function (especie, temp, ccaa) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsProvincia?temporada=' + temp + '&ccaa=' + ccaa);
     };
     //Obtenemos las temporadas
     ColoniasService.prototype.getTemporadas = function () {
         return this.http.get(this.url + '/api/temporadas');
+    };
+    //Operación para dejar seleccionada una especie en memoria
+    ColoniasService.prototype.selectColonia = function (data) {
+        localStorage.setItem('especie', JSON.stringify(data));
+        this.coloniaSelectedEvent.emit(data);
+        return data;
     };
     ColoniasService = __decorate([
         core_1.Injectable(),

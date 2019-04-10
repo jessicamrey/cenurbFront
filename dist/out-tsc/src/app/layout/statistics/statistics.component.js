@@ -20,7 +20,7 @@ var StatisticsComponent = /** @class */ (function () {
         this.coloniasService = coloniasService;
         this.alertService = alertService;
         this.seoService = seoService;
-        this.mostrar = false;
+        this.loading = false;
         this.annoChartData = [];
         this.annoChartLabels = [];
         this.ccaaChartData = [];
@@ -29,162 +29,31 @@ var StatisticsComponent = /** @class */ (function () {
         this.provChartLabels = [];
         this.listaCCAA = [];
         this.listaProvinciasLabels = [];
-        this.listaProvinciasLabels = [];
+        this.listaProvinciasData = [];
+        this.especie = parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
         // bar chart
         this.barChartOptions = {
             scaleShowVerticalLines: false,
             responsive: true
         };
-        this.barChartLabels = [
-            '2006',
-            '2007',
-            '2008',
-            '2009',
-            '2010',
-            '2011',
-            '2012'
-        ];
-        this.barChartType = 'horizontalBar';
+        this.barChartTypeH = 'horizontalBar';
+        this.barChartType = 'bar';
         this.barChartLegend = true;
-        this.barChartData = [
-            { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-            { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-        ];
-        // Doughnut
-        this.doughnutChartLabels = [
-            'Download Sales',
-            'In-Store Sales',
-            'Mail-Order Sales'
-        ];
-        this.doughnutChartData = [350, 450, 100];
-        this.doughnutChartType = 'doughnut';
-        // Radar
-        this.radarChartLabels = [
-            'Eating',
-            'Drinking',
-            'Sleeping',
-            'Designing',
-            'Coding',
-            'Cycling',
-            'Running'
-        ];
-        this.radarChartData = [
-            { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A' },
-            { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B' }
-        ];
-        this.radarChartType = 'radar';
-        // Pie
-        this.pieChartLabels = [
-            'Download Sales',
-            'In-Store Sales',
-            'Mail Sales'
-        ];
-        this.pieChartData = [300, 500, 100];
-        this.pieChartType = 'pie';
-        // PolarArea
-        this.polarAreaChartLabels = [
-            'Download Sales',
-            'In-Store Sales',
-            'Mail Sales',
-            'Telesales',
-            'Corporate Sales'
-        ];
-        this.polarAreaChartData = [300, 500, 100, 40, 120];
-        this.polarAreaLegend = true;
-        this.polarAreaChartType = 'polarArea';
-        // lineChart
-        this.lineChartData = [
-            { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-            { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-            { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
-        ];
-        this.lineChartLabels = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July'
-        ];
-        this.lineChartOptions = {
-            responsive: true
-        };
-        this.lineChartColors = [
-            {
-                // grey
-                backgroundColor: 'rgba(148,159,177,0.2)',
-                borderColor: 'rgba(148,159,177,1)',
-                pointBackgroundColor: 'rgba(148,159,177,1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-            },
-            {
-                // dark grey
-                backgroundColor: 'rgba(77,83,96,0.2)',
-                borderColor: 'rgba(77,83,96,1)',
-                pointBackgroundColor: 'rgba(77,83,96,1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(77,83,96,1)'
-            },
-            {
-                // grey
-                backgroundColor: 'rgba(148,159,177,0.2)',
-                borderColor: 'rgba(148,159,177,1)',
-                pointBackgroundColor: 'rgba(148,159,177,1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-            }
-        ];
-        this.lineChartLegend = true;
-        this.lineChartType = 'line';
     }
-    // events
-    StatisticsComponent.prototype.chartClicked = function (e) {
-        // console.log(e);
-    };
-    StatisticsComponent.prototype.chartHovered = function (e) {
-        // console.log(e);
-    };
-    StatisticsComponent.prototype.randomize = function () {
-        // Only Change 3 values
-        var data = [
-            Math.round(Math.random() * 100),
-            59,
-            80,
-            Math.random() * 100,
-            56,
-            Math.random() * 100,
-            40
-        ];
-        var clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-        /**
-         * (My guess), for Angular to recognize the change in the dataset
-         * it has to change the dataset variable directly,
-         * so one way around it, is to clone the data, change it and then
-         * assign it;
-         */
-    };
     StatisticsComponent.prototype.ngOnInit = function () {
-        //this.statsAnno();
+        this.statsAnno();
         this.statsCcca();
-        this.statsProvincia();
     };
     StatisticsComponent.prototype.statsAnno = function () {
         var _this = this;
         var dataList = [];
         //TODO: recuperar especie de localstorage, recuperar temporada de nueva entidad
-        this.coloniasService.getStatsAnno(9, 2019).subscribe(function (data) {
+        this.coloniasService.getStatsAnno(this.especie, 2019).subscribe(function (data) {
             console.log(data);
             for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
                 var item = data_1[_i];
                 dataList.push(item["1"]);
-                _this.annoChartLabels.push(item["temporada"]);
+                _this.annoChartLabels.push(item["anno"]);
             }
             _this.annoChartData.push({ data: dataList, label: "Avion comun" });
         }, function (error) {
@@ -197,17 +66,32 @@ var StatisticsComponent = /** @class */ (function () {
     };
     StatisticsComponent.prototype.statsProvincia = function () {
         var _this = this;
-        var dataList = [];
-        this.coloniasService.getStatsProvincia(9, 2019).subscribe(function (data) {
-            for (var _i = 0, data_2 = data; _i < data_2.length; _i++) {
-                var item = data_2[_i];
-                dataList.push(item["1"]);
-                _this.provChartLabels.push(item["provincia"]);
-            }
-            _this.provChartData.push({ data: dataList, label: "Avion comun" });
-        }, function (error) {
-            console.log(error);
-        });
+        this.loading = true;
+        var finish = this.listaCCAA.length;
+        var init = 0;
+        var _loop_1 = function (ccaa) {
+            this_1.coloniasService.getStatsProvincia(this_1.especie, 2019, ccaa["DEN_COM"]).subscribe(function (data) {
+                var dataList = [];
+                for (var _i = 0, data_2 = data; _i < data_2.length; _i++) {
+                    var item = data_2[_i];
+                    dataList[_this.listaProvinciasLabels[item["ccaa"]].indexOf(item["provincia"])] = item["1"];
+                }
+                _this.listaProvinciasData[ccaa["DEN_COM"]] =
+                    [{ data: dataList, label: "Avion comun" }];
+                init++;
+                if (init == finish) {
+                    _this.loading = false;
+                }
+            }, function (error) {
+                _this.loading = false;
+                console.log(error);
+            });
+        };
+        var this_1 = this;
+        for (var _i = 0, _a = this.listaCCAA; _i < _a.length; _i++) {
+            var ccaa = _a[_i];
+            _loop_1(ccaa);
+        }
     };
     StatisticsComponent.prototype.recuperaCCAA = function () {
         var _this = this;
@@ -218,11 +102,10 @@ var StatisticsComponent = /** @class */ (function () {
             for (var _i = 0, data_3 = data; _i < data_3.length; _i++) {
                 var ccaa = data_3[_i];
                 _this.ccaaChartLabels.push(ccaa["DEN_COM"]);
-                _this.recuperaProvincia(ccaa["ID_COM"]);
+                _this.recuperaProvincia(ccaa["ID_COM"], ccaa["DEN_COM"]);
             }
-            console.log(_this.listaCCAA);
-            console.log(_this.listaProvincias);
-            _this.coloniasService.getStatsCcaa(9, 2019).subscribe(function (data) {
+            _this.statsProvincia();
+            _this.coloniasService.getStatsCcaa(_this.especie, 2019).subscribe(function (data) {
                 for (var _i = 0, data_4 = data; _i < data_4.length; _i++) {
                     var item = data_4[_i];
                     dataList[_this.ccaaChartLabels.indexOf(item["ccaa"])] = item["1"];
@@ -235,7 +118,7 @@ var StatisticsComponent = /** @class */ (function () {
             _this.alertService.warning(_this.translate.instant("Dashboard.errorGetCCAA"));
         });
     };
-    StatisticsComponent.prototype.recuperaProvincia = function (idCom) {
+    StatisticsComponent.prototype.recuperaProvincia = function (idCom, den) {
         var _this = this;
         this.seoService.getProvincia(idCom).subscribe(function (data) {
             var lista = [];
@@ -243,8 +126,7 @@ var StatisticsComponent = /** @class */ (function () {
                 var item = data_5[_i];
                 lista.push(item["DEN_PROV"]);
             }
-            console.log(lista);
-            _this.listaProvinciasLabels[idCom] = lista;
+            _this.listaProvinciasLabels[den] = lista;
         }, function (error) {
             _this.alertService.warning(_this.translate.instant("Dashboard.errorGetProv"));
         });

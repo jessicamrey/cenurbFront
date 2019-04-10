@@ -11,12 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var seo_apis_service_1 = require("../../../services/seo-apis.service");
+var colonias_service_1 = require("../../../services/colonias.service");
 var core_2 = require("@ngx-translate/core");
 var ngx_alerts_1 = require("ngx-alerts");
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(translate, seoService, alertService) {
+    function DashboardComponent(translate, seoService, coloniasService, alertService) {
         this.translate = translate;
         this.seoService = seoService;
+        this.coloniasService = coloniasService;
         this.alertService = alertService;
         this.listaCol = [];
     }
@@ -29,8 +31,15 @@ var DashboardComponent = /** @class */ (function () {
             _this.listaCol = data;
             console.log(_this.listaCol);
         }, function (error) {
-            _this.alertService.warning(_this.translate.instant("Dashboard.errorGetCol"));
+            _this.alertService.danger(_this.translate.instant("Dashboard.errorGetCol"));
         });
+    };
+    DashboardComponent.prototype.seleccionar = function (nombre, id) {
+        var data = {
+            especie: nombre,
+            especie_id: id
+        };
+        this.coloniasService.selectColonia(data);
     };
     DashboardComponent = __decorate([
         core_1.Component({
@@ -40,6 +49,7 @@ var DashboardComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [core_2.TranslateService,
             seo_apis_service_1.SeoApisService,
+            colonias_service_1.ColoniasService,
             ngx_alerts_1.AlertService])
     ], DashboardComponent);
     return DashboardComponent;

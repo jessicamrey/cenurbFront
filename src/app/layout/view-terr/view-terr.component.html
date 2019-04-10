@@ -1,5 +1,168 @@
-  <p style="margin-top:60px;"></p>
+ <p style="margin-top:40px;"></p>
 
-<p>
-  view-terr works!
-</p>
+
+<div class="card">
+
+    <div class="card-header" style="background-color: #A9A9A9">
+        {{ 'ViewCol.filter' | translate }}
+    </div>
+    <div class="card-body" style="background-color: #A9A9A9">
+        <div class="row">
+            <div class="col-sm-2">
+                <label>{{ 'ViewCol.ccaa' | translate }}</label>
+                <select class="form-control"  (change)="recuperaProvincia()" id="selectCCAA" >
+                        <option *ngFor="let ccaa of listaCCAA" value="{{ccaa.DEN_COM}}" id="{{ccaa.ID_COM}}">{{ccaa.DEN_COM}}</option>
+                    </select>
+            </div>
+            <div class="col-sm-2">
+                <label>{{ 'ViewCol.prov' | translate }}</label>
+                <select class="form-control"   (change)="recuperaMunicipio()" id="selectProvincia" >
+                        <option value="-" selected="-"> - </option>
+                        <option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
+                    </select>
+            </div>
+            <div class="col-sm-2">
+                <label>{{ 'ViewCol.mun' | translate }}</label>
+                <select class="form-control" id="selectMunicipio" >
+                        <option value="-" selected="-"> - </option>
+                        <option *ngFor="let mun of listaMun" value="{{mun.DEN_POB}}" id="{{mun.ID_POB}}">{{mun.DEN_POB}}</option>
+                    </select>
+            </div>
+            <div class="col-sm-2">
+                <label>{{ 'ViewCol.name' | translate }}</label>
+                <input class="form-control" id="nombre"/>
+            </div>
+            <div class="col-sm-2">
+                <label>{{ 'ViewCol.nameCenter' | translate }}</label>
+                <input class="form-control" id="nombreCentro"/>
+            </div>
+            <div class="col-sm-1">
+                <label>{{ 'ViewCol.temp' | translate }}</label>
+                <input class="form-control" id="temporada"/>
+            </div>
+            <div class="col-sm-1">
+                <label>{{ 'ViewCol.cod' | translate }}</label>
+                <input class="form-control" id="cod"/>
+            </div>
+            <div class="col-sm-12" style="text-align: center">
+                <input type="checkbox" id="vacio" style="margin-top:15px;">{{ 'ViewCol.empty' | translate }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="text-align: center">
+                <button class="btn btn-primary" (click)="getDatosBusqueda()">{{ 'ViewCol.search' | translate }}</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+ <div class="row" *ngFor="let item of listaTerritorios" style="margin-top:15px;margin-bottom:15px;">
+
+<!-- este modal ya venia en la version original de la template-->
+ <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{item.nombre}}</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- De momento no vamos a mostrar el mapa
+                                    <agm-map [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
+                                      <agm-marker [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
+                                        <agm-info-window>{{item.nombre}}</agm-info-window>
+                                      </agm-marker>
+
+                                    </agm-map>-->
+                                </div>
+                                <div class="col-md-6">
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.name' | translate }}</p>
+                                    <p style="text-align: center">{{item.nombre}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.cod' | translate }}</p>
+                                    <p style="text-align: center">{{item.id}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.nameCenter' | translate }}</p>
+                                    <p style="text-align: center">{{item.nombreCentro}}</p>                                
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.temp' | translate }}</p>
+                                    <p style="text-align: center">{{item.temporada}}</p>  
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.loc' | translate }}</p>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <p style="font-size: 10px">{{ 'ViewCol.ccaa' | translate }}</p>                                             
+                                        <p style="font-size: 10px">{{ 'ViewCol.prov' | translate }}</p> 
+                                        <p style="font-size: 10px">{{ 'ViewCol.mun' | translate }}</p>
+                                    </div>
+                                    <div class="col-md">
+                                        <p style="text-align: right;font-size: 10px">{{item.ccaa}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{item.provincia}}</p> 
+                                        <p style="text-align: right;font-size: 10px">{{item.municipio}}</p> 
+                                    </div>
+
+                                </div>
+                                 <p style="text-align: center;font-size: 15px">{{ 'ViewCol.address' | translate }}</p>
+                                        <p style="text-align: center;font-size: 10px">{{item.calleNumPiso}}, {{item.barrio}}</p>
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoEd' | translate }}</p>
+                                    <p style="text-align: center">{{item.tipoEdificio.descripcion}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.tipoProp' | translate }}</p>
+                                    <p style="text-align: center">{{item.tipoPropiedad.Description}}</p> 
+                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.empty' | translate }}</p>
+                                    <p style="text-align: center">{{item.vacio}}</p> 
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="transparentButton" (click)="newFavorito(item.id)"><i class="fas fa-heart"></i></button>
+                            <a [routerLink]="['/', item.id, 'visitProfile'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+    <div class="col-sm-12">
+
+
+        <div class="card">
+         <button class="transparentButton" (click)="openLg(content)"> 
+
+            <div class="card-header">{{item.nombre}}
+            </div>
+
+            <!-- Large modal -->
+            <div class="card-body">
+                {{item.nombre}}
+            </div>
+        </button>
+    </div>
+
+
+</div>
+
+</div> 
+
+                    
+<div *ngIf="filtered==false && totalPages>0">
+                    <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="pageChanged($event)">
+                    </ngb-pagination>
+</div>
+<div *ngIf="filtered==true && totalPages>0">
+                    <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="pageChangedFiltered($event)">
+                    </ngb-pagination>
+</div>
+<div *ngIf="totalPages<=0" style="text-align: center">
+    {{ 'ViewCol.noData' | translate }}
+</div>
+
+
+
+
+

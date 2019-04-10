@@ -12,15 +12,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var core_2 = require("@ngx-translate/core");
+var colonias_service_1 = require("../../../../services/colonias.service");
+var territorios_service_1 = require("../../../../services/territorios.service");
 var SidebarComponent = /** @class */ (function () {
-    function SidebarComponent(translate, router) {
+    function SidebarComponent(translate, router, coloniasService, territoriosService) {
         var _this = this;
         this.translate = translate;
         this.router = router;
+        this.coloniasService = coloniasService;
+        this.territoriosService = territoriosService;
         this.isActive = false;
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
+        this.showCol = false;
+        this.showTerr = false;
         this.collapsedEvent = new core_1.EventEmitter();
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
         this.translate.setDefaultLang('en');
@@ -34,6 +40,17 @@ var SidebarComponent = /** @class */ (function () {
             }
         });
     }
+    SidebarComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.coloniasService.coloniaSelectedEvent.subscribe(function (data) {
+            _this.showCol = true;
+            _this.showTerr = false;
+        });
+        this.territoriosService.territorioSelectedEvent.subscribe(function (data) {
+            _this.showCol = false;
+            _this.showTerr = true;
+        });
+    };
     SidebarComponent.prototype.eventCalled = function () {
         this.isActive = !this.isActive;
     };
@@ -77,7 +94,10 @@ var SidebarComponent = /** @class */ (function () {
             templateUrl: './sidebar.component.html',
             styleUrls: ['./sidebar.component.scss']
         }),
-        __metadata("design:paramtypes", [core_2.TranslateService, router_1.Router])
+        __metadata("design:paramtypes", [core_2.TranslateService,
+            router_1.Router,
+            colonias_service_1.ColoniasService,
+            territorios_service_1.TerritoriosService])
     ], SidebarComponent);
     return SidebarComponent;
 }());

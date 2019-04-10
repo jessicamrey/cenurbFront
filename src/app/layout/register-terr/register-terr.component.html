@@ -1,7 +1,7 @@
   <p style="margin-top:80px;"></p>
 <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 <ngx-alerts></ngx-alerts>
-<form role="form" [formGroup]="registerForm" (ngSubmit)="registrarColonia()">
+<form role="form" [formGroup]="registerForm" (ngSubmit)="registraTerritorio()">
 
 
     <div class="row">
@@ -65,6 +65,20 @@
                     </select>
 
                 </div>
+                 <div class="form-group">
+                    <label>{{ 'RegisterTerr.type' | translate }} </label>
+                    <select class="form-control"  formControlName="tipo" >
+                        <option *ngFor="let tipo of listaTipos" value="{{tipo.id}}" id="{{tipo.id}}">{{tipo.descripcion}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>{{ 'RegisterTerr.threat' | translate }} *</label>
+                    <select class="form-control"  formControlName="amenazada" >
+                        <option value="false" id="0">{{ 'RegisterTerr.no' | translate }}</option>
+                        <option value="true" id="1">{{ 'RegisterTerr.yes' | translate }}</option>
+
+                    </select>
+                </div>
         <p style="color:red">{{ 'RegisterCol.step1Msg' | translate }}</p>
 
 
@@ -90,13 +104,25 @@
                 <p style="text-align: left;font-size: large;" >
                     <input type="checkbox" id="patio">{{ 'RegisterCol.patio' | translate }}</p>
             </div>
+            <div class="form-group">
+                    <label>{{ 'RegisterTerr.num' | translate }} </label>
+                    <input class="form-control" placeholder="Enter text" formControlName="numPiso">
+            </div>
+
+            <div class="form-group">
+                    <label>{{ 'RegisterTerr.empl' | translate }} *</label>
+                    <select class="form-control"  formControlName="emplazamiento" >
+                        <option *ngFor="let empl of listaEmpl" value="{{empl.id}}" id="{{empl.id}}">{{empl.tipo}}</option>
+                    </select>
+                </div>
+            <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
+              <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+            </agm-map>
         </div>
 </div>
 
-<!--<agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
-  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
-</agm-map>-->
 
+     <button type="submit" [disabled]="registerForm.invalid && markers.length<=0" class="btn btn-primary" >{{ 'RegisterTerr.register' | translate }}</button>
 
 
 

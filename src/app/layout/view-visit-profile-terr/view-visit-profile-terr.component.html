@@ -1,0 +1,188 @@
+  <p style="margin-top:80px;"></p>
+
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+<ngx-alerts></ngx-alerts>
+
+
+                         <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{ 'ViewVisitProfile.register' | translate }} </h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+                                <p>{{ 'ViewVisitProfileTerr.infoMsg1' | translate }}</p>
+                                <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
+								  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+								</agm-map>
+
+                                <form  role="form" [formGroup]="registerForm" (ngSubmit)="registrarVisita()">
+                                	 <div class="form-group">
+				                    <label>{{ 'ViewVisitProfileTerr.th7' | translate }} *</label>
+				                    <select class="form-control"  formControlName="observacion"   id="observacion" >
+				                      <option *ngFor="let ob of listaObservaciones" value="{{ob.id}}" id="{{ob.id}}">{{ob.tipo}}</option>
+				                    </select>
+				                </div>
+                                </form>
+								<p>* {{ 'ViewVisitProfileTerr.infoMsg2' | translate }}</p>
+                               
+				                                   
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="registraVisita()" (click)="c('Close click')"> {{ 'ViewVisitProfile.register2' | translate }}</button>
+
+
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+           
+            <div class="card">
+                <div class="card-header">{{ 'ViewVisitProfileTerr.title' | translate }} {{colId}}</div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ 'ViewVisitProfileTerr.th1' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th2' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th3' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th4' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th5' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th6' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th7' | translate }}</th>
+                            
+
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of listaVisitas">
+
+
+
+
+                         <ng-template #content let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <h4 class="modal-title">{{ 'ViewVisitProfile.register' | translate }} *</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+
+                                    
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <p> (*) {{ 'ViewVisitProfile.infoMsg1' | translate }}</p>
+
+
+                            <button  type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="editaVisita(item)" (click)="c('Close click')"> {{ 'ViewVisitProfile.edit' | translate }}</button>
+
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+                        <ng-template #contentEliminar let-c="close" let-d="dismiss" >
+                        <div class="modal-header" >
+                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+                                    {{ 'ViewVisitProfile.infoMsg3' | translate }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')" (click)="eliminaVisita(item)"> {{ 'ViewVisitProfile.yes' | translate }}</button>
+
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ViewVisitProfile.no' | translate }}</button>
+                        </div>
+                        </ng-template>
+
+
+
+
+
+                            <td>{{item.usuario}}</td>
+                            <td>{{item.fecha}}</td>
+                            <td>{{item.hora}}</td>
+                            <td>{{item.huso}}</td>
+                            <td>{{item.coord_X}}</td>
+                            <td>{{item.coord_Y}}</td>
+                            <td>{{item.observacion}}</td>
+
+                            
+                            
+                            <td *ngIf="usuario==item.usuario">
+                                <button class="transparentButton" (click)="editaVisitaModal(item, content)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="transparentButton" (click)="eliminaVisitaModal(contentEliminar)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+
+                            </td>
+                            <td *ngIf="usuario!=item.usuario"> {{ 'ViewVisitProfile.noAction' | translate }}</td>
+
+
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+           </div>
+          
+        </div>
+        <div class="col-sm-12">
+            <div *ngIf="totalPages>0">
+                                <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                                (pageChange)="pageChanged($event)">
+                                </ngb-pagination>
+            </div>
+            <div *ngIf="totalPages<=0 && listaVisitas.length<=0" style="text-align: center">
+                {{ 'ViewVisitProfile.noData' | translate }}
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button class="btn btn-primary" (click)="openLg(content)">{{ 'ViewVisitProfile.register' | translate }}</button>
+        </div>
+
+    </div>
+

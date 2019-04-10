@@ -60,6 +60,7 @@ export class RegisterColComponent implements OnInit {
             tipoPropiedad: ['', Validators.required],
             tipoEdificio: ['', Validators.required],
             temporada: ['', Validators.required]
+            
         });
   }
 
@@ -307,6 +308,7 @@ this.markers=[{ latitude: lat, longitude: lng }];
               },
               error => {
                  this.alertService.danger(this.translate.instant("RegisterCol.errorMsg1"));
+                 this.loading=false;
                   
             }
         );

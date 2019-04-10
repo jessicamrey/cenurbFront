@@ -57,6 +57,8 @@ export class SidebarComponent implements OnInit{
 
             }
         );
+
+        
     }
 
     eventCalled() {

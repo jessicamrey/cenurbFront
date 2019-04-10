@@ -36,6 +36,7 @@ import { RegisterTerrComponent } from './register-terr/register-terr.component';
 import { ViewTerrComponent } from './view-terr/view-terr.component';
 import { ViewCloseTerrComponent } from './view-close-terr/view-close-terr.component';
 import { StatisticsTerrComponent } from './statistics-terr/statistics-terr.component';
+import { ViewVisitProfileTerrComponent } from './view-visit-profile-terr/view-visit-profile-terr.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { StatisticsTerrComponent } from './statistics-terr/statistics-terr.compo
      ViewTerrComponent,
      ViewCloseTerrComponent,
      StatisticsTerrComponent,
+     ViewVisitProfileTerrComponent,
      ]
 })
 export class LayoutModule {}

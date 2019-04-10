@@ -54,7 +54,7 @@ var ViewCloseColComponent = /** @class */ (function () {
         var _this = this;
         var lat = this.geolocationPosition["coords"]["latitude"];
         var lon = this.geolocationPosition["coords"]["longitude"];
-        var especie = 9;
+        var especie = parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
         this.coloniasService.recuperaColoniasCercanas(radio, lat, lon, especie).subscribe(function (data) {
             _this.listaColonias = data;
             console.log(data);

@@ -40,7 +40,8 @@ var ViewColComponent = /** @class */ (function () {
     };
     ViewColComponent.prototype.recuperaColonias = function (pageNumber) {
         var _this = this;
-        this.coloniasService.recuperaColonias(pageNumber).subscribe(function (data) {
+        var especie = parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
+        this.coloniasService.recuperaColonias(pageNumber, especie).subscribe(function (data) {
             _this.listaColonias = data["hydra:member"];
             var last = data["hydra:view"]["hydra:last"];
             last = last.substr(last.indexOf('page') + 5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
