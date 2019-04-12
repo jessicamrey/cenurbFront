@@ -96,7 +96,7 @@
 
                          <ng-template #content let-c="close" let-d="dismiss" >
                         <div class="modal-header" >
-                            <h4 class="modal-title">{{ 'ViewVisitProfile.register' | translate }} *</h4>
+                            <h4 class="modal-title">{{ 'ViewVisitProfile.modify' | translate }} *</h4>
                             <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -216,6 +216,7 @@
            </div>
           
         </div>
+
         <div class="col-sm-12">
             <div *ngIf="totalPages>0">
                                 <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"

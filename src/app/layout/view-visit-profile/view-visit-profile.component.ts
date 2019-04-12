@@ -200,6 +200,7 @@ export class ViewVisitProfileComponent implements OnInit {
                         },
                         error=>{                            console.log(error);
                             this.alertService.danger(this.translate.instant("ViewVisitProfile.error3"));
+                            this.loading=false;
                         });
   	}
 

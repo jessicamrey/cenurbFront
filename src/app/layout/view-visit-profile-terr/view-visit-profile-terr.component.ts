@@ -10,7 +10,7 @@ import { VisitaTerritorio } from '../../../models/visita-territorio';
 
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+declare var $:any;
 @Component({
   selector: 'app-view-visit-profile-terr',
   templateUrl: './view-visit-profile-terr.component.html',
@@ -28,7 +28,7 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 	isEdit=false;
 	longitude :any;
   	latitude :any;
-
+  	selectedOb:boolean=false;
   	markers = [
   	];
 
@@ -70,7 +70,7 @@ getLocalizacion(){
                 console.log(this.latitude);
                 console.log(this.longitude);
                 this.markers=[{ latitude: position["coords"]["latitude"],
-                				longitude: position["coords"]["longitude"]];
+                				longitude: position["coords"]["longitude"]}];
 
             },
             error => {
@@ -110,7 +110,14 @@ this.markers=[{ latitude: lat, longitude: lng }];
                         		let y=date.getFullYear();
                         		let m=date.getMonth()+1;
                         		let d=date.getUTCDate();
+
+                        		let h=date.getHours();
+                        		let min=date.getMinutes();
+                        		let s=date.getSeconds();
+
                         		visita["fecha"]=d +'/' + m + '/' + y;
+                        		visita["hora"]=h +':' + min + ':' + s;
+
                         		this.listaVisitas.push(visita);
                         	}
                         	let last=data["hydra:view"]["hydra:last"];
@@ -139,5 +146,125 @@ this.markers=[{ latitude: lat, longitude: lng }];
               }
         );
   }
+
+  registraVisita(){
+  		this.loading=true;
+  		let visita=new VisitaTerritorio();
+  		visita.setObservacionId(this.registerForm.get("observacion").value);
+  		visita.setLat(this.markers[0]["latitude"]);
+  		visita.setLon(this.markers[0]["longitude"]);
+  		visita.setFecha(new Date());
+  		visita.setHora(new Date());
+
+  		//TODO: El usuario tiene que sacarse de localstorage
+  		visita.setUsuario("0");
+
+
+  		//TODO: Falta implementar subida de fotos
+
+  		console.log(visita);
+  		this.territoriosService.nuevaVisitaTerritorio(visita,this.terrId).subscribe(
+                        data =>{
+                        	console.log(data);
+                        	this.loading=false;
+                        	let date=new Date((data["fecha"]));
+                        	let y=date.getFullYear();
+                        	let m=date.getMonth()+1;
+                        	let d=date.getUTCDate();
+
+                        	let h=date.getHours();
+                        	let min=date.getMinutes();
+                        	let s=date.getSeconds();
+                        	
+                        	data["fecha"]=(d +'/' + m + '/' + y);
+                        	data["hora"]=h +':' + min + ':' + s;
+
+                        	this.listaVisitas.push(data);
+
+                        	console.log(this.listaVisitas);
+                        	this.alertService.success(this.translate.instant("ViewVisitProfile.success1"));
+                        },
+                        error=>{
+                        	this.loading=false;
+                            console.log(error);
+                            this.alertService.danger(this.translate.instant("ViewVisitProfile.error1"));
+                        });
+
+
+  	}
+
+
+  	eliminaVisitaModal(contentEliminar){
+  		this.modalService.open(contentEliminar, {});
+  	}
+
+  	eliminaVisita(visita){
+
+  		this.loading=true;
+
+  		this.territoriosService.eliminarVisita(visita.id).subscribe(
+                        data =>{
+                        	this.loading=false;
+                        	this.listaVisitas.splice(
+                        		this.listaVisitas.indexOf(visita),1);
+
+                        	this.alertService.success(this.translate.instant("ViewVisitProfile.success3"));
+                        },
+                        error=>{                            console.log(error);
+                            this.alertService.danger(this.translate.instant("ViewVisitProfile.error3"));
+                            this.loading=false;
+                        });
+  	}
+
+
+  	editaVisitaModal(observacion,lat, lon, content){
+  		this.isEdit=true;
+
+  		//Para rellenar el formulario
+  		this.markers=[{ latitude: lat,longitude: lon}];
+
+  		this.registerForm.get('observacion').setValue(observacion);
+
+  		this.modalService.open(content, {});
+
+  	}
+
+  	editaVisita(visita){
+
+  		//Volvemos a recuperar los datos que han podido ser modificados por el usuario
+  		this.loading=true;
+  		let newVisita=new VisitaTerritorio();
+  		newVisita.setObservacionId(this.registerForm.get("observacion").value);
+  		newVisita.setLat(this.markers[0]["latitude"]);
+  		newVisita.setLon(this.markers[0]["longitude"]);
+
+  		
+  		this.territoriosService.modificarVisita(visita.id, newVisita).subscribe(
+                        data =>{
+                        	this.loading=false;
+                        	this.isEdit=false;
+                        	let date=new Date((data["fecha"]));
+                        	let y=date.getFullYear();
+                        	let m=date.getMonth()+1;
+                        	let d=date.getUTCDate();
+
+                        	let h=date.getHours();
+                        	let min=date.getMinutes();
+                        	let s=date.getSeconds();
+
+                        	data["fecha"]=(d +'/' + m + '/' + y);
+                        	data["hora"]=h +':' + min + ':' + s;
+
+                        	this.listaVisitas[this.listaVisitas.indexOf(visita)]=data;
+
+                        	this.alertService.success(this.translate.instant("ViewVisitProfile.success2"));
+                        },
+                        error=>{
+                        	this.loading=false;
+                        	this.isEdit=false;
+                            console.log(error);
+                            this.alertService.danger(this.translate.instant("ViewVisitProfile.error2"));
+                        });
+  	}
 
 }

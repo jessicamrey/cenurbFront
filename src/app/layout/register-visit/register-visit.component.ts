@@ -26,6 +26,8 @@ export class RegisterVisitComponent implements OnInit {
   foundTerr:boolean=false;
   selected:boolean=false;
   name:any;
+  loadingCol:boolean=false;
+  loadingTerr:boolean=false;
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
                 private territoriosService: TerritoriosService,
@@ -43,13 +45,16 @@ export class RegisterVisitComponent implements OnInit {
 
 
   	recuperaColoniasFavoritas(userId){
+      this.loadingCol=true;
   		this.coloniasService.recuperaFavoritos(userId).subscribe(
                         data =>{
                         	this.listaCol=data;
                             console.log(data);
+                            this.loadingCol=false;
                         },
                         error=>{
                             console.log(error);
+                            this.loadingCol=false;
                         });
   	}
 
@@ -110,13 +115,18 @@ export class RegisterVisitComponent implements OnInit {
     }
 
     recuperaTerritoriosFavoritas(userId){
+      this.loadingTerr=true;
       this.territoriosService.recuperaFavoritos(userId).subscribe(
                         data =>{
                           this.listaTerr=data;
                             console.log(data);
+                            this.loadingTerr=false;
+
                         },
                         error=>{
                             console.log(error);
+                            this.loadingTerr=false;
+
                         });
     }
 

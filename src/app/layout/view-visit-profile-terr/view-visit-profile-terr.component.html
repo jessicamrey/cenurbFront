@@ -58,13 +58,14 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>{{ 'ViewVisitProfileTerr.th1' | translate }}</th>
+                            
                             <th>{{ 'ViewVisitProfileTerr.th2' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th3' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th4' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th5' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th6' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th7' | translate }}</th>
+                            <th>{{ 'ViewVisitProfileTerr.th8' | translate }}</th>
                             
 
 
@@ -79,7 +80,7 @@
 
                          <ng-template #content let-c="close" let-d="dismiss" >
                         <div class="modal-header" >
-                            <h4 class="modal-title">{{ 'ViewVisitProfile.register' | translate }} *</h4>
+                            <h4 class="modal-title">{{ 'ViewVisitProfile.modify' | translate }} *</h4>
                             <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -90,8 +91,22 @@
                             <div class="row">
                                
                                 <div class="col-md-12">
+                                <p>{{ 'ViewVisitProfileTerr.infoMsg1' | translate }}</p>
+                                <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
+								  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+								</agm-map>
 
-                                    
+                                <form  role="form" [formGroup]="registerForm" (ngSubmit)="registrarVisita()">
+                                	 <div class="form-group">
+				                    <label>{{ 'ViewVisitProfileTerr.th7' | translate }} *</label>
+				                    <select class="form-control"  formControlName="observacion"   id="observacion" (change)="selectedOb=true">
+				                      <option *ngFor="let ob of listaObservaciones" value="{{ob.id}}" id="{{ob.id}}">{{ob.tipo}}</option>
+				                    </select>
+				                </div>
+                                </form>
+								<p>* {{ 'ViewVisitProfileTerr.infoMsg2' | translate }}</p>
+                               
+				                                   
                                 </div>
                             </div>
 
@@ -101,7 +116,7 @@
                             <p> (*) {{ 'ViewVisitProfile.infoMsg1' | translate }}</p>
 
 
-                            <button  type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="editaVisita(item)" (click)="c('Close click')"> {{ 'ViewVisitProfile.edit' | translate }}</button>
+                            <button  type="button" class="btn btn-primary" [disabled]="selectedOb==false" (click)="editaVisita(item)" (click)="c('Close click')"> {{ 'ViewVisitProfile.edit' | translate }}</button>
 
                             <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
                         </div>
@@ -138,18 +153,18 @@
 
 
 
-                            <td>{{item.usuario}}</td>
+                           
                             <td>{{item.fecha}}</td>
                             <td>{{item.hora}}</td>
                             <td>{{item.huso}}</td>
-                            <td>{{item.coord_X}}</td>
-                            <td>{{item.coord_Y}}</td>
-                            <td>{{item.observacion}}</td>
+                            <td>{{item.lat}}</td>
+                            <td>{{item.lon}}</td>
+                            <td>{{item.observaciones.tipo}}</td>
 
                             
                             
-                            <td *ngIf="usuario==item.usuario">
-                                <button class="transparentButton" (click)="editaVisitaModal(item, content)">
+                            <td >
+                                <button class="transparentButton" (click)="editaVisitaModal(item.observaciones.tipo,item.lat, item.lon, content)">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="transparentButton" (click)="eliminaVisitaModal(contentEliminar)">
@@ -158,7 +173,7 @@
 
 
                             </td>
-                            <td *ngIf="usuario!=item.usuario"> {{ 'ViewVisitProfile.noAction' | translate }}</td>
+                           
 
 
 

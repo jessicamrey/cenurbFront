@@ -122,7 +122,7 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
   //Editamos los datos de una visita ya creada
   modificarVisita(visitaId:number, visita) {
     let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
-    return this.api.put('api/visitas-coloniaterritorios/' + visitaId, JSON.stringify(visita), config);
+    return this.api.put('api/visitas-territorios/' + visitaId, JSON.stringify(visita), config);
   }
 
 //Eliminamos una visita que hemos creado
