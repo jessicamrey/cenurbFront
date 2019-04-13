@@ -1,6 +1,6 @@
   <p style="margin-top:40px;"></p>
 
-<div class="card">
+<div class="card" *ngIf="showCol==true">
 
     <div class="card-header" style="background-color: #A9A9A9">
         {{ 'ViewVisits.filter' | translate }}
@@ -15,12 +15,12 @@
                         <option *ngFor="let item of colonias" value="{{item.id}}" id="{{item.id}}">{{item.nombre}}</option>
                 </select>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 {{ 'ViewVisits.dateFilter' | translate }}
                 <div class="input-group datepicker-input">
                             <input class="form-control" placeholder="{{ 'ViewVisits.since' | translate }}"
                                 name="dp" [(ngModel)]="dateSince" ngbDatepicker #s="ngbDatepicker">
-                            <button class="input-group-addon" (click)="s.toggle()" type="button">
+                            <button class="transparentButton" (click)="s.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar"></span>
                             </button>
@@ -28,11 +28,13 @@
                 <div class="input-group datepicker-input">
                             <input class="form-control" placeholder="{{ 'ViewVisits.until' | translate }}"
                                 name="dp" [(ngModel)]="dateUntil" ngbDatepicker #u="ngbDatepicker">
-                            <button class="input-group-addon" (click)="u.toggle()" type="button">
+                            <button class="transparentButton" (click)="u.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar"></span>
                             </button>
                 </div>
+                <button class="btn btn-secondary" (click)="filtrar()">{{ 'ViewVisits.apply' | translate }}</button>
+                <button class="btn btn-secondary" (click)="limpiar()">{{ 'ViewVisits.clean' | translate }}</button>
             </div>
         </div>
         <div class="row">
@@ -52,7 +54,59 @@
 
 </div>
 
+<div class="card" *ngIf="showCol==false">
 
+    <div class="card-header" style="background-color: #A9A9A9">
+        {{ 'ViewVisits.filterTerr' | translate }}
+    </div>
+    <div class="card-body" style="background-color: #A9A9A9">
+        
+        <div class="row">
+            <div class="col-sm-4">
+                {{ 'ViewVisits.nameFilter' | translate }}
+                <select (change)="filtrarTerr()" id="territorio" >
+                        <option selected value="all" id="all">{{ 'ViewVisits.allTerr' | translate }} </option>
+                        <option *ngFor="let item of territorios" value="{{item.id}}" id="{{item.id}}">{{item.nombre}}</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                {{ 'ViewVisits.dateFilter' | translate }}
+                <div class="input-group datepicker-input">
+                            <input class="form-control" placeholder="{{ 'ViewVisits.since' | translate }}"
+                                name="dp" [(ngModel)]="dateSince" ngbDatepicker #s="ngbDatepicker">
+                            <button class="transparentButton" (click)="s.toggle()" type="button">
+                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                <span class="fa fa-calendar"></span>
+                            </button>
+                </div>
+                <div class="input-group datepicker-input">
+                            <input class="form-control" placeholder="{{ 'ViewVisits.until' | translate }}"
+                                name="dp" [(ngModel)]="dateUntil" ngbDatepicker #u="ngbDatepicker">
+                            <button class="transparentButton" (click)="u.toggle()" type="button">
+                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                <span class="fa fa-calendar"></span>
+                            </button>
+                </div>
+                <button class="btn btn-secondary" (click)="filtrarTerr()">{{ 'ViewVisits.apply' | translate }}</button>
+                <button class="btn btn-secondary" (click)="limpiar()">{{ 'ViewVisits.clean' | translate }}</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {{ 'ViewVisits.show' | translate }}
+                <button class="btn btn-secondary" (click)="showCol=true">
+                {{ 'ViewVisits.col' | translate }}
+                </button> 
+                <button class="btn btn-secondary" (click)="showCol=false">
+                {{ 'ViewVisits.terr' | translate }}
+                </button> 
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
 
 <div class="row">
         <div class="col-sm-12" *ngIf="showCol==true">
@@ -66,6 +120,7 @@
                         <thead>
                         <tr>
                             <th>{{ 'ViewVisitProfile.th1' | translate }}</th>
+                            <th>{{ 'ViewVisits.codCol' | translate }}</th>
                             <th>{{ 'ViewVisitProfile.th2' | translate }}</th>
                             <th>{{ 'ViewVisitProfile.th3' | translate }}</th>
                             <th>{{ 'ViewVisitProfile.th4' | translate }}</th>
@@ -176,6 +231,7 @@
 
 
                             <td>{{item.colonia.nombre}}</td>
+                            <td>{{item.colonia.id}}</td>
                             <td>{{item.fecha}}</td>
                             <td>{{item.numNidos}}</td>
                             <td>{{item.numNidosExito}}</td>
@@ -215,7 +271,8 @@
                     <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            
+                            <th>{{ 'ViewVisitProfileTerr.name' | translate }}</th>
+                            <th>{{ 'ViewVisits.codTerr' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th2' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th3' | translate }}</th>
                             <th>{{ 'ViewVisitProfileTerr.th4' | translate }}</th>
@@ -309,8 +366,8 @@
 
 
 
-
-                           
+                            <td>{{item.territorio.nombre}}</td>
+                            <td>{{item.territorio.id}}</td>
                             <td>{{item.fecha}}</td>
                             <td>{{item.hora}}</td>
                             <td>{{item.huso}}</td>
@@ -343,84 +400,13 @@
           
         </div>
         <div class="col-sm-12">
-            <div *ngIf="totalPages>0">
-                                <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
-                                (pageChange)="pageChanged($event)">
-                                </ngb-pagination>
-            </div>
             <div *ngIf="totalPages<=0 && listaVisitas.length<=0" style="text-align: center">
                 {{ 'ViewVisitProfile.noData' | translate }}
             </div>
         </div>
-        <div class="col-sm-12">
-            <button class="btn btn-primary" (click)="openLg(content)">{{ 'ViewVisitProfile.register' | translate }}</button>
-        </div>
 
     </div>
 
-
-
- <div class="row" *ngFor="let item of listaVisitas" style="margin-top:15px;margin-bottom:15px;">
-
- <!--<ng-template #content let-c="close" let-d="dismiss" >
-                        <div class="modal-header" >
-                            <h4 class="modal-title" >{{ 'ViewVisits.visit' | translate }} {{item.numVisita}}</h4>
-                            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" >
-
-                            
-                            <div class="row">
-                                
-                                <div class="col-md-12">
-                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.visitNum' | translate }}</p>
-                                    <p style="text-align: center">{{item.numVisita}}</p>
-                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.dateVisit' | translate }}</p>
-                                    <p style="text-align: center">{{item.fecha}}</p>
-                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numNest' | translate }}</p>
-                                    <p style="text-align: center">{{item.numNidos}}</p>                                
-                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numSuccess' | translate }}</p>
-                                    <p style="text-align: center">{{item.numNidosExito}}</p>  
-                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numTaken' | translate }}</p>
-                                    <p style="text-align: center">{{item.numNidosOcupados}}</p> 
-                                <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewVisits.numEmpty' | translate }}</p>
-                                    <p style="text-align: center">{{item.numNidosVacios}}</p> 
-
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-                        </div>
-                        </ng-template>-->
-
-
-  <!--  <div class="col-sm-12">
-
-
-        <div class="card">
-         
-        	<button class="transparentButton" (click)="openLg(content)">
-	            <div class="card-header">{{item.colonia.nombre}}
-	            </div>
-
-	            <!-- Large modal --
-	            <div class="card-body">
-	                {{ 'ViewVisits.numVisit' | translate }}{{item.numVisita}}, {{ 'ViewVisits.date' | translate }} {{item.fecha}}
-	            </div>
-            </button>
-        
-    </div>
-
-
-</div>-->
-
-</div> 
 
 
 

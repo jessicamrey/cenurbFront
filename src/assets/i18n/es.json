@@ -153,14 +153,18 @@
         "found2Terr":    "Territorio encontrado"
     },
     "ViewVisits":{
+        "codCol":       "Cód. Colonia",
+        "codTerr":      "Cód.Territorio",
         "numVisit":     "Visita número ",
         "date":         "con fecha ",
         "filter":       "Filtrar colonias",
         "filterTerr":   "Filtrar territorios",
         "nameFilter":   "Por nombre",
-        "dateFilter":    "Entre las fechas ",
+        "dateFilter":   "Entre las fechas ",
         "since":        "Fecha desde...",
         "until":        "Fecha hasta...",
+        "apply":        "Aplicar",
+        "clean":        "Limpiar",
         "colVisits":    "Visitas en COLONIAS",
         "terrVisits":   "Visitas en TERRITORIOS",
         "all":          "Todas",
@@ -213,6 +217,7 @@
     },
     "ViewVisitProfileTerr":{
         "title":        "Visitas registradas en territorio ",
+        "name":         "Nombre",
         "th8":          "Acciones",
         "th2":          "Fecha",
         "th3":          "Hora",
