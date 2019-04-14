@@ -250,5 +250,10 @@
         "anno":         "Por año",
         "ccaa":         "Por Comunidad Autónoma",
         "prov":         "Por provincia"
+    },
+    "GeneralTerr":{
+        "all":          "Todas",
+        "filter":       "Filtrar por ...",
+        "apply":        "Aplicar"
     }
 }

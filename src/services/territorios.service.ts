@@ -130,6 +130,30 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.api.delete('api/visitas-territorios/' + visitaId);
   }
 
+//Obtenemos las estadisticas por año
+
+  getStatsAnno(especie, temp){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnnoTerr?temporada=' + temp);
+  }
+
+  //Obtenemos las estadisticas por ccaa
+
+  getStatsCcaa(especie, temp){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaaTerr?temporada=' + temp);
+  }
+
+  //Obtenemos las estadisticas por provincia
+
+  getStatsProvincia(especie, temp, ccaa){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvinciaTerr?temporada=' + temp + '&ccaa=' + ccaa);
+  }
+
+
+  //Obtenemos estadisticas generales, una llamada por especie
+
+  getStats(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/statsTerr?especie='+especie + busqueda);
+  }
 
 
 

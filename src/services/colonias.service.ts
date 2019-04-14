@@ -145,6 +145,12 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/temporadas');
   }
 
+//Obtenemos estadisticas generales, una llamada por especie
+
+  getStats(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/stats?especie='+especie + busqueda);
+  }
+
   //Operación para dejar seleccionada una especie en memoria
 
   selectColonia(data) {

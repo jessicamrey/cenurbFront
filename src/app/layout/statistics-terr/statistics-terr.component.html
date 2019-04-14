@@ -1,5 +1,40 @@
   <p style="margin-top:60px;"></p>
 
-<p>
-  statistics-terr works!
-</p>
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+
+   <ngb-tabset type="pills">
+                    <ngb-tab title="{{ 'Statistics.anno' | translate }}">
+                        <ng-template ngbTabContent>
+                        	<canvas baseChart [datasets]="annoChartData" [labels]="annoChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event) ">
+                            </canvas>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="{{ 'Statistics.ccaa' | translate }}">
+                        <ng-template ngbTabContent>
+                        <canvas baseChart [datasets]="ccaaChartData" [labels]="ccaaChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                    		</canvas>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="{{ 'Statistics.prov' | translate }}">
+                        <ng-template ngbTabContent>
+                        <div class="row">
+                            <div class="col-sm-4" *ngFor="let ccaa of listaCCAA">
+                                <div class="card" >
+                                    <div class="card-header">
+                                        {{ccaa.DEN_COM}}
+                                    </div>
+                                    <div class="card-body">
+                                      
+                                         
+                                       <canvas baseChart [datasets]="listaProvinciasData[ccaa.DEN_COM]" [labels]="listaProvinciasLabels[ccaa.DEN_COM]" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                            </canvas>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </ng-template>
+                    </ngb-tab>
+    </ngb-tabset>
+ 
+

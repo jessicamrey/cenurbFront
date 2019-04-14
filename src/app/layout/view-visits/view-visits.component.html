@@ -260,6 +260,16 @@
                         </tbody>
                     </table>
                 </div>
+                 <div *ngIf="totalPages>0">
+                    <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="pageChanged($event)">
+                    </ngb-pagination>
+        </div>
+        <div class="col-sm-12">
+            <div *ngIf="totalPages<=0 && listaVisitas.length<=0" style="text-align: center">
+                {{ 'ViewVisitProfile.noData' | translate }}
+            </div>
+        </div>
            </div>
           
         </div>
@@ -310,7 +320,7 @@
                                   <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
                                 </agm-map>
 
-                                <form  role="form" [formGroup]="registerForm" (ngSubmit)="registrarVisita()">
+                                <form  role="form" [formGroup]="registerFormTerr" (ngSubmit)="registrarVisita()">
                                      <div class="form-group">
                                     <label>{{ 'ViewVisitProfileTerr.th7' | translate }} *</label>
                                     <select class="form-control"  formControlName="observacion"   id="observacion" (change)="selectedOb=true">
@@ -330,7 +340,7 @@
                             <p> (*) {{ 'ViewVisitProfile.infoMsg1' | translate }}</p>
 
 
-                            <button  type="button" class="btn btn-primary" [disabled]="selectedOb==false" (click)="editaVisita(item)" (click)="c('Close click')"> {{ 'ViewVisitProfile.edit' | translate }}</button>
+                            <button  type="button" class="btn btn-primary" [disabled]="selectedOb==false" (click)="editaVisitaTerr(item)" (click)="c('Close click')"> {{ 'ViewVisitProfile.edit' | translate }}</button>
 
                             <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
                         </div>
@@ -357,7 +367,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" (click)="c('Close click')" (click)="eliminaVisita(item)"> {{ 'ViewVisitProfile.yes' | translate }}</button>
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')" (click)="eliminaVisitaTerr(item)"> {{ 'ViewVisitProfile.yes' | translate }}</button>
 
                             <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ViewVisitProfile.no' | translate }}</button>
                         </div>
@@ -378,10 +388,10 @@
                             
                             
                             <td >
-                                <button class="transparentButton" (click)="editaVisitaModal(item.observaciones.tipo,item.lat, item.lon, content)">
+                                <button class="transparentButton" (click)="editaVisitaModalTerr(item.observaciones.tipo,item.lat, item.lon, content)">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="transparentButton" (click)="eliminaVisitaModal(contentEliminar)">
+                                <button class="transparentButton" (click)="eliminaVisitaModalTerr(contentEliminar)">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
 
@@ -396,14 +406,21 @@
                         </tbody>
                     </table>
                 </div>
-           </div>
-          
+        <div *ngIf="totalPagesTerr>0">
+                    <ngb-pagination [collectionSize]="totalPages" [(page)]="advancedPagination" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="pageChangedTerr($event)">
+                    </ngb-pagination>
         </div>
         <div class="col-sm-12">
-            <div *ngIf="totalPages<=0 && listaVisitas.length<=0" style="text-align: center">
+            <div *ngIf="totalPagesTerr<=0 && listaVisitasTerr.length<=0" style="text-align: center">
                 {{ 'ViewVisitProfile.noData' | translate }}
             </div>
         </div>
+
+           </div>
+          
+        </div>
+       
 
     </div>
 

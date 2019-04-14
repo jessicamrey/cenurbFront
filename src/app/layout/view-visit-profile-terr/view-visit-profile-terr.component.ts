@@ -27,8 +27,8 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 	usuario=0;
 	isEdit=false;
 	longitude :any;
-  	latitude :any;
-  	selectedOb:boolean=false;
+  latitude :any;
+  selectedOb:boolean=false;
   	markers = [
   	];
 

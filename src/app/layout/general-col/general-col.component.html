@@ -1,4 +1,56 @@
   <p style="margin-top:60px;"></p>
-<p>
-  general-col works!
-</p>
+
+<div class="card" >
+
+    <div class="card-header" style="background-color: #A9A9A9">
+        {{ 'GeneralTerr.filter' | translate }}
+    </div>
+    <div class="card-body" style="background-color: #A9A9A9">
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.ccaa' | translate }}</label>
+                    <select class="form-control" (change)="recuperaProvincia()" id="selectCCAA" >
+                    	<option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                        <option *ngFor="let ccaa of listaCCAA" value="{{ccaa.DEN_COM}}" id="{{ccaa.ID_COM}}">{{ccaa.DEN_COM}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>{{ 'RegisterCol.prov' | translate }}</label>
+                    <select class="form-control"  (change)="recuperaMunicipio()" id="selectProvincia" >
+                    	<option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                      	<option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+	            <div class="form-group">
+	                    <label>{{ 'RegisterCol.temp' | translate }}</label>
+	                    <select class="form-control" id="temporada">
+	                        <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+	                        <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
+	                    </select>
+
+	                </div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-sm-12">
+        		<button class="btn btn-secondary" (click)="recuperaColoniales('Colonias registradas')">{{ 'GeneralTerr.apply' | translate }}</button>
+        	</div>
+        </div>
+    </div>
+    <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+
+    <canvas *ngIf="show==true" baseChart [datasets]="chartData" [labels]="chartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event) ">
+    </canvas>
+
+</div>
+
+
+				
+
+                
