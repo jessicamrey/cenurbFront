@@ -20,6 +20,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ViewVisitProfileComponent implements OnInit {
 
 	listaVisitas:any=[];
+  listaTemporadas:any=[];
 	colId:any;
 	registerForm: FormGroup;
 	totalPages:number=0;
@@ -50,10 +51,12 @@ export class ViewVisitProfileComponent implements OnInit {
             numNidosExito: ['', Validators.required],
             numNidosOcupados: ['', Validators.required],
             numNidosVacios: ['', Validators.required],
-            numVisita: ['', Validators.required]
+            numVisita: ['', Validators.required],
+            temporada: ['', Validators.required]
 
         });
 
+      this.recuperaTemporadas();
         //TODO: recuperar usuario de localstorage
 
   	}
@@ -93,7 +96,7 @@ export class ViewVisitProfileComponent implements OnInit {
   		visita.setNumNidosOcupados(this.registerForm.get("numNidosOcupados").value);
   		visita.setNumNidosVacios(this.registerForm.get("numNidosVacios").value);
   		visita.setNumVisita(parseInt(this.registerForm.get("numVisita").value));
-
+      visita.setAnno(parseInt(this.registerForm.get("temporada").value));
   		visita.setFecha(new Date());
   		//TODO: El usuario tiene que sacarse de localstorage
   		visita.setUsuario("0");
@@ -203,5 +206,20 @@ export class ViewVisitProfileComponent implements OnInit {
                             this.loading=false;
                         });
   	}
+
+    recuperaTemporadas(){
+    this.coloniasService.getTemporadas().subscribe(
+      data=>{
+        
+        for (let item of data){
+          if (item["abierta"]==true){
+            this.listaTemporadas.push(item["anno"]);
+          }
+        }
+      },
+      error=>{
+        console.log(error);
+      })
+  }
 
 }

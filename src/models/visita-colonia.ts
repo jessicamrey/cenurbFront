@@ -9,6 +9,7 @@ export class VisitaColonia{
   private numNidosVacios: number;
   private fecha: any;
   private numVisita:number;
+  private anno:number;
 
 
 
@@ -17,6 +18,13 @@ export class VisitaColonia{
 
 	//getters and setters
 
+public getAnno() {
+      return this.anno
+    }
+
+  public setAnno(value: number) {
+      this.anno = value;
+    }
   public getUsuario() {
       return this.usuario
     }

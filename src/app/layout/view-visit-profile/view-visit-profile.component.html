@@ -44,6 +44,15 @@
                                             <input class="form-control" placeholder="Enter text" formControlName="numVisita" >
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>{{ 'RegisterCol.temp' | translate }} *</label>
+                                            <select class="form-control"  formControlName="temporada" >
+                                                
+                                                <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
+                                            </select>
+
+                                        </div>
+
 
 
 
