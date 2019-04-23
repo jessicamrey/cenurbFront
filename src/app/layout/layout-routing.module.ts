@@ -19,13 +19,7 @@ import {ViewTerrComponent} from './view-terr/view-terr.component';
 import {ViewCloseTerrComponent} from './view-close-terr/view-close-terr.component';
 import {StatisticsTerrComponent} from './statistics-terr/statistics-terr.component';
 import {StatisticsNestsComponent} from './statistics-nests/statistics-nests.component';
-
-
-
-
-
-
-
+import {StatisticsObsvComponent} from './statistics-obsv/statistics-obsv.component';
 
 
 const routes: Routes = [
@@ -49,6 +43,7 @@ const routes: Routes = [
             { path: 'viewCloseTerr', component: ViewCloseTerrComponent },
             { path: 'statisticsTerr', component: StatisticsTerrComponent },
             { path: 'statisticsNests', component: StatisticsNestsComponent },
+            { path: 'statisticsObsv', component: StatisticsObsvComponent },
             { path: 'viewVisits', component: ViewVisitsComponent },
             { path: 'dashboardTerr', component: DashboardTerrComponent },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' }

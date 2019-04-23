@@ -17,6 +17,8 @@
         "view":         "Ver colonias",
         "viewClose":    "Colonias cercanas",
         "statistics":   "Estadísticas",
+        "statsNests":   "Estadísticas de níños",
+        "statsObsv":    "Est. de observacións",
         "visits":       "Visitas",
         "registerVisit":"Rexistrar visita",
         "myVisits":     "Ver as miñas visitas",

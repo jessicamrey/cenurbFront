@@ -155,6 +155,12 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/especies/statsTerr?especie='+especie + busqueda);
   }
 
+  //Obtenemos estadisticas para observaciones
+
+  getStatsObsv(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+ '/statsObservaciones'+ busqueda);
+  }
+
 
 
 }
