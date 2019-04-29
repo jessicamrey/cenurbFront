@@ -4,6 +4,12 @@ var VisitaColonia = /** @class */ (function () {
     function VisitaColonia() {
     }
     //getters and setters
+    VisitaColonia.prototype.getAnno = function () {
+        return this.anno;
+    };
+    VisitaColonia.prototype.setAnno = function (value) {
+        this.anno = value;
+    };
     VisitaColonia.prototype.getUsuario = function () {
         return this.usuario;
     };

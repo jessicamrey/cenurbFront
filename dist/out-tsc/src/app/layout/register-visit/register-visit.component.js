@@ -11,30 +11,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var colonias_service_1 = require("../../../services/colonias.service");
+var territorios_service_1 = require("../../../services/territorios.service");
 var core_2 = require("@ngx-translate/core");
 var ngx_alerts_1 = require("ngx-alerts");
 var colonia_1 = require("../../../models/colonia");
+var territorio_1 = require("../../../models/territorio");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var RegisterVisitComponent = /** @class */ (function () {
-    function RegisterVisitComponent(translate, coloniasService, alertService, modalService) {
+    function RegisterVisitComponent(translate, coloniasService, territoriosService, alertService, modalService) {
         this.translate = translate;
         this.coloniasService = coloniasService;
+        this.territoriosService = territoriosService;
         this.alertService = alertService;
         this.modalService = modalService;
         this.listaCol = [];
+        this.listaTerr = [];
         this.col = new colonia_1.Colonia();
+        this.terr = new territorio_1.Territorio();
         this.found = false;
+        this.foundTerr = false;
+        this.selected = false;
+        this.loadingCol = false;
+        this.loadingTerr = false;
     }
     RegisterVisitComponent.prototype.ngOnInit = function () {
         this.recuperaColoniasFavoritas(0);
+        this.recuperaTerritoriosFavoritas(0);
+        if (JSON.parse(localStorage.getItem('especie'))) {
+            this.selected = true;
+            this.name = JSON.parse(localStorage.getItem('especie'))["especie"];
+        }
     };
     RegisterVisitComponent.prototype.recuperaColoniasFavoritas = function (userId) {
         var _this = this;
+        this.loadingCol = true;
         this.coloniasService.recuperaFavoritos(userId).subscribe(function (data) {
             _this.listaCol = data;
             console.log(data);
+            _this.loadingCol = false;
         }, function (error) {
             console.log(error);
+            _this.loadingCol = false;
         });
     };
     RegisterVisitComponent.prototype.openLg = function (content) {
@@ -56,10 +73,45 @@ var RegisterVisitComponent = /** @class */ (function () {
     };
     RegisterVisitComponent.prototype.newFavorito = function (colId) {
         var data = {
-            "usuario": "1",
+            "usuario": "0",
             "colonia": colId
         };
         this.coloniasService.nuevoFavorito(data).subscribe(function (message) {
+            console.log(message);
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    RegisterVisitComponent.prototype.buscarTerritorio = function () {
+        var _this = this;
+        var id = $("#terrId").val();
+        this.territoriosService.recuperaTerritorio(id).subscribe(function (data) {
+            _this.terr = data;
+            _this.alertService.success(_this.translate.instant("RegisterVisit.foundTerr"));
+            _this.foundTerr = true;
+        }, function (error) {
+            _this.foundTerr = false;
+            _this.alertService.warning(_this.translate.instant("RegisterVisit.notFoundTerr"));
+        });
+    };
+    RegisterVisitComponent.prototype.recuperaTerritoriosFavoritas = function (userId) {
+        var _this = this;
+        this.loadingTerr = true;
+        this.territoriosService.recuperaFavoritos(userId).subscribe(function (data) {
+            _this.listaTerr = data;
+            console.log(data);
+            _this.loadingTerr = false;
+        }, function (error) {
+            console.log(error);
+            _this.loadingTerr = false;
+        });
+    };
+    RegisterVisitComponent.prototype.newFavoritoTerr = function (terrId) {
+        var data = {
+            "usuario": "0",
+            "territorio": terrId
+        };
+        this.territoriosService.nuevoFavorito(data).subscribe(function (message) {
             console.log(message);
         }, function (error) {
             console.log(error);
@@ -73,6 +125,7 @@ var RegisterVisitComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [core_2.TranslateService,
             colonias_service_1.ColoniasService,
+            territorios_service_1.TerritoriosService,
             ngx_alerts_1.AlertService,
             ng_bootstrap_1.NgbModal])
     ], RegisterVisitComponent);

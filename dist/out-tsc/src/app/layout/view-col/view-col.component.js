@@ -135,7 +135,7 @@ var ViewColComponent = /** @class */ (function () {
     };
     ViewColComponent.prototype.newFavorito = function (colId) {
         var data = {
-            "usuario": "1",
+            "usuario": "0",
             "colonia": colId
         };
         this.coloniasService.nuevoFavorito(data).subscribe(function (message) {

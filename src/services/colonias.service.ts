@@ -163,26 +163,26 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
   //Obtenemos las estadisticas por año para numero de nidos
 
-  getStatsAnnoCol(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnnoCol?temporada=' + temp);
+  getStatsAnnoCol(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnnoCol'+busqueda);
   }
 
   //Obtenemos las estadisticas por ccaa para numero de nidos
 
-  getStatsCcaaCol(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaaCol?temporada=' + temp);
+  getStatsCcaaCol(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaaCol' + busqueda);
   }
 
   //Obtenemos las estadisticas por provincia para numero de nidos
 
-  getStatsProvinciaCol(especie, temp, ccaa){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvinciaCol?temporada=' + temp + '&ccaa=' + ccaa);
+  getStatsProvinciaCol(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvinciaCol' + busqueda);
   }
 
   //Obtenemos las estadisticas por municipio para numero de nidos
 
-  getStatsMunicipioCol(especie, temp, ccaa, prov, busqueda){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsMunicipioCol?temporada=' + temp + '&ccaa=' + ccaa + '&provincia=' + prov + busqueda);
+  getStatsMunicipioCol(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsMunicipioCol' + busqueda);
   }
 
 
@@ -192,7 +192,7 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 //COMPROBAR QUE EL STRING DE BUSQUED ESTE BIEN FORMADO,. NO SE SI LA FORMA ?& FUNCIONARA
 
   getStatsTipoEdificioCol(especie, busqueda){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsTipoEdificioCol?' + busqueda);
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsTipoEdificioCol' + busqueda);
   }
 
 

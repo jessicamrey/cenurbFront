@@ -26,6 +26,7 @@ var ViewVisitProfileComponent = /** @class */ (function () {
         this.modalService = modalService;
         this.formBuilder = formBuilder;
         this.listaVisitas = [];
+        this.listaTemporadas = [];
         this.totalPages = 0;
         this.loading = false;
         this.usuario = 0;
@@ -43,8 +44,10 @@ var ViewVisitProfileComponent = /** @class */ (function () {
             numNidosExito: ['', forms_1.Validators.required],
             numNidosOcupados: ['', forms_1.Validators.required],
             numNidosVacios: ['', forms_1.Validators.required],
-            numVisita: ['', forms_1.Validators.required]
+            numVisita: ['', forms_1.Validators.required],
+            temporada: ['', forms_1.Validators.required]
         });
+        this.recuperaTemporadas();
         //TODO: recuperar usuario de localstorage
     };
     ViewVisitProfileComponent.prototype.recuperaVisitas = function (colId, pageNumber) {
@@ -81,6 +84,7 @@ var ViewVisitProfileComponent = /** @class */ (function () {
         visita.setNumNidosOcupados(this.registerForm.get("numNidosOcupados").value);
         visita.setNumNidosVacios(this.registerForm.get("numNidosVacios").value);
         visita.setNumVisita(parseInt(this.registerForm.get("numVisita").value));
+        visita.setAnno(parseInt(this.registerForm.get("temporada").value));
         visita.setFecha(new Date());
         //TODO: El usuario tiene que sacarse de localstorage
         visita.setUsuario("0");
@@ -106,8 +110,6 @@ var ViewVisitProfileComponent = /** @class */ (function () {
     };
     ViewVisitProfileComponent.prototype.pageChanged = function (page) {
         this.recuperaVisitas(this.colId, page);
-    };
-    ViewVisitProfileComponent.prototype.borraVisita = function (id) {
     };
     ViewVisitProfileComponent.prototype.editaVisitaModal = function (visita, content) {
         this.isEdit = true;
@@ -161,6 +163,20 @@ var ViewVisitProfileComponent = /** @class */ (function () {
         }, function (error) {
             console.log(error);
             _this.alertService.danger(_this.translate.instant("ViewVisitProfile.error3"));
+            _this.loading = false;
+        });
+    };
+    ViewVisitProfileComponent.prototype.recuperaTemporadas = function () {
+        var _this = this;
+        this.coloniasService.getTemporadas().subscribe(function (data) {
+            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                var item = data_1[_i];
+                if (item["abierta"] == true) {
+                    _this.listaTemporadas.push(item["anno"]);
+                }
+            }
+        }, function (error) {
+            console.log(error);
         });
     };
     ViewVisitProfileComponent = __decorate([

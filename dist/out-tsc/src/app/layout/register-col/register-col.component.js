@@ -239,6 +239,7 @@ var RegisterColComponent = /** @class */ (function () {
             }
         }, function (error) {
             _this.alertService.danger(_this.translate.instant("RegisterCol.errorMsg1"));
+            _this.loading = false;
         });
     };
     RegisterColComponent = __decorate([

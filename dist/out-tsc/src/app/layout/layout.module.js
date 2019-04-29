@@ -37,6 +37,9 @@ var register_terr_component_1 = require("./register-terr/register-terr.component
 var view_terr_component_1 = require("./view-terr/view-terr.component");
 var view_close_terr_component_1 = require("./view-close-terr/view-close-terr.component");
 var statistics_terr_component_1 = require("./statistics-terr/statistics-terr.component");
+var view_visit_profile_terr_component_1 = require("./view-visit-profile-terr/view-visit-profile-terr.component");
+var statistics_nests_component_1 = require("./statistics-nests/statistics-nests.component");
+var statistics_obsv_component_1 = require("./statistics-obsv/statistics-obsv.component");
 var LayoutModule = /** @class */ (function () {
     function LayoutModule() {
     }
@@ -77,6 +80,9 @@ var LayoutModule = /** @class */ (function () {
                 view_terr_component_1.ViewTerrComponent,
                 view_close_terr_component_1.ViewCloseTerrComponent,
                 statistics_terr_component_1.StatisticsTerrComponent,
+                view_visit_profile_terr_component_1.ViewVisitProfileTerrComponent,
+                statistics_nests_component_1.StatisticsNestsComponent,
+                statistics_obsv_component_1.StatisticsObsvComponent,
             ]
         })
     ], LayoutModule);

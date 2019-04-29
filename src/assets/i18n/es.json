@@ -257,5 +257,22 @@
         "all":          "Todas",
         "filter":       "Filtrar por ...",
         "apply":        "Aplicar"
+    },
+    "StatisticsNest":{
+        "data":         "DATOS en ",
+        "chart":        "GRÁFICO para ",
+        "mun":          "Municipio",
+        "numNest":      "Número de nidos registrados en total",
+        "numTaken":     "Número de nidos anotados como ocupados",
+        "numEmpty":     "Número de nidos que estaban vacíos",
+        "numSuccess":   "Número de nidos registrados que tuvieron éxito",
+        "noData":       "SIN DATOS",
+        "byMun":        "Por municipio",
+        "byTipoEd":     "Por tipo de edificio",
+        "infoMsg1":     "Los gráficos de este apartado sólo están disponibles si filtra una provincia",
+        "infoMsg2":     "Los gráficos de este apartado sólo están disponibles si filtra un municipio",
+        "infoMsg3":     "Este campo sólo es válido en el apartado 'Por tipo de edificio'",
+        "infoMsg4":     "Debido al gran volumen de datos, este apartado sólo estará disponible cuando filtre una provincia o un municipio"
+
     }
 }

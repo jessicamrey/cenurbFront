@@ -28,7 +28,7 @@ var TerritoriosService = /** @class */ (function () {
         return data;
     };
     //Registra un nuevo territorio
-    TerritoriosService.prototype.nuevaTerritorio = function (territoio) {
+    TerritoriosService.prototype.nuevoTerritorio = function (territoio) {
         var config = { headers: new http_1.HttpHeaders().set("Content-Type", 'application/json') };
         var response = this.http.post(this.url + '/api/territorios', JSON.stringify(territoio), config);
         return response;
@@ -46,6 +46,75 @@ var TerritoriosService = /** @class */ (function () {
     //Obtenemos los emplazamientos
     TerritoriosService.prototype.getEmplazamientos = function () {
         return this.http.get(this.url + '/api/emplazamientos');
+    };
+    //Obtenemos los emplazamientos
+    TerritoriosService.prototype.getObservaciones = function () {
+        return this.http.get(this.url + '/api/observaciones-territorios');
+    };
+    //Obtenemos los tipos de territorio
+    TerritoriosService.prototype.getTipos = function () {
+        return this.http.get(this.url + '/api/tipo-territorios');
+    };
+    //recupera todos los territorios con paginacion
+    TerritoriosService.prototype.recuperaTerritorios = function (page, especie) {
+        return this.http.get(this.url + '/api/territorios?page=' + page + '&especie=' + especie);
+    };
+    //Recuperamos territorios con un string de busqueda que incluye filtros
+    TerritoriosService.prototype.recuperaTerritoriosFiltered = function (page, busqueda) {
+        return this.http.get(this.url + '/api/territorios?page=' + page + busqueda);
+    };
+    //Recupera los datos de un solo territorio
+    TerritoriosService.prototype.recuperaTerritorio = function (terrId) {
+        return this.http.get(this.url + '/api/territorios/' + terrId);
+    };
+    //Recupera los territorios marcados como favoritos por el usuario
+    TerritoriosService.prototype.recuperaFavoritos = function (userId) {
+        return this.http.get(this.url + '/api/territorios/favoritos/' + userId);
+    };
+    //Marca un nuevo territorio como favorito
+    TerritoriosService.prototype.nuevoFavorito = function (data) {
+        var config = { headers: new http_1.HttpHeaders().set("Content-Type", 'application/json') };
+        var response = this.http.post(this.url + '/api/territorios/favoritos', JSON.stringify(data), config);
+        return response;
+    };
+    //Recupera las visitas para un territorio
+    TerritoriosService.prototype.recuperaVisitasGeneral = function (stringBusqueda) {
+        return this.http.get(this.url + '/api/visitas-territorios' + stringBusqueda);
+    };
+    //Registramos una nueva visita en un territorio
+    TerritoriosService.prototype.nuevaVisitaTerritorio = function (data, terrId) {
+        var config = { headers: new http_1.HttpHeaders().set("Content-Type", 'application/json') };
+        var response = this.http.post(this.url + '/api/territorios/' + terrId + '/visitas', JSON.stringify(data), config);
+        return response;
+    };
+    //Editamos los datos de una visita ya creada
+    TerritoriosService.prototype.modificarVisita = function (visitaId, visita) {
+        var config = { headers: new http_1.HttpHeaders().set("Content-Type", 'application/json') };
+        return this.api.put('api/visitas-territorios/' + visitaId, JSON.stringify(visita), config);
+    };
+    //Eliminamos una visita que hemos creado
+    TerritoriosService.prototype.eliminarVisita = function (visitaId) {
+        return this.api.delete('api/visitas-territorios/' + visitaId);
+    };
+    //Obtenemos las estadisticas por año
+    TerritoriosService.prototype.getStatsAnno = function (especie, temp) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsAnnoTerr?temporada=' + temp);
+    };
+    //Obtenemos las estadisticas por ccaa
+    TerritoriosService.prototype.getStatsCcaa = function (especie, temp) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsCcaaTerr?temporada=' + temp);
+    };
+    //Obtenemos las estadisticas por provincia
+    TerritoriosService.prototype.getStatsProvincia = function (especie, temp, ccaa) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsProvinciaTerr?temporada=' + temp + '&ccaa=' + ccaa);
+    };
+    //Obtenemos estadisticas generales, una llamada por especie
+    TerritoriosService.prototype.getStats = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/statsTerr?especie=' + especie + busqueda);
+    };
+    //Obtenemos estadisticas para observaciones
+    TerritoriosService.prototype.getStatsObsv = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsObservaciones' + busqueda);
     };
     TerritoriosService = __decorate([
         core_1.Injectable(),

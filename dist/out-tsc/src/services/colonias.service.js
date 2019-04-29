@@ -109,11 +109,36 @@ var ColoniasService = /** @class */ (function () {
     ColoniasService.prototype.getTemporadas = function () {
         return this.http.get(this.url + '/api/temporadas');
     };
+    //Obtenemos estadisticas generales, una llamada por especie
+    ColoniasService.prototype.getStats = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/stats?especie=' + especie + busqueda);
+    };
     //Operación para dejar seleccionada una especie en memoria
     ColoniasService.prototype.selectColonia = function (data) {
         localStorage.setItem('especie', JSON.stringify(data));
         this.coloniaSelectedEvent.emit(data);
         return data;
+    };
+    //Obtenemos las estadisticas por año para numero de nidos
+    ColoniasService.prototype.getStatsAnnoCol = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsAnnoCol' + busqueda);
+    };
+    //Obtenemos las estadisticas por ccaa para numero de nidos
+    ColoniasService.prototype.getStatsCcaaCol = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsCcaaCol' + busqueda);
+    };
+    //Obtenemos las estadisticas por provincia para numero de nidos
+    ColoniasService.prototype.getStatsProvinciaCol = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsProvinciaCol' + busqueda);
+    };
+    //Obtenemos las estadisticas por municipio para numero de nidos
+    ColoniasService.prototype.getStatsMunicipioCol = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsMunicipioCol' + busqueda);
+    };
+    //Obtenemos las estadisticas por tipo de edificio para numero de nidos
+    //COMPROBAR QUE EL STRING DE BUSQUED ESTE BIEN FORMADO,. NO SE SI LA FORMA ?& FUNCIONARA
+    ColoniasService.prototype.getStatsTipoEdificioCol = function (especie, busqueda) {
+        return this.http.get(this.url + '/api/especies/' + especie + '/statsTipoEdificioCol' + busqueda);
     };
     ColoniasService = __decorate([
         core_1.Injectable(),

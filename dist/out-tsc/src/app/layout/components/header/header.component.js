@@ -46,6 +46,10 @@ var HeaderComponent = /** @class */ (function () {
             _this.selected = true;
             _this.name = data.especie;
         });
+        if (JSON.parse(localStorage.getItem('especie'))) {
+            this.selected = true;
+            this.name = JSON.parse(localStorage.getItem('especie'))["especie"];
+        }
     };
     HeaderComponent.prototype.isToggled = function () {
         var dom = document.querySelector('body');
