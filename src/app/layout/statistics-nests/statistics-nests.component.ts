@@ -18,9 +18,14 @@ export class StatisticsNestsComponent implements OnInit {
 	ccaaChartData:any=[];
 	provChartData:any=[];
   munChartData:any=[];
+  tipoEdChartData:any=[];
+
+  annoChartDataFiltered:any=[];
   ccaaChartDataFiltered:any=[];
   provChartDataFiltered:any=[];
   munChartDataFiltered:any=[];
+  tipoEdChartDataFiltered:any=[];
+
 
 	listaCCAA:any=[];
 	listaProv:any=[];
@@ -51,12 +56,16 @@ export class StatisticsNestsComponent implements OnInit {
     disableProv:boolean=true;
     disableMun:boolean=true;
 
+    annoFiltered:boolean=false;
+    annoSelected:any;
     ccaaFiltered:boolean=false;
     ccaaSelected:any;
     provFiltered:boolean=false;
     provSelected:any;
     munFiltered:boolean=false;
     munSelected:any;
+    tipoEdFiltered:boolean=false;
+    tipoEdSelected:any;
 
     start=1;
     startMun=1;
@@ -72,8 +81,9 @@ export class StatisticsNestsComponent implements OnInit {
   	this.recuperaCCAA();
   	this.recuperaTipoEd();
   	this.recuperaTemporadas();
-    this.statsAnno('');
-    this.statsCcaa('all');
+    this.statsAnno('', 'all');
+    this.statsCcaa('','all');
+    this.statsTipoEdificio('','all');
 
 
     /*this.labels=[this.translate.instant("ViewVisits.numNest"),
@@ -99,6 +109,7 @@ export class StatisticsNestsComponent implements OnInit {
         for (let item of data){
             this.listaTemporadas.push(item["anno"]);
         }
+        console.log(data);
       },
       error=>{
         console.log(error);
@@ -154,49 +165,64 @@ export class StatisticsNestsComponent implements OnInit {
 
 
 
-  statsAnno(busqueda){
+  statsAnno(busqueda, anno){
     this.show=false;
     this.loading=true;
-  	this.coloniasService.getStatsAnnoCol(this.especie, '').subscribe(
-  		data=>{
-        this.annoData=data;
-        for (let item of data){
-          let dataList={data: [item[1], item[2], item[3], item[4]], label: this.especieNombre};
-          this.annoChartData[item["anno"]]=[dataList];
+    if(anno=='all'){
+      this.annoFiltered=false;
+    	this.coloniasService.getStatsAnnoCol(this.especie, busqueda).subscribe(
+    		data=>{
+          for (let item of data){
+            let dataList={data: [item[1], item[2], item[3], item[4]], label: this.especieNombre};
+            this.annoChartData[item["anno"]]=[dataList];
 
-                    if (this.start==data.length){
-                      this.show=true;
-                      this.start=1;
-                      this.loading=false;
-                    }
-                    this.start++;
-        }
+                      if (this.start==data.length){
+                        this.show=true;
+                        this.start=1;
+                        this.loading=false;
+                      }
+                      this.start++;
+          }
 
-  		},
-  		error=>{
-        this.loading=false;
-  			console.log(error);
-  		});
+    		},
+    		error=>{
+          this.loading=false;
+    			console.log(error);
+    		});
+    }else{
+
+      this.annoChartDataFiltered=[this.annoChartData[anno]];
+      this.annoFiltered=true;
+    }
 
   }
   
-  statsCcaa(ccaa){
+  statsCcaa(busqueda,ccaa){
     this.showCcaa=false;
     this.loading=true;
     if(ccaa=='all'){
       this.ccaaFiltered=false;
-      this.coloniasService.getStatsCcaaCol(this.especie, '').subscribe(
+      this.coloniasService.getStatsCcaaCol(this.especie, busqueda).subscribe(
       data=>{
-        for (let item of data){
-          let dataList={data: [item[1], item[2], item[3], item[4]], label: this.especieNombre};
-          this.ccaaChartData[item["ccaa"]]=[dataList];
 
-                    if (this.start==data.length){
-                      this.showCcaa=true;
-                      this.start=1;
-                      this.loading=false;
-                    }
-                    this.start++;
+        if (data.length>0){
+
+          for (let item of data){
+            let dataList={data: [item[1], item[2], item[3], item[4]], label: this.especieNombre};
+            this.ccaaChartData[item["ccaa"]]=[dataList];
+
+                      if (this.start==data.length){
+                        this.showCcaa=true;
+                        this.start=1;
+                        this.loading=false;
+                      }
+                      this.start++;
+          }
+        }
+        else{ //sin datos
+          this.ccaaChartData=[];
+          this.loading=false;
+
         }
       },
       error=>{
@@ -278,16 +304,31 @@ export class StatisticsNestsComponent implements OnInit {
   }
 
 
-  statsTipoEdificio(busqueda){
+  statsTipoEdificio(busqueda, tipoEd){
+    if(tipoEd=='all'){
+      this.tipoEdFiltered=false;
+      this.coloniasService.getStatsTipoEdificioCol(this.especie, busqueda).subscribe(
+      data=>{
+        for (let item of data){
+          let dataList={data: [item[1], item[2], item[3], item[4]], label: this.especieNombre};
+          this.tipoEdChartData[item["descripcion"]]=[dataList];
 
-    this.coloniasService.getStatsTipoEdificioCol(this.especie, busqueda).subscribe(
-  		data=>{
-  			console.log("DATA TIPO EDIFICIO");
-  			console.log(data);
-  		},
-  		error=>{
-  			console.log(error);
-  		});
+                    if (this.start==data.length){
+                      this.showCcaa=true;
+                      this.start=1;
+                      this.loading=false;
+                    }
+                    this.start++;
+        }
+      },
+      error=>{
+        this.loading=false;
+        console.log(error);
+      });
+    }else{
+      this.tipoEdChartDataFiltered=[this.tipoEdChartData[tipoEd]];
+      this.tipoEdFiltered=true;
+    }
 
   }
 
@@ -308,6 +349,10 @@ export class StatisticsNestsComponent implements OnInit {
     this.ccaaSelected=ccaa;
     this.provSelected=prov;
     this.munSelected=mun;
+    this.tipoEdSelected=tipoEd;
+    this.annoSelected=temp;
+
+
 
     ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
     prov!='all' ? busqueda=busqueda+'&provincia='+prov : busqueda;
@@ -317,9 +362,9 @@ export class StatisticsNestsComponent implements OnInit {
 
     console.log(busqueda);
 
-    this.statsAnno(busqueda);
-    this.statsCcaa(ccaa);
-    //this.statsTipoEdificio(busqueda);
+    this.statsAnno(busqueda, temp);
+    this.statsCcaa(busqueda,ccaa);
+    this.statsTipoEdificio(busqueda,tipoEd);
 
     if (ccaa!='all'){
       this.disableProv=false;

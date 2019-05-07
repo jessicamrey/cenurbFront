@@ -206,15 +206,18 @@
         "success1":     "La visita se ha registrado correctamente",
         "success2":     "La visita se ha modificado correctamente",
         "success3":     "La visita se ha eliminado correctamente",
+        "success4":     "Las fotografías se han subido correctamente",
         "error1":       "Ha ocurrido un error al intentar registrar la visita",
         "error2":       "Ha ocurrido un error al intentar modificar la visita",
         "error3":       "Ha ocurrido un error al intentar eliminar la visita",
+        "error4":       "Ha ocurrido un error al intentar subir las fotografías",
         "infoMsg2":     "Sólo puedes borrar o editar las visitas que has registrado tú"  ,
         "infoMsg3":     "¿Estás seguro de que quieres borrar esta visita?",
         "yes":          "Sí",
         "no":           "No",
         "edit":         "Modificar" ,
-        "delete":       "Eliminar"
+        "delete":       "Eliminar",
+        "upload":       "¿Quieres subir alguna fotografía?"
         
     },
     "ViewVisitProfileTerr":{
@@ -260,6 +263,7 @@
     },
     "StatisticsNest":{
         "data":         "DATOS en ",
+        "dataTipoEd":   "DATOS para ",
         "chart":        "GRÁFICO para ",
         "mun":          "Municipio",
         "numNest":      "Número de nidos registrados en total",

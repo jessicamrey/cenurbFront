@@ -49,6 +49,11 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/temporadas');
   }
 
+  //Obtenemos los tipos de territorio
+
+  getTiposTerritorio(){
+    return this.http.get<any>(this.url + '/api/tipo-territorios');
+  }
 
   //Obtenemos los emplazamientos
 

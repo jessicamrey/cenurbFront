@@ -19,6 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ViewVisitProfileComponent implements OnInit {
 
+  preFiles:File[]=[];
 	listaVisitas:any=[];
   listaTemporadas:any=[];
 	colId:any;
@@ -60,6 +61,16 @@ export class ViewVisitProfileComponent implements OnInit {
         //TODO: recuperar usuario de localstorage
 
   	}
+
+    preUpload(event) {
+      let file = event.target.files;
+      if (file.length > 0) {
+        for (let i in file){
+          this.preFiles[i]=file[i];
+      }
+        }
+    }
+
 
   	recuperaVisitas(colId, pageNumber){
   		this.coloniasService.recuperaVisitasGeneral('?colonia='+colId+'&page='+pageNumber).subscribe(
@@ -107,7 +118,7 @@ export class ViewVisitProfileComponent implements OnInit {
   		console.log(visita);
   		this.coloniasService.nuevaVisitaColonia(visita,this.colId).subscribe(
                         data =>{
-                        	this.loading=false;
+                        	
                         	let date=new Date((data["fecha"]));
                         	let y=date.getFullYear();
                         	let m=date.getMonth()+1;
@@ -119,6 +130,24 @@ export class ViewVisitProfileComponent implements OnInit {
 
                         	console.log(this.listaVisitas);
                         	this.alertService.success(this.translate.instant("ViewVisitProfile.success1"));
+
+                          if(this.preFiles.length > 0)
+                          {
+                              console.log(this.preFiles);
+                              this.coloniasService.uploadImage(data["id"],this.preFiles).subscribe(
+                                  (data : any)=>{
+                                      this.loading=false;
+                                      this.alertService.success(this.translate.instant("ViewVisitProfile.success4"));
+                                  },
+                                  error=>{
+                                    this.loading=false;
+                                    this.alertService.danger(this.translate.instant("ViewVisitProfile.error4"));
+                                  }
+                                );      
+                          } else{
+                            this.loading=false;
+                          }
+
                         },
                         error=>{
                         	this.loading=false;

@@ -195,6 +195,20 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsTipoEdificioCol' + busqueda);
   }
 
+  //Subimos una imagen
+
+  uploadImage(id:number,image: File[]){
+    let formData: FormData = new FormData();
+    for (let i in image){
+      console.log(image[i]);
+       formData.append('file[]', image[i], id+'_image'+new Date().getTime()+i);
+    }
+   
+    return this.api.post('api/visitas-coloniass/'+id+'/image', formData);
+  }
+
+
+
 
 
 

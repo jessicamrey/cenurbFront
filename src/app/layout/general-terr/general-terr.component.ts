@@ -16,6 +16,7 @@ export class GeneralTerrComponent implements OnInit {
     listaCCAA:any[]= [];
     listaProv:any[]= [];
     listaTemporadas:any[]= [];
+    listaTipos:any=[];
 
 	  loading=false;
 	  chartData:any=[];
@@ -45,6 +46,7 @@ export class GeneralTerrComponent implements OnInit {
   	this.recuperaNoColoniales('Territorios registrados');
   	this.recuperaCCAA();
   	this.recuperaTemporadas();
+    this.recuperaTipos();
   	
   }
 
@@ -110,10 +112,14 @@ export class GeneralTerrComponent implements OnInit {
     	let ccaa=$( "#selectCCAA option:selected" ).attr("value");
     	let prov=$( "#selectProvincia option:selected" ).attr("value");
     	let temp=$( "#temporada option:selected" ).attr("value");
+      let tipo=$( "#tipo option:selected" ).attr("value");
+
     	
     	ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
     	prov!='all' ? busqueda=busqueda+'&provincia='+prov : busqueda;
     	temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
+      tipo!='all' ? busqueda=busqueda+'&tipo='+tipo : busqueda;
+
     	console.log(busqueda);
 
     	this.territoriosService.getStats(especie, busqueda).subscribe(
@@ -172,10 +178,21 @@ export class GeneralTerrComponent implements OnInit {
       data=>{
         
         for (let item of data){
-          if (item["abierta"]==true){
+          
             this.listaTemporadas.push(item["anno"]);
-          }
+          
         }
+      },
+      error=>{
+        console.log(error);
+      })
+  }
+
+  recuperaTipos(){
+    this.territoriosService.getTiposTerritorio().subscribe(
+      data=>{
+      
+        this.listaTipos=data["hydra:member"];
       },
       error=>{
         console.log(error);

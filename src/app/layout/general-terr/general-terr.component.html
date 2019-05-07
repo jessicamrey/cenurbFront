@@ -36,6 +36,16 @@
 
 	                </div>
             </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                        <label>{{ 'RegisterTerr.type' | translate }}</label>
+                        <select class="form-control" id="tipo">
+                            <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                            <option *ngFor="let t of listaTipos" value="{{t.descripcion}}" id="{{t.id}}">{{t.descripcion}}</option>
+                        </select>
+
+                    </div>
+            </div>
         </div>
         <div class="row">
         	<div class="col-sm-12">

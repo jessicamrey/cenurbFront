@@ -13,17 +13,17 @@ declare var $:any;
 export class GeneralColComponent implements OnInit {
 
 	listaCol:any[]= [];
-    listaCCAA:any[]= [];
-    listaProv:any[]= [];
-    listaTemporadas:any[]= [];
+  listaCCAA:any[]= [];
+  listaProv:any[]= [];
+  listaTemporadas:any[]= [];
 
 	loading=false;
 	chartData:any=[];
 	dataList:any=[];
 	chartLabels:string[]=[];
-  	especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
-    show:boolean=false;
-    start=1;
+  especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
+  show:boolean=false;
+  start=1;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -174,9 +174,9 @@ export class GeneralColComponent implements OnInit {
       data=>{
         
         for (let item of data){
-          if (item["abierta"]==true){
+          
             this.listaTemporadas.push(item["anno"]);
-          }
+          
         }
       },
       error=>{

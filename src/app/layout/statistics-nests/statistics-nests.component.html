@@ -49,7 +49,7 @@
                 <label>{{ 'RegisterCol.tipoEd' | translate }} *</label>
                     <select class="form-control" id="tipoEdificio"  >
                         <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
-                        <option *ngFor="let ed of listaTipoEd" value="{{ed.id}}" id="{{ed.id}}">{{ed.descripcion}}</option>
+                        <option *ngFor="let ed of listaTipoEd" value="{{ed.descripcion}}" id="{{ed.id}}">{{ed.descripcion}}</option>
                     </select>
             </div>
         </div>
@@ -73,56 +73,125 @@
 <ngb-tabset type="pills">
                     <ngb-tab title="{{ 'Statistics.anno' | translate }}">
                         <ng-template ngbTabContent>
-                        <div class="row">
-                            <div class="col-sm-6" *ngFor="let item of annoData">
+                        <div class="row" *ngIf="annoFiltered==false; else filteredAnno">
+                            <div class="col-sm-6" *ngFor="let item of listaTemporadas">
 		                        <div class="card">
 					                <div class="card-header">
-					                {{ 'StatisticsNest.data' | translate }} {{item.anno}}
+					                {{ 'StatisticsNest.data' | translate }} {{item}}
 					                </div>
 					                <div class="card-body table-responsive">
-					                    <table class="table table-hover table-striped">
-					                        <thead>
-						                        <tr>
-						                        	<th></th>
-						                            <th>{{item.anno}}</th>
-						                        </tr>
-					                        </thead>
-					                        <tbody>
-						                        <tr>
-												    <td>{{ 'StatisticsNest.numNest' | translate }}</td>
-												    <td>{{item['0']}}</td> 
-												</tr>
-												<tr>
-												    <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
-												    <td>{{item['1']}}</td> 
-												</tr>
-												<tr>
-												    <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
-												    <td>{{item['2']}}</td> 
-												</tr>
-												<tr>
-												    <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
-												    <td>{{item['3']}}</td> 
-												</tr>
-					                        </tbody>
-					                        </table>
+                                        <div *ngIf="ccaaChartData[item.DEN_COM]!=undefined; else noData">
+    					                    <table class="table table-hover table-striped">
+    					                        <thead>
+    						                        <tr>
+    						                        	<th></th>
+    						                            <th>{{item}}</th>
+    						                        </tr>
+    					                        </thead>
+    					                        <tbody>
+    						                        <tr>
+    												    <td>{{ 'StatisticsNest.numNest' | translate }}</td>
+    												    <td> {{annoChartData[item]['0'].data['0']}}</td> 
+    												</tr>
+    												<tr>
+    												    <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
+    												    <td>{{annoChartData[item]['0'].data['1']}}</td> 
+    												</tr>
+    												<tr>
+    												    <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
+    												    <td>{{annoChartData[item]['0'].data['2']}}</td> 
+    												</tr>
+    												<tr>
+    												    <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
+    												    <td>{{annoChartData[item]['0'].data['3']}}</td> 
+    												</tr>
+    					                        </tbody>
+    					                        </table>
+                                        </div>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
 					                </div>
 					            </div>
 
                                 <div class="card" >
                                     <div class="card-header">
-                                        {{ 'StatisticsNest.chart' | translate }} {{item.anno}}
+                                        {{ 'StatisticsNest.chart' | translate }} {{item}}
                                     </div>
                                     <div class="card-body">
                                       
                                          <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
-                                       <canvas *ngIf="show==true" baseChart [datasets]="annoChartData[item.anno]" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                           <canvas *ngIf="annoChartData[item]!=undefined; else noData" baseChart [datasets]="annoChartData[item]" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
                                             </canvas>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
                                         
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <ng-template #filteredAnno>
+                            <div class="row">
+                                <div class="col-sm-12"  >
+                                    <div class="card">
+                                        <div class="card-header">
+                                        {{ 'StatisticsNest.data' | translate }} {{annoSelected}}
+                                        </div>
+                                        <div class="card-body table-responsive">
+                                            <div *ngIf="annoChartDataFiltered[0]!=undefined; else noDataFiltered">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{annoSelected}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numNest' | translate }}</td>
+                                                            <td>{{annoChartDataFiltered['0']['0'].data['0']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
+                                                            <td>{{annoChartDataFiltered['0']['0'].data['1']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
+                                                            <td>{{annoChartDataFiltered['0']['0'].data['2']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
+                                                            <td>{{annoChartDataFiltered['0']['0'].data['3']}}</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                            <ng-template #noDataFiltered>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" >
+                                        <div class="card-header">
+                                            {{ 'StatisticsNest.chart' | translate }} {{annoSelected}}
+                                        </div>
+                                        <div class="card-body">
+                                          
+                                            <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+                                           <canvas *ngIf="annoChartDataFiltered['0']!=undefined; else noData" baseChart [datasets]="annoChartDataFiltered['0']" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                            </canvas>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                             
+                            </ng-template>
                         </ng-template>
                     </ngb-tab>
                     <ngb-tab title="{{ 'Statistics.ccaa' | translate }}">
@@ -492,7 +561,126 @@
                     </ngb-tab>
                     <ngb-tab title="{{ 'StatisticsNest.byTipoEd' | translate }}">
                         <ng-template ngbTabContent>
-                        
+                            <div class="row" *ngIf="tipoEdFiltered==false; else filteredTipoEd">
+                                <div class="col-sm-6" *ngFor="let item of listaTipoEd" >
+                                    <div class="card">
+                                        <div class="card-header">
+                                        {{ 'StatisticsNest.dataTipoEd' | translate }} {{item.descripcion}}
+                                        </div>
+                                        <div class="card-body table-responsive">
+                                            <div *ngIf="tipoEdChartData[item.descripcion]!=undefined; else noData">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{item.descipcion}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numNest' | translate }}</td>
+                                                            <td>{{tipoEdChartData[item.descripcion]['0'].data['0']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
+                                                            <td>{{tipoEdChartData[item.descripcion]['0'].data['1']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
+                                                            <td>{{tipoEdChartData[item.descripcion]['0'].data['2']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
+                                                            <td>{{tipoEdChartData[item.descripcion]['0'].data['3']}}</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" >
+                                        <div class="card-header">
+                                            {{ 'StatisticsNest.chart' | translate }} {{item.descripcion}}
+                                        </div>
+                                        <div class="card-body">
+                                          
+                                            <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+                                           <canvas *ngIf="tipoEdChartData[item.descripcion]!=undefined; else noData" baseChart [datasets]="tipoEdChartData[item.descripcion]" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                            </canvas>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <ng-template #filteredTipoEd>
+                            <div class="row">
+                                <div class="col-sm-12"  >
+                                    <div class="card">
+                                        <div class="card-header">
+                                        {{ 'StatisticsNest.dataTipoEd' | translate }} {{tipoEdSelected}}
+                                        </div>
+                                        <div class="card-body table-responsive">
+                                            <div *ngIf="tipoEdChartDataFiltered[0]!=undefined; else noDataFiltered">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{tipoEdSelected}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numNest' | translate }}</td>
+                                                            <td>{{tipoEdChartDataFiltered['0']['0'].data['0']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
+                                                            <td>{{tipoEdChartDataFiltered['0']['0'].data['1']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
+                                                            <td>{{tipoEdChartDataFiltered['0']['0'].data['2']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
+                                                            <td>{{tipoEdChartDataFiltered['0']['0'].data['3']}}</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                            <ng-template #noDataFiltered>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" >
+                                        <div class="card-header">
+                                            {{ 'StatisticsNest.chart' | translate }} {{tipoEdSelected}}
+                                        </div>
+                                        <div class="card-body">
+                                          
+                                            <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+                                           <canvas *ngIf="tipoEdChartDataFiltered['0']!=undefined; else noData" baseChart [datasets]="tipoEdChartDataFiltered['0']" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                            </canvas>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                             
+                            </ng-template>
                         </ng-template>
                     </ngb-tab>
     </ngb-tabset>
