@@ -31,6 +31,7 @@ export class ViewVisitProfileTerrComponent implements OnInit {
   selectedOb:boolean=false;
   	markers = [
   	];
+  preFiles:File[]=[];
 
   constructor(private translate: TranslateService,
                 private territoriosService: TerritoriosService,
@@ -166,7 +167,23 @@ this.markers=[{ latitude: lat, longitude: lng }];
   		this.territoriosService.nuevaVisitaTerritorio(visita,this.terrId).subscribe(
                         data =>{
                         	console.log(data);
-                        	this.loading=false;
+                        	if(this.preFiles.length > 0)
+                          {
+                              console.log(this.preFiles);
+                              this.territoriosService.uploadImage(data["id"],this.preFiles).subscribe(
+                                  (data : any)=>{
+                                      this.loading=false;
+                                      this.alertService.success(this.translate.instant("ViewVisitProfile.success4"));
+                                  },
+                                  error=>{
+                                    this.loading=false;
+                                    this.alertService.danger(this.translate.instant("ViewVisitProfile.error4"));
+                                  }
+                                );      
+                          } else{
+                            this.loading=false;
+                          }
+
                         	let date=new Date((data["fecha"]));
                         	let y=date.getFullYear();
                         	let m=date.getMonth()+1;
@@ -266,5 +283,16 @@ this.markers=[{ latitude: lat, longitude: lng }];
                             this.alertService.danger(this.translate.instant("ViewVisitProfile.error2"));
                         });
   	}
+
+    preUpload(event) {
+      let file = event.target.files;
+      if (file.length > 0) {
+        for (let i in file){
+          this.preFiles[i]=file[i];
+      }
+        }
+    }
+
+
 
 }

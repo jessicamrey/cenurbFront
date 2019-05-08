@@ -29,6 +29,13 @@
 				                      <option *ngFor="let ob of listaObservaciones" value="{{ob.id}}" id="{{ob.id}}">{{ob.tipo}}</option>
 				                    </select>
 				                </div>
+
+                                <div class="form-group">
+                                            <label>{{ 'ViewVisitProfile.upload' | translate }} </label>
+                                            <input type="file" name="file" (change)="preUpload($event)" multiple />
+                                        </div>
+
+                                        
                                 </form>
 								<p>* {{ 'ViewVisitProfileTerr.infoMsg2' | translate }}</p>
                                

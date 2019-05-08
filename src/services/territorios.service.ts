@@ -166,6 +166,16 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/especies/'+especie+ '/statsObservaciones'+ busqueda);
   }
 
+//Subimos una imagen
 
+  uploadImage(id:number,images: File[]){
+    let formData: FormData = new FormData();
+    for (let image of images){
+      console.log(image);
+       formData.append('file[]', image, id+'_image'+new Date().getTime());
+    }
+   
+    return this.api.post('api/visitas-territorios/'+id+'/image', formData);
+  }
 
 }

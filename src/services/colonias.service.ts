@@ -197,14 +197,14 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
   //Subimos una imagen
 
-  uploadImage(id:number,image: File[]){
+  uploadImage(id:number,images: File[]){
     let formData: FormData = new FormData();
-    for (let i in image){
-      console.log(image[i]);
-       formData.append('file[]', image[i], id+'_image'+new Date().getTime()+i);
+    for (let image of images){
+      console.log(image);
+       formData.append('file[]', image, id+'_image'+new Date().getTime());
     }
    
-    return this.api.post('api/visitas-coloniass/'+id+'/image', formData);
+    return this.api.post('api/visitas-colonias/'+id+'/image', formData);
   }
 
 
