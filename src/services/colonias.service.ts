@@ -123,20 +123,20 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
 //Obtenemos las estadisticas por año
 
-  getStatsAnno(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnno?temporada=' + temp);
+  getStatsAnno(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnno' + busqueda);
   }
 
   //Obtenemos las estadisticas por ccaa
 
-  getStatsCcaa(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaa?temporada=' + temp);
+  getStatsCcaa(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaa' + busqueda);
   }
 
   //Obtenemos las estadisticas por provincia
 
-  getStatsProvincia(especie, temp, ccaa){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvincia?temporada=' + temp + '&ccaa=' + ccaa);
+  getStatsProvincia(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvincia' + busqueda );
   }
 
 //Obtenemos las temporadas

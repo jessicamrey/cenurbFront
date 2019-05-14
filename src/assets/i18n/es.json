@@ -254,7 +254,11 @@
     "Statistics":{
         "anno":         "Por año",
         "ccaa":         "Por Comunidad Autónoma",
-        "prov":         "Por provincia"
+        "prov":         "Por provincia",
+        "title":        "Número de colonias registradas en ",
+        "title1":       "Número de colonias registradas por comunidades",
+        "title2":       "Número de colonias registradas por provincias",
+        "table":        "Colonias registradas"
     },
     "GeneralTerr":{
         "all":          "Todas",

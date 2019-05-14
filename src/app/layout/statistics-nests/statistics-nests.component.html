@@ -80,7 +80,7 @@
 					                {{ 'StatisticsNest.data' | translate }} {{item}}
 					                </div>
 					                <div class="card-body table-responsive">
-                                        <div *ngIf="ccaaChartData[item.DEN_COM]!=undefined; else noData">
+                                        <div *ngIf="annoChartData[item]!=undefined; else noData">
     					                    <table class="table table-hover table-striped">
     					                        <thead>
     						                        <tr>
