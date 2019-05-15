@@ -24,6 +24,8 @@ export class StatisticsComponent implements OnInit {
   annoChartDataFiltered:any=[];
   ccaaChartDataFiltered:any=[];
   provChartDataFiltered:any=[];
+  provDataFiltered:any=[];
+
   munChartDataFiltered:any=[];
   tipoEdChartDataFiltered:any=[];
 
@@ -49,11 +51,6 @@ export class StatisticsComponent implements OnInit {
     public barChartLegend: boolean = true;
     labels:string[]=["Num. nidos", "Num. nidos ocupados", "Num. nidos vacios", "Num. nidos exito"];
 
-    show:boolean=false;
-    showCcaa:boolean=false;
-    showProv:boolean=false;
-    showMun:boolean=false;
-
     disableProv:boolean=true;
     disableMun:boolean=true;
 
@@ -66,13 +63,15 @@ export class StatisticsComponent implements OnInit {
 
     ccaaChartLabels:string[]=[];
     provChartLabels:string[]=[];
+    provChartLabelsFiltered:string[]=[];
+
 
     start=1;
     dataList:any=[];
     dataListProv:any=[];
 
 
-
+    listaProvinciasLabels:any=[];
 
   constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
@@ -81,7 +80,9 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit() {
     this.recuperaCCAA();
+    this.recuperaProvincias();
     this.recuperaTemporadas();
+    this.statsProvincia('','all', 'all');
     this.statsAnno('','all');
     this.statsCcaa('','all');
 
@@ -105,8 +106,7 @@ export class StatisticsComponent implements OnInit {
                 this.listaCCAA=data;
                 for (let ccaa of data){
                   this.ccaaChartLabels.push(ccaa["DEN_COM"]);
-                  this.dataList.push("0");                  
-                  this.statsProvincia(ccaa["ID_COM"], '', 'all');
+                  this.dataList.push("0");
                 }
                 this.ccaaChartData=[{data: this.dataList, label: this.especieNombre}];
               },
@@ -130,8 +130,25 @@ export class StatisticsComponent implements OnInit {
         );
 }
 
+recuperaProvincias(){
+    this.listaProv= [];
+    this.seoService.getProvincias().subscribe(
+              data => {
+                this.listaProv=data;
+                for (let prov of data){
+                  this.provChartLabels.push(prov["DEN_PROV"]);
+                  this.dataListProv.push("0");
+                }
+                this.provChartData=[{data: this.dataListProv, label: this.especieNombre}];
+              },
+              error => {
+                  this.alertService.warning(this.translate.instant("Dashboard.errorGetProv"));
+                  
+            }
+        );
+}
+
 statsAnno(busqueda, anno){
-    this.show=false;
     this.loading=true;
     if(anno=='all'){
       this.annoFiltered=false;
@@ -142,7 +159,6 @@ statsAnno(busqueda, anno){
             this.annoChartData[item["anno"]]=[dataList];
 
                       if (this.start==data.length){
-                        this.show=true;
                         this.start=1;
                         this.loading=false;
                       }
@@ -155,9 +171,9 @@ statsAnno(busqueda, anno){
           console.log(error);
         });
     }else{
-
       this.annoChartDataFiltered=[this.annoChartData[anno]];
       this.annoFiltered=true;
+      this.loading=false;
     }
   
 
@@ -167,13 +183,21 @@ statsAnno(busqueda, anno){
 
 
   statsCcaa(busqueda,ccaa){
-    this.showCcaa=false;
+
+
+
     this.loading=true;
-    if(ccaa=='all'){
+    
+
+      for (let index in this.dataList){
+        this.dataList[index]="0";
+      }
+
+
       this.ccaaFiltered=false;
       this.coloniasService.getStatsCcaa(this.especie, busqueda).subscribe(
       data=>{
-
+        console.log(data);
         if (data.length>0){
 
 
@@ -190,68 +214,102 @@ statsAnno(busqueda, anno){
           this.loading=false;
 
         }
+
+         if(ccaa!='all'){
+    
+           // this.ccaaChartDataFiltered=[this.ccaaChartData['0'].data[this.ccaaChartLabels.indexOf(ccaa)]];
+           this.ccaaChartDataFiltered=[data["0"]["1"]];
+            
+            this.ccaaFiltered=true;
+            this.loading=false;
+          }
+
+
       },
       error=>{
         this.loading=false;
         console.log(error);
       });
-    }else{
-      this.ccaaChartDataFiltered=[this.ccaaChartData['0'].data[this.ccaaChartLabels.indexOf(ccaa)]];
-      this.ccaaFiltered=true;
-    }
+   
+    
     
 
   }
 
-  statsProvincia(idCom, busqueda, prov){
-    console.log("Entramos en el id de comunidad: " + idCom);
+  statsProvincia(busqueda, prov, ccaa){
     this.loading=true;
-    if (prov=='all'){
-      //Queremos recuperar todas las estadisticas al mismo tiempo, por lo que el primer paso es recuperar las provincias de la ccaa
-      this.seoService.getProvincia(idCom).subscribe(
-              data => {
-                for (let provincia of data){
-                  this.provChartLabels.push(provincia["DEN_PROV"]);
-                  this.coloniasService.getStatsProvincia(this.especie,busqueda).subscribe(
-                    dataProv=>{
-                        if (dataProv.length>0){
+    let dataListFiltered:any=[];
+   
+
+        
 
 
-                          for (let item of dataProv){
-
-                            this.dataListProv[this.provChartLabels.indexOf(item["provincia"])]=item["1"];
-                          }
-
-                          this.provChartData=[{data: this.dataListProv, label: this.especieNombre}];
-                        }
-                        else{ //sin datos
-                          this.provChartData=[];
-                          this.loading=false;
-
-                        }
-
-
-                    },
-                    errorProv=>{
-                      this.loading=false;
-                    });
-                }
-                console.log(this.provChartLabels);
-                console.log(this.provChartData);
-              },
-              error => {
-                  this.alertService.warning(this.translate.instant("Dashboard.errorGetProv"));
-                  
+        
+        
+          console.log("caso2");
+            for (let index in this.dataListProv){
+              this.dataListProv[index]="0";
             }
-        );
+            this.provFiltered=false;
+            this.coloniasService.getStatsProvincia(this.especie, busqueda).subscribe(
+            data=>{
+
+              if (data.length>0){
 
 
-    }else{
+                for (let item of data){
 
-      this.provChartDataFiltered=[this.provChartData['0'].data[this.provChartLabels.indexOf(prov)]];
-      this.ccaaFiltered=true;
-    }
+                  this.dataListProv[this.provChartLabels.indexOf(item["provincia"])]=item["1"];
+                  
+                }
 
+                this.provChartData=[{data: this.dataListProv, label: this.especieNombre}];
+              }
+              else{ //sin datos
+                this.provChartData=[];
+                this.loading=false;
+
+              }
+
+              if (prov!='all'){
+                console.log("caso 3");
+
+                //Este es el caso en el que queremos filtrar una unica provincia
+
+                //this.provDataFiltered=[this.provChartData['0'].data[this.provChartLabels.indexOf(prov)]];
+                this.provDataFiltered=[data["0"]["1"]];
+                this.provFiltered=true;
+              
+               this.loading=false;
+              }else{
+                if (ccaa!='all'){
+                  console.log("caso 1");
+                  //Este es el caso en el que queremos ver varias provincias por ccaa
+                  this.provChartLabelsFiltered=[];
+                  for (let provincia of this.listaProv){
+                      this.provDataFiltered[provincia["ID_PROV"]]=(this.provChartData['0'].data[this.provChartLabels.indexOf(provincia["DEN_PROV"])]);
+                      this.provChartLabelsFiltered.push(provincia["DEN_PROV"]);
+                      dataListFiltered.push(this.provChartData['0'].data[this.provChartLabels.indexOf(provincia["DEN_PROV"])]);
+                  }
+                  this.provFiltered=false;
+                  this.provSelected=ccaa;
+                  this.provChartDataFiltered=[{data: dataListFiltered, label: this.especieNombre}];
+                }
+
+              }
+
+              
+
+            },
+            error=>{
+              this.loading=false;
+              console.log(error);
+            });
+
+        
+     
+
+    
   }
 
 
@@ -259,8 +317,9 @@ statsAnno(busqueda, anno){
   filtrar(){
 
     //reseteamos las listas de datos
-    this.show=false;
-    this.showCcaa=false;
+
+    
+
     this.start=1;
     let busqueda='?';
 
@@ -279,22 +338,20 @@ statsAnno(busqueda, anno){
     temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
     console.log(busqueda);
 
+    
+    
     this.statsAnno(busqueda, temp);
     this.statsCcaa(busqueda,ccaa);
-
-    /*if (ccaa!='all'){
-      this.disableProv=false;
-      this.statsProvincia(busqueda, prov);
-    }else{
-      this.disableProv=true;
-
-    }*/
+    this.statsProvincia(busqueda, prov, ccaa);
+    
+    this.loading=false;
 
     
 
 
 
   }
+
 
 
 

@@ -32,6 +32,11 @@ private url: string = environment.backendUrl;
     return this.http.get<any>(this.url + '/api/provincias/' + idCom);
   }
 
+  //Recupera un listado de todas las provincias de la base de datos de SeO
+  getProvincias() {
+    return this.http.get<any>(this.url + '/api/provincias');
+  }
+
 //Recupera los municipios de una provincia de la base de datos de SEO
   getMunicipio(idProv:any ) {
     return this.http.get<any>(this.url + '/api/municipios/' + idProv);
