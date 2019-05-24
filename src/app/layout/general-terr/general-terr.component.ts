@@ -24,6 +24,8 @@ export class GeneralTerrComponent implements OnInit {
 	  chartLabels:string[]=[];
   	especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
     show:boolean=false;
+    show2:boolean=false;
+
     start=1;
 
     public barChartOptions: any = {
@@ -60,13 +62,13 @@ export class GeneralTerrComponent implements OnInit {
   		this.dataList=[];
   		this.chartLabels=[];
 
-  		if (this.listaNoCol.length<=0){
+  		//if (this.listaNoCol.length<=0){
 
-  			this.chartData.push({data: this.dataList, label: titulo});
+  			this.chartData=[{data: this.dataList, label: titulo}];
 
-			  const clone = JSON.parse(JSON.stringify(this.chartData));
+			  /*const clone = JSON.parse(JSON.stringify(this.chartData));
         	clone[0].data = this.dataList;
-        	this.chartData = clone;
+        	this.chartData = clone;*/
 
 
 
@@ -77,7 +79,7 @@ export class GeneralTerrComponent implements OnInit {
 
                 for (let item of data){
 
-                	this.getStatsEspecie(item["ID_ESP"],data.length);
+                	this.getStatsEspecie(item["ID_ESP"],data.length, '');
                 	this.chartLabels.push(item["DEN_ESP_CAS"]);
                 }
               },
@@ -87,7 +89,8 @@ export class GeneralTerrComponent implements OnInit {
                   
             }
         );
-  		}else{//Aqui nos ahorramos llamadas a seoService
+  		//}
+      /*else{//Aqui nos ahorramos llamadas a seoService
 
   			this.chartData.push({data: this.dataList, label: titulo});
 
@@ -100,36 +103,24 @@ export class GeneralTerrComponent implements OnInit {
                 	this.chartLabels.push(item["DEN_ESP_CAS"]);
                 }
 
-  		}
+  		}*/
         
     }
 
-    getStatsEspecie(especie, cantidad){
-
-
-    	let busqueda='';
-
-    	let ccaa=$( "#selectCCAA option:selected" ).attr("value");
-    	let prov=$( "#selectProvincia option:selected" ).attr("value");
-    	let temp=$( "#temporada option:selected" ).attr("value");
-      let tipo=$( "#tipo option:selected" ).attr("value");
-
-    	
-    	ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
-    	prov!='all' ? busqueda=busqueda+'&provincia='+prov : busqueda;
-    	temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
-      tipo!='all' ? busqueda=busqueda+'&tipo='+tipo : busqueda;
-
-    	console.log(busqueda);
-
+    getStatsEspecie(especie, cantidad, busqueda){
+      console.log(this.dataList);
     	this.territoriosService.getStats(especie, busqueda).subscribe(
               data => {
+               
+
               	for (let item of data){
                     this.dataList.push(item["1"]);
+                     this.chartData=[{data: this.dataList, label: 'Territorios registrados'}];
                     if (this.start==cantidad){
                       this.show=true;
                       this.start=1;
                       this.loading=false;
+
                     }
                     this.start++;
                 }
@@ -144,6 +135,55 @@ export class GeneralTerrComponent implements OnInit {
         );
 
     }
+
+    filtrar(){
+      this.show=false;
+      this.loading=true;
+      this.dataList=[];
+      this.chartLabels=[];
+      let busqueda='';
+
+      let ccaa=$( "#selectCCAA option:selected" ).attr("value");
+      let prov=$( "#selectProvincia option:selected" ).attr("value");
+      let temp=$( "#temporada option:selected" ).attr("value");
+      let tipo=$( "#tipo option:selected" ).attr("value");
+
+      
+      ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
+      prov!='all' ? busqueda=busqueda+'&provincia='+prov : busqueda;
+      temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
+      tipo!='all' ? busqueda=busqueda+'&tipo='+tipo : busqueda;
+
+
+      console.log(busqueda);
+
+      /*for (let especie of this.listaNoCol){
+        this.getStatsEspecie(especie["ID_ESP"], this.listaNoCol.length, busqueda);
+      }*/
+
+      this.seoService.listaNoColoniales().subscribe(
+              data => {
+                this.listaNoCol=data;
+                console.log(this.listaNoCol);
+
+                for (let item of data){
+
+                  this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                  this.chartLabels.push(item["DEN_ESP_CAS"]);
+                }
+              },
+              error => {
+                this.loading=false;
+                  this.alertService.warning(this.translate.instant("Dashboard.errorGetNoCol"));
+                  
+            }
+        );
+
+
+    }
+
+
+
 
 
     recuperaCCAA(){

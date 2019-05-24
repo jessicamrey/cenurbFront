@@ -79,6 +79,34 @@
                                       </agm-marker>
 
                                     </agm-map>-->
+
+                                    <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'RegisterCol.locNidos' | translate }}</p>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <p style="font-size: 10px">{{ 'RegisterCol.fachada' | translate }}</p>                                        
+                                            <p style="font-size: 10px">{{ 'RegisterCol.trasera' | translate }}</p> 
+                                            <p style="font-size: 10px">{{ 'RegisterCol.latIzq' | translate }}</p>
+                                            <p style="font-size: 10px">{{ 'RegisterCol.latDer' | translate }}</p>
+                                            <p style="font-size: 10px">{{ 'RegisterCol.patio' | translate }}</p>
+                                            <p style="font-size: 10px">{{ 'RegisterTerr.num' | translate }}</p>
+                                            <p style="font-size: 10px">{{ 'RegisterTerr.empl' | translate }}</p>
+
+
+                                        </div>
+                                        <div class="col-md">
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.fachada}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.trasera}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.lateralIzquierdo}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.lateralDerecho}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.patioInferior}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.numPiso}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.emplazamiento.tipo}}</p> 
+
+
+                                        </div>
+
+                                     </div>
+                                     
                                 </div>
                                 <div class="col-md-6">
                                 <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.name' | translate }}</p>

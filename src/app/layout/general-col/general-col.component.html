@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label>{{ 'RegisterCol.ccaa' | translate }}</label>
                     <select class="form-control" (change)="recuperaProvincia()" id="selectCCAA" >
-                    	<option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                        <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
                         <option *ngFor="let ccaa of listaCCAA" value="{{ccaa.DEN_COM}}" id="{{ccaa.ID_COM}}">{{ccaa.DEN_COM}}</option>
                     </select>
                 </div>
@@ -21,36 +21,75 @@
                 <div class="form-group">
                     <label>{{ 'RegisterCol.prov' | translate }}</label>
                     <select class="form-control"  (change)="recuperaMunicipio()" id="selectProvincia" >
-                    	<option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
-                      	<option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
+                        <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                        <option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
                     </select>
                 </div>
             </div>
             <div class="col-sm-4">
-	            <div class="form-group">
-	                    <label>{{ 'RegisterCol.temp' | translate }}</label>
-	                    <select class="form-control" id="temporada">
-	                        <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
-	                        <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
-	                    </select>
+                <div class="form-group">
+                        <label>{{ 'RegisterCol.temp' | translate }}</label>
+                        <select class="form-control" id="temporada">
+                            <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                            <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
+                        </select>
 
-	                </div>
+                    </div>
             </div>
         </div>
         <div class="row">
-        	<div class="col-sm-12">
-        		<button class="btn btn-secondary" (click)="recuperaColoniales('Colonias registradas')">{{ 'GeneralTerr.apply' | translate }}</button>
-        	</div>
+            <div class="col-sm-12">
+                <button class="btn btn-secondary" (click)="filtrar()">{{ 'GeneralTerr.apply' | translate }}</button>
+            </div>
         </div>
     </div>
+</div>
+<div class="row">
+
+                        <div class="col-sm-12">
+                                <div class="card">
+                                    
+                                    <div class="card-body table-responsive">
+                                        <div >
+                                            <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{ 'Statistics.table' | translate }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of listaCol">
+                                                            <td>{{item.DEN_ESP_CAS}}</td>
+                                                            <td > 
+                                                                <div >
+                                                                    {{chartData['0'].data[listaCol.indexOf(item)]}}
+                                                                </div>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+
+                               
+                            </div>
+
+<div class="col-sm-12">
     <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 
     <canvas *ngIf="show==true" baseChart [datasets]="chartData" [labels]="chartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event) ">
     </canvas>
-
+</div>
 </div>
 
 
-				
+
+
+
+
+                
 
                 

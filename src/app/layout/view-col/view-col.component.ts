@@ -34,6 +34,8 @@ export class ViewColComponent implements OnInit {
     listaMun:any[]= [];
     busqueda:string;
     filtered:boolean=false;
+    loading=false;
+  
 
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
@@ -54,11 +56,12 @@ export class ViewColComponent implements OnInit {
   		this.coloniasService.recuperaColonias(pageNumber, especie).subscribe(
               data => {
                 this.listaColonias=data["hydra:member"];
+                console.log(this.listaColonias);
                 let last=data["hydra:view"]["hydra:last"];
                 last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
                 this.totalPages=last*10;
                 console.log(data);
-                console.log(this.listaColonias);
+                
               },
               error => {
                   this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));

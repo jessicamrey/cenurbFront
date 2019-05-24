@@ -105,6 +105,12 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
   
   }
 
+   //Desmarcamos un favorito
+  removeFavorito(colId:number, usuario) {
+    return this.api.delete('api/territorios/favoritos/' + colId + '?usuario=' + usuario);
+  }
+
+
 
   //Recupera las visitas para un territorio
   recuperaVisitasGeneral( stringBusqueda:any) {
@@ -137,20 +143,20 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
 
 //Obtenemos las estadisticas por año
 
-  getStatsAnno(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnnoTerr?temporada=' + temp);
+  getStatsAnno(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsAnnoTerr' + busqueda);
   }
 
   //Obtenemos las estadisticas por ccaa
 
-  getStatsCcaa(especie, temp){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaaTerr?temporada=' + temp);
+  getStatsCcaa(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsCcaaTerr' + busqueda);
   }
 
   //Obtenemos las estadisticas por provincia
 
-  getStatsProvincia(especie, temp, ccaa){
-    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvinciaTerr?temporada=' + temp + '&ccaa=' + ccaa);
+  getStatsProvincia(especie,busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsProvinciaTerr' + busqueda );
   }
 
 

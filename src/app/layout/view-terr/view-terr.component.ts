@@ -169,5 +169,21 @@ export class ViewTerrComponent implements OnInit {
 
   }
 
+  newFavorito(terrId){
+    let data={
+      "usuario":"0",
+      "territorio":terrId
+    };
+     this.territoriosService.nuevoFavorito(data).subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
+
 
 }

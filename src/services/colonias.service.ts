@@ -51,6 +51,12 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
   
   }
 
+  //Desmarcamos un favorito
+  removeFavorito(colId:number, usuario) {
+    return this.api.delete('api/colonias/favoritos/' + colId + '?usuario=' + usuario);
+  }
+
+
 //Recuperamos colonias con un string de busqueda que incluye filtros
   recuperaColoniasFiltered( page:number, busqueda:string) {
     return this.http.get<any>(this.url + '/api/colonias?page=' + page + busqueda);

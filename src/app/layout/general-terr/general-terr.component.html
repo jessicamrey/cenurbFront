@@ -49,16 +49,55 @@
         </div>
         <div class="row">
         	<div class="col-sm-12">
-        		<button class="btn btn-secondary" (click)="recuperaNoColoniales('Territorios registrados')">{{ 'GeneralTerr.apply' | translate }}</button>
+        		<button class="btn btn-secondary" (click)="filtrar()">{{ 'GeneralTerr.apply' | translate }}</button>
         	</div>
         </div>
     </div>
+</div>
+<div class="row">
+
+                        <div class="col-sm-12">
+                                <div class="card">
+                                    
+                                    <div class="card-body table-responsive">
+                                        <div >
+                                            <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{ 'Statistics.tableTerr' | translate }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of listaNoCol">
+                                                            <td>{{item.DEN_ESP_CAS}}</td>
+                                                            <td > 
+                                                                <div >
+                                                                    {{chartData['0'].data[listaNoCol.indexOf(item)]}}
+                                                                </div>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+
+                               
+                            </div>
+
+<div class="col-sm-12">
     <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 
     <canvas *ngIf="show==true" baseChart [datasets]="chartData" [labels]="chartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event) ">
     </canvas>
-
 </div>
+</div>
+
+
+
+
 
 
 				

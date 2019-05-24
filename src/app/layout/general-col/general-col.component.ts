@@ -51,34 +51,34 @@ export class GeneralColComponent implements OnInit {
   }
 
   recuperaColoniales(titulo){
-    this.loading=true;
+   this.loading=true;
     this.show=false;
-  	
-  	console.log(this.chartData);
-  	console.log(this.chartLabels);
-  		this.chartData=[];
-  		this.dataList=[];
-  		this.chartLabels=[];
+    
+    console.log(this.chartData);
+    console.log(this.chartLabels);
+      this.chartData=[];
+      this.dataList=[];
+      this.chartLabels=[];
 
-  		if (this.listaCol.length<=0){
+      //if (this.listaNoCol.length<=0){
 
-  			this.chartData.push({data: this.dataList, label: titulo});
+        this.chartData=[{data: this.dataList, label: titulo}];
 
-			  const clone = JSON.parse(JSON.stringify(this.chartData));
-        	clone[0].data = this.dataList;
-        	this.chartData = clone;
+        /*const clone = JSON.parse(JSON.stringify(this.chartData));
+          clone[0].data = this.dataList;
+          this.chartData = clone;*/
 
 
 
-  			this.seoService.listaColoniales().subscribe(
+        this.seoService.listaColoniales().subscribe(
               data => {
                 this.listaCol=data;
                 console.log(this.listaCol);
 
                 for (let item of data){
 
-                	this.getStatsEspecie(item["ID_ESP"],data.length);
-                	this.chartLabels.push(item["DEN_ESP_CAS"]);
+                  this.getStatsEspecie(item["ID_ESP"],data.length, '');
+                  this.chartLabels.push(item["DEN_ESP_CAS"]);
                 }
               },
               error => {
@@ -87,57 +87,96 @@ export class GeneralColComponent implements OnInit {
                   
             }
         );
-  		}else{//Aqui nos ahorramos llamadas a seoService
+      //}
+      /*else{//Aqui nos ahorramos llamadas a seoService
 
-  			this.chartData.push({data: this.dataList, label: titulo});
+        this.chartData.push({data: this.dataList, label: titulo});
 
-			    const clone = JSON.parse(JSON.stringify(this.chartData));
-        	clone[0].data = this.dataList;
-        	this.chartData = clone;
+          const clone = JSON.parse(JSON.stringify(this.chartData));
+          clone[0].data = this.dataList;
+          this.chartData = clone;
 
-  			for (let item of this.listaCol){
-                	this.getStatsEspecie(item["ID_ESP"], this.listaCol.length);
-                	this.chartLabels.push(item["DEN_ESP_CAS"]);
+        for (let item of this.listaNoCol){
+                  this.getStatsEspecie(item["ID_ESP"], this.listaNoCol.length);
+                  this.chartLabels.push(item["DEN_ESP_CAS"]);
                 }
 
-  		}
+      }*/
         
     }
 
-    getStatsEspecie(especie, cantidad){
+    getStatsEspecie(especie, cantidad, busqueda){
 
 
-    	let busqueda='';
-
-    	let ccaa=$( "#selectCCAA option:selected" ).attr("value");
-    	let prov=$( "#selectProvincia option:selected" ).attr("value");
-    	let temp=$( "#temporada option:selected" ).attr("value");
-    	
-    	ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
-    	prov!='all' ? busqueda=busqueda+'&provincia='+prov : busqueda;
-    	temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
-    	console.log(busqueda);
-
-    	this.coloniasService.getStats(especie, busqueda).subscribe(
+     console.log(this.dataList);
+      this.coloniasService.getStats(especie, busqueda).subscribe(
               data => {
-              	for (let item of data){
+               
+
+                for (let item of data){
                     this.dataList.push(item["1"]);
+                     this.chartData=[{data: this.dataList, label: 'Territorios registrados'}];
                     if (this.start==cantidad){
                       this.show=true;
                       this.start=1;
                       this.loading=false;
+
                     }
                     this.start++;
                 }
                 
               },
               error => {
-              	console.log(error);
+                console.log(error);
                 this.loading=false;
                   this.alertService.warning(this.translate.instant("Dashboard.errorGetNoCol"));
                   
             }
         );
+
+    }
+
+   filtrar(){
+      this.show=false;
+      this.loading=true;
+      this.dataList=[];
+      this.chartLabels=[];
+      let busqueda='';
+
+      let ccaa=$( "#selectCCAA option:selected" ).attr("value");
+      let prov=$( "#selectProvincia option:selected" ).attr("value");
+      let temp=$( "#temporada option:selected" ).attr("value");
+
+      
+      ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
+      prov!='all' ? busqueda=busqueda+'&provincia='+prov : busqueda;
+      temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
+
+
+      console.log(busqueda);
+
+      /*for (let especie of this.listaNoCol){
+        this.getStatsEspecie(especie["ID_ESP"], this.listaNoCol.length, busqueda);
+      }*/
+
+      this.seoService.listaColoniales().subscribe(
+              data => {
+                this.listaCol=data;
+                console.log(this.listaCol);
+
+                for (let item of data){
+
+                  this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                  this.chartLabels.push(item["DEN_ESP_CAS"]);
+                }
+              },
+              error => {
+                this.loading=false;
+                  this.alertService.warning(this.translate.instant("Dashboard.errorGetNoCol"));
+                  
+            }
+        );
+
 
     }
 

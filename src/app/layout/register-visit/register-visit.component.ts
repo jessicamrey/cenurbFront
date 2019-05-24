@@ -146,4 +146,33 @@ export class RegisterVisitComponent implements OnInit {
         );
     }
 
+
+    removeFavoritoTerr(terrId){
+     this.territoriosService.removeFavorito(terrId, '0').subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
+
+
+    removeFavorito(colId){
+     this.coloniasService.removeFavorito(colId, '0').subscribe(
+              message => {
+                console.log(message);
+              },
+              error => {
+                console.log(error);
+                  
+            }
+        );
+    }
+
+
+
+
 }

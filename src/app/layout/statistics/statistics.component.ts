@@ -19,21 +19,16 @@ export class StatisticsComponent implements OnInit {
   ccaaChartData:any=[];
   provChartData:any=[];
   munChartData:any=[];
-  tipoEdChartData:any=[];
 
   annoChartDataFiltered:any=[];
   ccaaChartDataFiltered:any=[];
   provChartDataFiltered:any=[];
   provDataFiltered:any=[];
 
-  munChartDataFiltered:any=[];
-  tipoEdChartDataFiltered:any=[];
 
 
   listaCCAA:any=[];
   listaProv:any=[];
-  listaMun:any=[];
-  listaTipoEd:any[]= [];
   listaTemporadas:any=[];
 
 
@@ -49,10 +44,7 @@ export class StatisticsComponent implements OnInit {
     public barChartTypeH: string = 'horizontalBar';
     public barChartType: string = 'bar';
     public barChartLegend: boolean = true;
-    labels:string[]=["Num. nidos", "Num. nidos ocupados", "Num. nidos vacios", "Num. nidos exito"];
 
-    disableProv:boolean=true;
-    disableMun:boolean=true;
 
     annoFiltered:boolean=false;
     annoSelected:any;
@@ -71,7 +63,6 @@ export class StatisticsComponent implements OnInit {
     dataListProv:any=[];
 
 
-    listaProvinciasLabels:any=[];
 
   constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
@@ -210,7 +201,7 @@ statsAnno(busqueda, anno){
           this.ccaaChartData=[{data: this.dataList, label: this.especieNombre}];
         }
         else{ //sin datos
-          this.ccaaChartData=[];
+          this.ccaaChartData=[{data: [], label: this.especieNombre}];
           this.loading=false;
 
         }
@@ -218,7 +209,12 @@ statsAnno(busqueda, anno){
          if(ccaa!='all'){
     
            // this.ccaaChartDataFiltered=[this.ccaaChartData['0'].data[this.ccaaChartLabels.indexOf(ccaa)]];
-           this.ccaaChartDataFiltered=[data["0"]["1"]];
+           if (data.length>0){
+             this.ccaaChartDataFiltered=[data["0"]["1"]];
+           }else{
+             this.ccaaChartDataFiltered=["0"];
+           }
+           
             
             this.ccaaFiltered=true;
             this.loading=false;
@@ -266,7 +262,7 @@ statsAnno(busqueda, anno){
                 this.provChartData=[{data: this.dataListProv, label: this.especieNombre}];
               }
               else{ //sin datos
-                this.provChartData=[];
+                this.provChartData=[{data: [], label: this.especieNombre}];
                 this.loading=false;
 
               }
@@ -277,23 +273,34 @@ statsAnno(busqueda, anno){
                 //Este es el caso en el que queremos filtrar una unica provincia
 
                 //this.provDataFiltered=[this.provChartData['0'].data[this.provChartLabels.indexOf(prov)]];
-                this.provDataFiltered=[data["0"]["1"]];
+                if (data.length>0){
+                  this.provDataFiltered=[data["0"]["1"]];
+                }else{
+                  this.provDataFiltered=["0"];
+
+                }
+                
                 this.provFiltered=true;
               
                this.loading=false;
               }else{
+
+
                 if (ccaa!='all'){
                   console.log("caso 1");
+
                   //Este es el caso en el que queremos ver varias provincias por ccaa
-                  this.provChartLabelsFiltered=[];
-                  for (let provincia of this.listaProv){
-                      this.provDataFiltered[provincia["ID_PROV"]]=(this.provChartData['0'].data[this.provChartLabels.indexOf(provincia["DEN_PROV"])]);
-                      this.provChartLabelsFiltered.push(provincia["DEN_PROV"]);
-                      dataListFiltered.push(this.provChartData['0'].data[this.provChartLabels.indexOf(provincia["DEN_PROV"])]);
-                  }
-                  this.provFiltered=false;
-                  this.provSelected=ccaa;
-                  this.provChartDataFiltered=[{data: dataListFiltered, label: this.especieNombre}];
+                
+                    this.provChartLabelsFiltered=[];
+                    for (let provincia of this.listaProv){
+                        this.provDataFiltered[provincia["ID_PROV"]]=(this.provChartData['0'].data[this.provChartLabels.indexOf(provincia["DEN_PROV"])]);
+                        this.provChartLabelsFiltered.push(provincia["DEN_PROV"]);
+                        dataListFiltered.push(this.provChartData['0'].data[this.provChartLabels.indexOf(provincia["DEN_PROV"])]);
+                    }
+                    this.provFiltered=false;
+                    this.provSelected=ccaa;
+                    this.provChartDataFiltered=[{data: dataListFiltered, label: this.especieNombre}];
+                  
                 }
 
               }
@@ -316,9 +323,7 @@ statsAnno(busqueda, anno){
 
   filtrar(){
 
-    //reseteamos las listas de datos
 
-    
 
     this.start=1;
     let busqueda='?';

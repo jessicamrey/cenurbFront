@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
         localStorage.clear();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     onLoggedin() {
         localStorage.setItem('isLoggedin', 'true');
@@ -62,5 +63,78 @@ export class LoginComponent implements OnInit {
         );
 
     }
+
+
+
+    //------------------------------------PEDRO SILOS ---------------------------------------------
+
+    cerrarVentana(sValor) {
+        //alert(sValor);
+            var sTxt = "";
+            if (sValor != '') {
+                var sRet = sValor.split("#");
+                sTxt += "ID:"+sRet[0]+"#";
+                sTxt += "NOMBRE:"+sRet[1]+"#";
+                sTxt += "EMAIL:"+sRet[2]+"#";
+            } else{
+                sTxt = "NOT FOUND";
+            }
+            alert(sTxt);
+        }
+
+    abrirVentana(nTipo) {
+
+        /*var sUser = document.getElementById("tbxUser").value;
+        var sPass = document.getElementById("tbxPass").value;
+        var sId = document.getElementById("tbxID").value;*/
+
+        var sUser = $("#tbxUser").val();
+        var sPass = $("#tbxPass").val();
+        var sId = $("#tbxID").val();
+
+
+        var sLink = "http://www.seguimientodeaves.org/_Atlas/frmLoginCensosServer.php";
+        sLink += "?TIPO="+nTipo+"&USER="+sUser+"&PASS="+sPass+"&ID="+sId;
+        $(function(){
+            var src = sLink + '&REF=#' + encodeURIComponent( document.location.href );
+            var sty = 'visibility:hidden;';
+            try {
+                $('#iframe').children('iframe').remove();
+                let iframe = $( '<iframe src="' + src + '" style="' + sty + '" scrolling="no" frameborder="1"><\/iframe>' ).appendTo( '#iframe' );
+            } catch (e) {}
+            $.receiveMessage(
+                function(e){
+                    var h = e.data.replace( 'sVal=', '' );
+
+                    h = decodeURIComponent(h);
+                    console.log(h);
+                    while (h.toString().indexOf('+') != -1) h = h.toString().replace('+',' ');
+                    //this.cerrarVentana(h);
+
+                    function cerrar (sValor){
+                        var sTxt = "";
+                        if (sValor != '') {
+                            var sRet = sValor.split("#");
+                            sTxt += "ID:"+sRet[0]+"#";
+                            sTxt += "NOMBRE:"+sRet[1]+"#";
+                            sTxt += "EMAIL:"+sRet[2]+"#";
+                        } else{
+                            sTxt = "NOT FOUND";
+                        }
+                        alert(sTxt);
+                            }
+
+                     cerrar(h);
+                     
+            }, 'http://www.seguimientodeaves.org' );
+        });
+    }
+
+
+
+
+    
+
+
 }
 
