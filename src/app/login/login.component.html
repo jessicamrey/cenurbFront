@@ -4,47 +4,36 @@
         <div class="col-md-4">
             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
             <h1>{{ 'Login.welcome' | translate }}</h1>
-            <form role="form" id="loginForm">
+            <form role="form" id="loginForm" >
                 <div class="form-content">
                     <div class="form-group" >
-                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="email" placeholder="{{ 'Login.email' | translate }}">
+                        <input type="text"  class="form-control input-underline input-lg" id="tbxUser" name="_username" placeholder="{{ 'Login.email' | translate }}">
                     </div>
 
-                    <div class="form-group" *ngIf="!isAnonymous">
-                        <input type="password" class="form-control input-underline input-lg" id="password" placeholder="{{ 'Login.password' | translate }}">
+                    <div class="form-group" >
+                        <input type="text" class="form-control input-underline input-lg" id="tbxPass" name="_password" placeholder="{{ 'Login.password' | translate }}">
                     </div>
 
-                    <!-- Esta parte solo es visible cuando queremos entrar sin usuario-->
-                    <div class="form-group" *ngIf="isAnonymous">
-                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="name" placeholder="{{ 'Login.name' | translate }}">
-                    </div>
-
-                    <div class="form-group" *ngIf="isAnonymous">
-                        <input type="text" class="form-control input-underline input-lg" id="lastName" placeholder="{{ 'Login.lastName' | translate }}">
-                    </div>
-
-                    <div class="form-group" *ngIf="isAnonymous">
-                        <input type="text" class="form-control input-underline input-lg" id="phone" placeholder="{{ 'Login.phone' | translate }}">
-                    </div>
+                
 
                 </div>
-                <a class="btn rounded-btn" *ngIf="!isAnonymous" [routerLink]="['/selector']" (click)="onLoggedin()"> {{ 'Login.in' | translate }} </a>
-                &nbsp;
-                <a class="btn rounded-btn" *ngIf="isAnonymous" [routerLink]="['/selector']" (click)="loginAnonymous()"> {{ 'Login.inAno' | translate }} </a>
-                &nbsp;
+                <a class="btn rounded-btn"  (click)="onLoggedin()"> {{ 'Login.in' | translate }} </a>
+
+               
                 <p></p>
-                <h5 *ngIf="!isAnonymous">{{ 'Login.msg1' | translate }}</h5>
-                <h5 *ngIf="!isAnonymous">{{ 'Login.msg2' | translate }}</h5>
-                <h5 *ngIf="isAnonymous">{{ 'Login.msg3' | translate }}</h5>
+                <h5 *ngIf="isAnonymous">{{ 'Login.msg1' | translate }}</h5>
+                <h5 *ngIf="isAnonymous">{{ 'Login.msg2' | translate }}</h5>
                 <p></p>
                 <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Login.register' | translate }}</a>
-                <a class="btn rounded-btn"  *ngIf="!isAnonymous" (click)="isAnonymous=true">{{ 'Login.inAno' | translate }}</a>
-                <a class="btn rounded-btn" *ngIf="isAnonymous" (click)="isAnonymous=false">{{ 'Login.msg4' | translate }}</a>
             </form>
+
+            
+
+
         </div>
     </div>
 
-<form name="frmUsuario" method="POST">
+<!--<form name="frmUsuario" method="POST">
         <input id="tbxUser" type="text" />
         <input id="tbxPass" type="text"/>
         <input type="button" value="Buscar ALIAS/CLAVE"  (click)="abrirVentana(0);">
@@ -54,6 +43,9 @@
 
         <div id="iframe" class="clear" style="visibility:hidden;"></div>
 
-    </form>
+    </form>-->
 
+
+   <!-- <iframe src="http://localhost:8000/api/login/"></iframe>-->
+<button (click)="console()">PRUEBA</button>
 </div>

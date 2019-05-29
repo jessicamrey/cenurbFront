@@ -16,8 +16,7 @@ declare var $:any;
 })
 export class LoginComponent implements OnInit {
 
-	isAnonymous:boolean=false;
-    
+    url:string="localhost:8000/api/login"
 	
     constructor(private translate: TranslateService, 
     			public router: Router,
@@ -35,35 +34,29 @@ export class LoginComponent implements OnInit {
     }
 
     onLoggedin() {
-        localStorage.setItem('isLoggedin', 'true');
-    }
+        let data={
+          "username":$("#tbxUser").val(),
+          "password":$("#tbxPass").val()
+        };
 
-    loginAnonymous(){
-    	let data={
-    		name: $('#name').val(),
-    		lastName:$('#lastName').val() ,
-    		email:$('#email').val() ,
-    		phone: $('#phone').val()
-    	};
+        this.authService.login(data).subscribe(
+              message => {
+                console.log(message);
+                console.log("Ha sido suces");
+              },
+              error => {
+                console.log(error);
+                console.log("Ha sido error");
 
-    	let tempUser: TempUser= new TempUser();
-    	tempUser.setName(data.name);
-    	tempUser.setLastName(data.lastName);
-    	tempUser.setEmail(data.email);
-    	tempUser.setPhone(data.phone);
-
-    	this.authService.loginAnonymous(tempUser).subscribe(
-      		data => {
-        		console.log(data);
-      		},
-      		error => {
-      			this.alertService.warning(this.translate.instant("Login.errorLoginAno"));
-      			
-        	}
+                  
+            }
         );
 
+
+                //localStorage.setItem('isLoggedin', 'true');
     }
 
+  
 
 
     //------------------------------------PEDRO SILOS ---------------------------------------------
@@ -132,7 +125,15 @@ export class LoginComponent implements OnInit {
 
 
 
+console(){
+    var sUser = $("#tbxUser").val();
+        var sPass = $("#tbxPass").val();
 
+        console.log("CORREO");
+        console.log(sUser);
+        console.log("CONTRASEÑA");
+        console.log(sPass);
+}
     
 
 
