@@ -9,7 +9,8 @@
         "title":        "Censos urbanos",
         "infoMsg1":     "No has seleccionado ninguna especie",
         "infoMsg2":     "Especie seleccionada: ",
-        "language":     "Idioma"
+        "language":     "Idioma",
+        "logout":       "Desconectar"
     },
     "Sidebar":{
         "col":          "Colonias",
@@ -33,19 +34,24 @@
     "Login":{
         "welcome":      "BIENVENIDO/A a Censos Urbanos",
         "in":           "Entrar",
-        "inAno":        "Entrar sin usuario",
         "register":     "Registrar",
         "email":        "Correo electrónico",
         "password":     "Contraseña",
         "name":         "Nombre",
         "lastName":     "Apellidos",
         "phone":        "Teléfono",
+        "username":     "Nombre de usuario",
         "msg1":         "¿No tienes usuario?",
-        "msg2":         "Regístrate o entra sin usuario",
         "msg3":         "¿Ya tienes usuario?",
-        "msg4":         "Entrar con usuario",
-        "errorLoginAno": "Ha ocurrido un error al intentar acceder. Inténtelo de nuevo más tarde"
+        "error1":       "Usuario o contraseña incorrectos",
+        "error2": "Ha ocurrido un error al intentar acceder. Inténtelo de nuevo más tarde"
 
+    },
+    "Selector":{
+        "title":        "SELECCIÓN",
+        "infoMsg1":     "Por favor, seleccione el tipo de ave con el que quiere trabajar",
+        "col":          "Aves coloniales",
+        "noCol":        "Aves no coloniales"
     },
     "Dashboard":{
         "errorGetCol":   "Ha ocurrido un error al intentar recuperar el listado de aves coloniales",

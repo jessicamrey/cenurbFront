@@ -1,51 +1,45 @@
 <div class="login-page" [@routerTransition]>
 <ngx-alerts></ngx-alerts>
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
     <div class="row justify-content-md-center">
         <div class="col-md-4">
             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
             <h1>{{ 'Login.welcome' | translate }}</h1>
-            <form role="form" id="loginForm" >
+            <form role="form" id="loginForm" name="frmUsuario" method="POST">
                 <div class="form-content">
                     <div class="form-group" >
-                        <input type="text"  class="form-control input-underline input-lg" id="tbxUser" name="_username" placeholder="{{ 'Login.email' | translate }}">
+                        <input type="text"  class="form-control input-underline input-lg" id="tbxUser" name="_username" placeholder="{{ 'Login.username' | translate }}">
                     </div>
 
                     <div class="form-group" >
                         <input type="text" class="form-control input-underline input-lg" id="tbxPass" name="_password" placeholder="{{ 'Login.password' | translate }}">
                     </div>
 
+
+                    <input type="hidden"  id="email" value="">
+                    <input type="hidden"  id="id" value="">
+                    <input type="hidden"  id="name" value="">
+
                 
 
                 </div>
-                <a class="btn rounded-btn"  (click)="onLoggedin()"> {{ 'Login.in' | translate }} </a>
+                <a class="btn rounded-btn"  id="login2"  (click)="abrirVentana(0);"> {{ 'Login.in' | translate }} </a>
+               
 
                
                 <p></p>
-                <h5 *ngIf="isAnonymous">{{ 'Login.msg1' | translate }}</h5>
-                <h5 *ngIf="isAnonymous">{{ 'Login.msg2' | translate }}</h5>
+                <h5 >{{ 'Login.msg1' | translate }}</h5>
                 <p></p>
                 <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Login.register' | translate }}</a>
+                <div id="iframe" class="clear" style="visibility:hidden;"></div>
             </form>
 
-            
+             <button style="display:none" id="loginHidden" (click)="onLoggedin()"></button>
 
 
         </div>
     </div>
 
-<!--<form name="frmUsuario" method="POST">
-        <input id="tbxUser" type="text" />
-        <input id="tbxPass" type="text"/>
-        <input type="button" value="Buscar ALIAS/CLAVE"  (click)="abrirVentana(0);">
-        <br/>
-        <input id="tbxID" type="text"/>
-        <input type="button" value="Buscar ID"  (click)="abrirVentana(1);">
-
-        <div id="iframe" class="clear" style="visibility:hidden;"></div>
-
-    </form>-->
 
 
-   <!-- <iframe src="http://localhost:8000/api/login/"></iframe>-->
-<button (click)="console()">PRUEBA</button>
 </div>

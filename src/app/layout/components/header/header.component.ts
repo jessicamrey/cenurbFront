@@ -14,6 +14,11 @@ export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
     selected=false;
     name="";
+    userName:string='';
+    userEmail:string='';
+    userId:string='';
+
+
     constructor(private translate: TranslateService, 
                 public router: Router, 
                 private coloniasService: ColoniasService,
@@ -36,6 +41,10 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.userEmail=localStorage.getItem('userEmail');
+        this.userName=localStorage.getItem('userName');
+        this.userId=localStorage.getItem('userId');
 
         this.coloniasService.coloniaSelectedEvent.subscribe(
             (data: any) => {

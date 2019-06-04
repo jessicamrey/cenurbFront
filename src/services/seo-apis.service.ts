@@ -8,6 +8,8 @@ import {environment} from "../environments/environment";
 export class SeoApisService {
 
 private url: string = environment.backendUrl;
+private urlSeo: string = environment.loginSeoUrl;
+
 
 
   constructor(private api: ApiProvider, private http: HttpClient) {
@@ -48,6 +50,17 @@ private url: string = environment.backendUrl;
 //Recupera todos los tipos de edificios
   getTipoEd( ) {
     return this.http.get<any>(this.url + '/api/tipo-edificios');
+  }  
+
+
+
+  //LLAMADA A LOGIN DE SEO
+
+  loginSeo(data) {
+    //let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.urlSeo + data, [], {});
+    return response;
   }  
 
 }

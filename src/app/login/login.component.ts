@@ -4,9 +4,14 @@ import { routerTransition } from '../router.animations';
 import { TempUser } from '../../models/temp-user';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { SeoApisService } from '../../services/seo-apis.service';
+
+
 import {AlertService} from 'ngx-alerts';
 
 declare var $:any;
+
+
 
 @Component({
     selector: 'app-login',
@@ -15,13 +20,15 @@ declare var $:any;
     animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
+    url:string="localhost:8000/api/login";
+    login1:boolean=false;	
+    loading:boolean=false;
 
-    url:string="localhost:8000/api/login"
-	
     constructor(private translate: TranslateService, 
     			public router: Router,
     			private alertService: AlertService,
-    			public authService: AuthService) {
+    			public authService: AuthService,
+                public seoApisService: SeoApisService) {
     	this.translate.addLangs(['en', 'es']);
         this.translate.setDefaultLang('es');
 
@@ -33,58 +40,62 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
+
+
     onLoggedin() {
-        let data={
-          "username":$("#tbxUser").val(),
-          "password":$("#tbxPass").val()
-        };
 
-        this.authService.login(data).subscribe(
-              message => {
-                console.log(message);
-                console.log("Ha sido suces");
-              },
-              error => {
-                console.log(error);
-                console.log("Ha sido error");
+        if (this.login1==true){
+               this.login1=false;
+               this.loading=true;
+               
+              let data={
+                  "username":$("#email").val(),
+                  "password":$("#tbxPass").val()
+                };
 
-                  
-            }
-        );
+                this.authService.login(data).subscribe(
+                      message => {
+                          this.loading=false;
+                        console.log(message);
+                        localStorage.setItem('isLoggedin', 'true');
+                        localStorage.setItem('token',message["access_token"] );
+                        localStorage.setItem('userName', $("#name").val());
+                        localStorage.setItem('userId', $("#id").val());
+                        localStorage.setItem('userEmail', $("#email").val());
 
 
-                //localStorage.setItem('isLoggedin', 'true');
-    }
+                        this.router.navigate(['/selector']);
+                      },
+                      error => {
+                          this.loading=false;
+                          this.alertService.warning(this.translate.instant("Login.error1"));
+                        console.log(error);
 
+                          
+                    }
+                );
   
+        }else{
+            console.log("Error. falta el paso 1");
+        }
+        
 
+                //
+    }
 
     //------------------------------------PEDRO SILOS ---------------------------------------------
 
-    cerrarVentana(sValor) {
-        //alert(sValor);
-            var sTxt = "";
-            if (sValor != '') {
-                var sRet = sValor.split("#");
-                sTxt += "ID:"+sRet[0]+"#";
-                sTxt += "NOMBRE:"+sRet[1]+"#";
-                sTxt += "EMAIL:"+sRet[2]+"#";
-            } else{
-                sTxt = "NOT FOUND";
-            }
-            alert(sTxt);
-        }
+   
 
     abrirVentana(nTipo) {
-
-        /*var sUser = document.getElementById("tbxUser").value;
-        var sPass = document.getElementById("tbxPass").value;
-        var sId = document.getElementById("tbxID").value;*/
+        
+         
+        this.login1=true;
 
         var sUser = $("#tbxUser").val();
         var sPass = $("#tbxPass").val();
         var sId = $("#tbxID").val();
-
+        var result;
 
         var sLink = "http://www.seguimientodeaves.org/_Atlas/frmLoginCensosServer.php";
         sLink += "?TIPO="+nTipo+"&USER="+sUser+"&PASS="+sPass+"&ID="+sId;
@@ -96,46 +107,47 @@ export class LoginComponent implements OnInit {
                 let iframe = $( '<iframe src="' + src + '" style="' + sty + '" scrolling="no" frameborder="1"><\/iframe>' ).appendTo( '#iframe' );
             } catch (e) {}
             $.receiveMessage(
+
                 function(e){
                     var h = e.data.replace( 'sVal=', '' );
 
                     h = decodeURIComponent(h);
-                    console.log(h);
                     while (h.toString().indexOf('+') != -1) h = h.toString().replace('+',' ');
-                    //this.cerrarVentana(h);
 
                     function cerrar (sValor){
                         var sTxt = "";
                         if (sValor != '') {
+
                             var sRet = sValor.split("#");
                             sTxt += "ID:"+sRet[0]+"#";
                             sTxt += "NOMBRE:"+sRet[1]+"#";
                             sTxt += "EMAIL:"+sRet[2]+"#";
+                            
+                            (<HTMLInputElement>document.getElementById("id")).value=sRet[0];
+                            (<HTMLInputElement>document.getElementById("name")).value=sRet[1];
+                            (<HTMLInputElement>document.getElementById("email")).value=sRet[2];
+
+
+                            document.getElementById("loginHidden").click();
+
                         } else{
                             sTxt = "NOT FOUND";
                         }
-                        alert(sTxt);
-                            }
+                    }
 
                      cerrar(h);
+
+
                      
             }, 'http://www.seguimientodeaves.org' );
+
         });
+
+        
     }
 
 
-
-console(){
-    var sUser = $("#tbxUser").val();
-        var sPass = $("#tbxPass").val();
-
-        console.log("CORREO");
-        console.log(sUser);
-        console.log("CONTRASEÑA");
-        console.log(sPass);
-}
     
-
 
 }
 

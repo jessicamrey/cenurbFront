@@ -19,6 +19,11 @@ export class SidebarComponent implements OnInit{
     showCol: boolean=false;
     showTerr: boolean=false;
 
+
+    userName:string='';
+    userEmail:string='';
+    userId:string='';
+
     @Output() collapsedEvent = new EventEmitter<boolean>();
     
     constructor(private translate: TranslateService, 
@@ -42,6 +47,12 @@ export class SidebarComponent implements OnInit{
     }
 
     ngOnInit(){
+
+        this.userEmail=localStorage.getItem('userEmail');
+        this.userName=localStorage.getItem('userName');
+        this.userId=localStorage.getItem('userId');
+
+        
         this.coloniasService.coloniaSelectedEvent.subscribe(
             (data: any) => {
                 this.showCol=true;
