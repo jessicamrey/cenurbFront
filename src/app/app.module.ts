@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth.service';
 import { SeoApisService } from '../services/seo-apis.service';
 import { ColoniasService } from '../services/colonias.service';
 import { TerritoriosService } from '../services/territorios.service';
+//import { SharedServicesService } from '../services/shared-services.service';
 
 
 
@@ -56,6 +57,7 @@ export const createTranslateLoader = (http: HttpClient) => {
                 AuthService,
                 SeoApisService,
                 ColoniasService,
+                //SharedServicesService,
                 TerritoriosService],
     bootstrap: [AppComponent]
 })

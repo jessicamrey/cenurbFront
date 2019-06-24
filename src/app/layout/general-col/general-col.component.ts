@@ -3,6 +3,8 @@ import { SeoApisService } from '../../../services/seo-apis.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { ColoniasService } from '../../../services/colonias.service';
+import { SharedServicesService } from '../../../services/shared-services.service';
+
 
 declare var $:any;
 @Component({
@@ -38,7 +40,8 @@ export class GeneralColComponent implements OnInit {
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
                 public alertService: AlertService,
-                private coloniasService: ColoniasService) { }
+                private coloniasService: ColoniasService,
+                private sharedServices: SharedServicesService) { }
 
   ngOnInit() {
 
@@ -49,6 +52,25 @@ export class GeneralColComponent implements OnInit {
 
 
   }
+
+  exportAsXLSX():void {
+
+   //let dataToExport=JSON.parse(this.chartData[0]["data"]);
+   let dataToExport:any=[];
+
+   for (let position in this.listaCol){
+     console.log(position);
+     let element={
+       Nombre: this.listaCol[position]["DEN_ESP_CAS"],
+       Cantidad: this.chartData[0].data[position]
+     }
+     dataToExport.push(element);
+
+   }
+   this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
+
 
   recuperaColoniales(titulo){
    this.loading=true;
@@ -108,7 +130,7 @@ export class GeneralColComponent implements OnInit {
     getStatsEspecie(especie, cantidad, busqueda){
 
 
-     console.log(this.dataList);
+     console.log(this.chartData[0]["data"]);
       this.coloniasService.getStats(especie, busqueda).subscribe(
               data => {
                
