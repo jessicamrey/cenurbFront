@@ -48,12 +48,47 @@ export class LoginComponent implements OnInit {
                this.login1=false;
                this.loading=true;
                
-              let data={
+              
+                let idData={
+                    id_usu: $("#id").val()
+                }
+
+                //Comprobamos si es la primera vez que se logea en la aplicacion
+
+                this.authService.isRegistered(idData).subscribe(
+                    data=>{
+                        console.log("DATA: ");
+                        console.log(data);
+                       //Ye tenemos datos
+                       this.login();
+                    },
+                    error=>{
+                        console.log("ERROR: ");
+                        console.log(error);
+                        //Es la primera vez
+                        this.firstTimeLogin();
+                    }
+
+
+                    );
+
+               
+  
+        }else{
+            console.log("Error. falta el paso 1");
+        }
+        
+
+                //
+    }
+
+    login(){
+
+        let data={
                   "username":$("#email").val(),
                   "password":$("#tbxPass").val()
                 };
-
-                this.authService.login(data).subscribe(
+         this.authService.login(data).subscribe(
                       message => {
                           this.loading=false;
                         console.log(message);
@@ -74,13 +109,28 @@ export class LoginComponent implements OnInit {
                           
                     }
                 );
-  
-        }else{
-            console.log("Error. falta el paso 1");
-        }
-        
+    }
 
-                //
+    firstTimeLogin(){
+
+        let data={
+                  "id_usu": $("#id").val(),
+                  "password":$("#tbxPass").val(),
+                  "email":$("#email").val()
+                };
+
+
+                this.authService.register(data).subscribe(
+                    data=>{
+                        //Nos hemos registrado correctamente, ahora nos logeamos
+                        this.login();
+                    },
+                    error=>{
+                        console.log(error);
+
+                    }
+                    );
+
     }
 
     //------------------------------------PEDRO SILOS ---------------------------------------------

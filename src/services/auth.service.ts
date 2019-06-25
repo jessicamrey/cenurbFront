@@ -55,5 +55,24 @@ private url: string = environment.backendUrl;
       }));
   }
 
+  //Sabemos si es la primera ez que el usuario se logea en nuestra aplicación
+  isRegistered(id) {
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.url + '/api/isRegistered', JSON.stringify(id), config);
+    return response;
+  
+  }
+
+  //Nos registramos en la aplicacion
+  register(data) {
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.url + '/api/register', JSON.stringify(data), config);
+    return response;
+  
+  }
+
+
 
 }
