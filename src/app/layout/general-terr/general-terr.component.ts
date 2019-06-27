@@ -3,6 +3,8 @@ import { SeoApisService } from '../../../services/seo-apis.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { TerritoriosService } from '../../../services/territorios.service';
+import { SharedServicesService } from '../../../services/shared-services.service';
+
 
 declare var $:any;
 @Component({
@@ -42,7 +44,8 @@ export class GeneralTerrComponent implements OnInit {
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
                 public alertService: AlertService,
-                private territoriosService: TerritoriosService) { }
+                private territoriosService: TerritoriosService,
+                private sharedServices: SharedServicesService) { }
 
   ngOnInit() {
   	this.recuperaNoColoniales('Territorios registrados');
@@ -51,6 +54,24 @@ export class GeneralTerrComponent implements OnInit {
     this.recuperaTipos();
   	
   }
+
+  exportAsXLSX():void {
+
+   //let dataToExport=JSON.parse(this.chartData[0]["data"]);
+   let dataToExport:any=[];
+
+   for (let position in this.listaNoCol){
+     console.log(position);
+     let element={
+       Nombre: this.listaNoCol[position]["DEN_ESP_CAS"],
+       Cantidad: this.chartData[0].data[position]
+     }
+     dataToExport.push(element);
+
+   }
+   this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
 
   recuperaNoColoniales(titulo){
     this.loading=true;

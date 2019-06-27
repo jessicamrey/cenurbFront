@@ -58,6 +58,7 @@
 
     <div class="card-header" style="background-color: #A9A9A9">
         {{ 'ViewVisits.filterTerr' | translate }}
+         
     </div>
     <div class="card-body" style="background-color: #A9A9A9">
         
@@ -114,6 +115,7 @@
             <div class="card">
                 <div class="card-header">
                 {{ 'ViewVisits.colVisits' | translate }}
+                 <button class="btn btn-secondary" (click)="exportAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover table-striped">
@@ -276,7 +278,7 @@
         <div class="col-sm-12" *ngIf="showCol==false">
            
             <div class="card">
-                <div class="card-header">{{ 'ViewVisits.terrVisits' | translate }}</div>
+                <div class="card-header">{{ 'ViewVisits.terrVisits' | translate }} <button class="btn btn-secondary" (click)="exportTerrAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button></div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>

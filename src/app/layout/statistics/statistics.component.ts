@@ -3,6 +3,8 @@ import { ColoniasService } from '../../../services/colonias.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { SeoApisService } from '../../../services/seo-apis.service';
+import { SharedServicesService } from '../../../services/shared-services.service';
+
 
 declare var $:any;
 
@@ -67,7 +69,8 @@ export class StatisticsComponent implements OnInit {
   constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
                 public alertService: AlertService,
-                private seoService: SeoApisService) { }
+                private seoService: SeoApisService,
+                private sharedServices: SharedServicesService) { }
 
   ngOnInit() {
     this.recuperaCCAA();
@@ -78,6 +81,88 @@ export class StatisticsComponent implements OnInit {
     this.statsCcaa('','all');
 
   }
+
+  exportYearAsXLSX():void {
+
+     let dataToExport:any=[];
+     if (this.annoFiltered==false){
+         for (let item of this.listaTemporadas){
+           let element={
+             "Año": item,
+             "Colonias registradas": this.annoChartData[item]['0'].data['0']
+           }
+           dataToExport.push(element);
+       }
+     }else{
+           let element={
+             "Año": this.annoSelected,
+             "Colonias registradas": this.annoChartDataFiltered['0']['0'].data['0']
+           }
+           dataToExport.push(element);
+     }
+     this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+  }
+
+  exportCcaaAsXLSX():void {
+
+     let dataToExport:any=[];
+     if (this.ccaaFiltered==false){
+         for (let item of this.listaCCAA){
+           let element={
+             "Comunidad Autónoma": item.DEN_COM,
+             "Colonias registradas": this.ccaaChartData['0'].data[this.listaCCAA.indexOf(item)]
+           }
+           dataToExport.push(element);
+
+       }
+     }else{
+           let element={
+             "Comunidad Autónoma": this.ccaaSelected,
+             "Colonias registradas": this.ccaaChartDataFiltered['0']
+           }
+           dataToExport.push(element);
+     }
+     this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+  }
+
+  exportProvinciaAsXLSX():void {
+
+     let dataToExport:any=[];
+     if (this.ccaaFiltered==false){
+         for (let item of this.provChartLabels){
+           let element={
+             "Provincia": item,
+             "Colonias registradas": this.provChartData['0'].data[this.provChartLabels.indexOf(item)]
+           }
+           dataToExport.push(element);
+
+       }
+     }else{
+         if (this.provFiltered==false){
+           for (let item of this.listaProv){
+             let element={
+               "Provincia": item.DEN_PROV,
+               "Colonias registradas": this.provDataFiltered[item['ID_PROV']]
+             }
+             dataToExport.push(element);
+
+           }
+         }else{
+             let element={
+               "Provincia": this.provSelected,
+               "Colonias registradas": this.provDataFiltered['0']
+             }
+             dataToExport.push(element);
+
+         }
+           
+     }
+     this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+  }
+
 
  recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(

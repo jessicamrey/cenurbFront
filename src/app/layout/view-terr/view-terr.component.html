@@ -49,8 +49,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12" style="text-align: center">
+            <div class="col-sm-8" style="text-align: center">
                 <button class="btn btn-primary" (click)="getDatosBusqueda()">{{ 'ViewCol.search' | translate }}</button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-secondary" (click)="exportAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
             </div>
         </div>
     </div>
@@ -149,6 +152,7 @@
                         <div class="modal-footer">
                             <button class="transparentButton" (click)="newFavorito(item.id)"><i class="fas fa-heart"></i></button>
                             <a [routerLink]="['/', item.id, 'visitProfileTerr'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
+                             <button class="btn btn-secondary" (click)="exportOneAsXLSX(item)">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
                             <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
                         </div>
                         </ng-template>

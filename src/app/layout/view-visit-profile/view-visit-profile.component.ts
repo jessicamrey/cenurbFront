@@ -9,6 +9,8 @@ import { VisitaColonia } from '../../../models/visita-colonia';
 
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedServicesService } from '../../../services/shared-services.service';
+
 
 
 
@@ -28,12 +30,14 @@ export class ViewVisitProfileComponent implements OnInit {
 	loading=false;
 	usuario=0;
 	isEdit=false;
+  filtered=false;
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
                 public alertService: AlertService,
                 private route:ActivatedRoute,
                 private modalService: NgbModal,
-                private formBuilder: FormBuilder) { 
+                private formBuilder: FormBuilder,
+                private sharedServices: SharedServicesService) { 
 
   	
 }
@@ -61,6 +65,32 @@ export class ViewVisitProfileComponent implements OnInit {
         //TODO: recuperar usuario de localstorage
 
   	}
+
+    exportAsXLSX():void {
+
+       let dataToExport:any=[];
+
+       for (let position in this.listaVisitas){
+
+        
+           let element={
+           "Nombre": this.listaVisitas[position].nombre,
+           "Fecha":this.listaVisitas[position].fecha,
+           "Numero de nidos":this.listaVisitas[position].numNidos,
+           "Numero de nidos éxito": this.listaVisitas[position].numNidosExito,
+           "Número de nidos ocupados":this.listaVisitas[position].numNidosOcupados,
+           "Numero de nidos vacíos":this.listaVisitas[position].numNidosVacios,
+           "Número de la visita":this.listaVisitas[position].numVisita
+           }
+           dataToExport.push(element);
+
+         
+         
+
+       }
+       this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
 
     preUpload(event) {
       let file = event.target.files;

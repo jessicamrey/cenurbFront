@@ -8,6 +8,7 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VisitaColonia } from '../../../models/visita-colonia';
 import { VisitaTerritorio } from '../../../models/visita-territorio';
+import { SharedServicesService } from '../../../services/shared-services.service';
 
 
 
@@ -55,7 +56,8 @@ markers = [
                 private territoriosService: TerritoriosService,
                 public alertService: AlertService,
                 private modalService: NgbModal,
-                private formBuilder: FormBuilder) { }
+                private formBuilder: FormBuilder,
+                private sharedServices: SharedServicesService) { }
 
   	ngOnInit() {
   		this.recuperaVisitas(0);
@@ -122,6 +124,58 @@ const lng = position.coords.lng;
 
 this.markers=[{ latitude: lat, longitude: lng }];
 }
+
+
+exportAsXLSX():void {
+
+       let dataToExport:any=[];
+
+       for (let position in this.listaVisitas){
+
+        
+           let element={
+           "Nombre": this.listaVisitas[position].colonia.nombre,
+           "Colonia": this.listaVisitas[position].colonia.id,
+           "Fecha":this.listaVisitas[position].fecha,
+           "Numero de nidos":this.listaVisitas[position].numNidos,
+           "Numero de nidos éxito": this.listaVisitas[position].numNidosExito,
+           "Número de nidos ocupados":this.listaVisitas[position].numNidosOcupados,
+           "Numero de nidos vacíos":this.listaVisitas[position].numNidosVacios,
+           "Número de la visita":this.listaVisitas[position].numVisita
+           }
+           dataToExport.push(element);
+
+       }
+       this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
+
+
+exportTerrAsXLSX():void {
+
+       let dataToExport:any=[];
+
+       for (let position in this.listaVisitasTerr){
+
+        
+           let element={
+           "Nombre": this.listaVisitasTerr[position].territorio.nombre,
+           "Colonia": this.listaVisitasTerr[position].territorio.id,
+           "Fecha":this.listaVisitasTerr[position].fecha,
+           "Hora":this.listaVisitasTerr[position].hora,
+           "Huso": this.listaVisitasTerr[position].huso,
+           "Latitud":this.listaVisitasTerr[position].lat,
+           "Longitud":this.listaVisitasTerr[position].lon,
+           "Observación":this.listaVisitasTerr[position].observaciones.tipo
+           }
+           dataToExport.push(element);
+
+       }
+       this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
+
+
 
   	recuperaVisitas(user){
       this.listaVisitas=[];

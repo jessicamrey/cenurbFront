@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { Colonia } from '../../../models/colonia';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SharedServicesService } from '../../../services/shared-services.service';
+
 declare var $:any;
 
 
@@ -41,7 +43,8 @@ export class ViewColComponent implements OnInit {
                 private coloniasService: ColoniasService,
                 public alertService: AlertService,
                 private modalService: NgbModal,
-                private seoService: SeoApisService) { 
+                private seoService: SeoApisService,
+                private sharedServices: SharedServicesService) { 
   		this.advancedPagination = 1;
   	}
 
@@ -49,6 +52,77 @@ export class ViewColComponent implements OnInit {
       this.recuperaCCAA();
   		this.recuperaColonias(1);
   	}
+
+    exportAsXLSX():void {
+
+       let dataToExport:any=[];
+
+       for (let position in this.listaColonias){
+
+         if(this.filtered==false){
+           let element={
+           "Lista de colonias": this.listaColonias[position].nombre
+           }
+           dataToExport.push(element);
+
+         }else{
+           let element={
+           "Lista de colonias (Filtrado)": this.listaColonias[position].nombre
+           }
+           dataToExport.push(element);
+         }
+         
+
+       }
+       this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
+
+    exportOneAsXLSX(item):void {
+
+       //let dataToExport=JSON.parse(this.chartData[0]["data"]);
+       let dataToExport:any=[];
+
+      
+
+       
+           let element={
+           "Nombre": item.nombre,
+           "Codigo":  item.id,
+           "Nombre del centro": item.nombreCentro,
+           "Temporada":  item.temporada,
+           "Localización":  item.municipio+','+item.provincia+','+item.ccaa,
+           "Dirección": item.calleNumPiso+','+item.barrio,
+           "Tipo de edificio": item.tipoEdificio.descripcion,
+           "Tipo de propiedad": item.tipoPropiedad.Description
+         };
+           dataToExport.push(element);
+
+           let nidosTitle={
+             "Localización de los nidos": ""
+           }
+           dataToExport.push(nidosTitle);
+
+           let nidos={
+             
+         
+                                   "Fachada":item.locNidos.fachada,
+                                   "Laterla Izq.":item.locNidos.lateralIzquierdo,
+                                   "Lateral Der.":item.locNidos.lateralDerecho,
+                                   "Trasera":item.locNidos.trasera,
+                                   "Patio interior":item.locNidos.patioInferior
+                                   } 
+           
+           
+           dataToExport.push(nidos);
+
+         
+         
+
+       
+       this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+    }
 
 
   	recuperaColonias(pageNumber){

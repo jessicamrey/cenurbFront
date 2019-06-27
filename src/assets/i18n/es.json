@@ -3,7 +3,8 @@
     "Menu":{
         "title":        "Censos urbanos",
         "col":          "Aves coloniales",
-        "terr":         "Aves no coloniales"
+        "terr":         "Aves no coloniales",
+        "excel":        "DESCARGAR"
     },
     "Header":{
         "title":        "Censos urbanos",

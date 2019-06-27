@@ -54,6 +54,9 @@
 <ngb-tabset type="pills">
                     <ngb-tab title="{{ 'Statistics.anno' | translate }}">
                         <ng-template ngbTabContent>
+                        
+                        <button class="btn btn-secondary" (click)="exportYearAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+
                         <div class="row" *ngIf="annoFiltered==false; else filteredAnno">
                             <div class="col-sm-12" *ngIf="loading==false">
                                 <div class="card">
@@ -127,6 +130,10 @@
                     </ngb-tab>
                     <ngb-tab title="{{ 'Statistics.ccaa' | translate }}">
                         <ng-template ngbTabContent>
+
+                         <button class="btn btn-secondary" (click)="exportCcaaAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+
+
                             <div class="row" *ngIf="ccaaFiltered==false; else filteredCcaa">
                                 <div class="col-sm-12"  >
                                     <div class="card">
@@ -208,6 +215,10 @@
                     </ngb-tab>
                     <ngb-tab title="{{ 'Statistics.prov' | translate }}"  >
                         <ng-template ngbTabContent>
+
+                         <button class="btn btn-secondary" (click)="exportProvinciaAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+
+
                             <div class="row" *ngIf="ccaaFiltered==false; else filteredProv">
                                 <div class="col-sm-12" >
                                     <div class="card">
