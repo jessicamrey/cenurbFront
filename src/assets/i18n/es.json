@@ -30,7 +30,8 @@
         "generalTerr":  "Aves no coloniales",
         "registerTerr": "Registrar territorio",
         "viewTerr":     "Ver territorios",
-        "viewCloseTerr":"Territorios cercanos"
+        "viewCloseTerr":"Territorios cercanos",
+        "docs":         "Documentación"
     },
     "Login":{
         "welcome":      "BIENVENIDO/A a Censos Urbanos",
@@ -143,6 +144,10 @@
     },
     "ViewCloseCol":{
         "infoMsg1":     "Selecciona el radio de distancia en el que quieres buscar"
+    },
+    "ViewCloseTerr":{
+        "infoMsg1":     "Selecciona el radio de distancia en el que quieres buscar",
+        "infoMsg2":     "Número de territorios encontrados: "
     },
     "RegisterVisit":{
         "infoMsg1":     "Escribe el código de la COLONIA en el que quieres registrar una nueva visita",

@@ -39,6 +39,7 @@ import { StatisticsTerrComponent } from './statistics-terr/statistics-terr.compo
 import { ViewVisitProfileTerrComponent } from './view-visit-profile-terr/view-visit-profile-terr.component';
 import { StatisticsNestsComponent } from './statistics-nests/statistics-nests.component';
 import { StatisticsObsvComponent } from './statistics-obsv/statistics-obsv.component';
+import { DocsComponent } from './docs/docs.component';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { StatisticsObsvComponent } from './statistics-obsv/statistics-obsv.compo
      ViewVisitProfileTerrComponent,
      StatisticsNestsComponent,
      StatisticsObsvComponent,
+     DocsComponent,
      ]
 })
 export class LayoutModule {}

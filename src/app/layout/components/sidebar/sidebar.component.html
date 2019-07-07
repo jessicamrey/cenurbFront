@@ -72,12 +72,12 @@
                             <span>{{ 'Sidebar.statistics' | translate }}</span>
                         </a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a [routerLink]="['/statisticsObsv']">
                             <i class="fas fa-chart-line"></i>&nbsp;
                             <span>{{ 'Sidebar.statsObsv' | translate }}</span>
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
             </li>
         </div>
@@ -123,6 +123,15 @@
                     </li>                </ul>
             </li>
         </div>
+
+        <div class="nested-menu">
+            <a class="list-group-item" [routerLink]="['/docs']">
+                <i class="fas fa-file"></i>&nbsp;
+                <span>{{ 'Sidebar.docs' | translate }}</span>
+            </a>
+           
+        </div>
+
 
         <div class="header-fields">
             <a (click)="rltAndLtr()" class="list-group-item">

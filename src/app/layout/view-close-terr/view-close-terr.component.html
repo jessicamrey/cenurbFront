@@ -1,5 +1,39 @@
-  <p style="margin-top:60px;"></p>
 
-<p>
-  view-close-terr works!
-</p>
+ <p style="margin-top:40px;"></p>
+
+<div class="row">
+	<div class="col-sm-4">
+		<div class="card">
+			<div class="card-header">
+				<p style="text-align: center">{{ 'ViewCloseTerr.infoMsg1' | translate }}</p>
+			</div>
+			<div class="card-body">
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getTerritoriosCercanos(1)">1 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getTerritoriosCercanos(5)">5 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getTerritoriosCercanos(10)">10 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getTerritoriosCercanos(15)">15 km</button></p>
+				<p style="text-align: center">
+					<button class="btn btn-primary" style="background-color: #1d5d83" (click)="getTerritoriosCercanos(20)">20 km</button></p>
+			</div>
+		</div>
+
+	</div>
+	<div class="col-sm-8">
+
+		<div class="card">
+			<div class="card-header">
+				<p style="text-align: center">{{ 'ViewCloseTerr.infoMsg2' | translate }}{{numTerritorios}}</p>
+			</div>
+			<div class="card-body">
+				<agm-map [latitude]="geolocationPosition.coords.latitude" [longitude]="geolocationPosition.coords.longitude">
+				</agm-map>
+			</div>
+		</div>
+	</div>
+	
+</div>
+

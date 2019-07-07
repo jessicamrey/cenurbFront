@@ -24,6 +24,12 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
      return data;
   }
 
+//Recupera el número de territorios cercanos a la posicion del usuario, con un radio de distancia
+  recuperaTerritoriosCercanos( radio, lat, lon, especie) {
+    return this.http.get<any>(this.url + '/api/closeTerr?rad=' + radio + '&lat=' + lat + '&lon=' + lon + '&especie=' + especie);
+  }
+
+
 
    //Registra un nuevo territorio
   nuevoTerritorio(territoio: Territorio) {
