@@ -14,7 +14,7 @@ export class ViewCloseTerrComponent implements OnInit {
 title: string = 'My first AGM project';
   	lat: number = 51.678418;
   	lng: number = 7.809007;
-    geolocationPosition:any;
+    geolocationPosition:any=localStorage.getItem('geolocationPosition');
     numTerritorios:any;
 
 
@@ -24,11 +24,11 @@ title: string = 'My first AGM project';
                private modalService: NgbModal) { }
 
   ngOnInit() {
-  	this.getLocalizacion();
+  //	this.getLocalizacion();
   }
 
 
-  getLocalizacion(){
+  /*getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -50,7 +50,7 @@ title: string = 'My first AGM project';
             }
         );
     };
-  }
+  }*/
 
 
   getTerritoriosCercanos(radio){
