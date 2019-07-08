@@ -46,10 +46,10 @@ registerFormTerr: FormGroup;
 loading=false;
 isEdit=false;
 
-longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"];
-latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
-markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
-             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
+longitude :any=localStorage.getItem('longitude');
+latitude :any=localStorage.getItem('latitude');
+markers = [{ latitude: localStorage.getItem('latitude'),
+             longitude: localStorage.getItem('longitude')}];
 
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,

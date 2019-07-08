@@ -40,6 +40,7 @@ import { ViewVisitProfileTerrComponent } from './view-visit-profile-terr/view-vi
 import { StatisticsNestsComponent } from './statistics-nests/statistics-nests.component';
 import { StatisticsObsvComponent } from './statistics-obsv/statistics-obsv.component';
 import { DocsComponent } from './docs/docs.component';
+import { CensoMunicipioComponent } from './censo-municipio/censo-municipio.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { DocsComponent } from './docs/docs.component';
      StatisticsNestsComponent,
      StatisticsObsvComponent,
      DocsComponent,
+     CensoMunicipioComponent,
      ]
 })
 export class LayoutModule {}
