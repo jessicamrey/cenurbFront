@@ -30,8 +30,8 @@ export class RegisterColComponent implements OnInit {
   locNidos= new LocNidos();
   registerForm: FormGroup;
   loading=false;
-  longitude :any;
-  latitude :any;
+  longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"];
+  latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
 
   markers = [
   ];
@@ -43,7 +43,7 @@ export class RegisterColComponent implements OnInit {
                 private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.getLocalizacion();
+    //this.getLocalizacion();
     this.recuperaTemporadas();
   	this.recuperaCCAA();
   	this.recuperaTipoProp();
@@ -64,7 +64,7 @@ export class RegisterColComponent implements OnInit {
         });
   }
 
-  getLocalizacion(){
+ /* getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -88,7 +88,7 @@ export class RegisterColComponent implements OnInit {
             }
         );
     };
-  }
+  }*/
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
