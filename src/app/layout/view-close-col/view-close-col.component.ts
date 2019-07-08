@@ -13,7 +13,7 @@ export class ViewCloseColComponent implements OnInit {
 	title: string = 'My first AGM project';
   	lat: number = 51.678418;
   	lng: number = 7.809007;
-    geolocationPosition:any;
+    geolocationPosition:any=localStorage.getItem('geolocationPosition');
     listaColonias:any[]= [];
   constructor( private coloniasService: ColoniasService,
                public alertService: AlertService,
@@ -24,11 +24,11 @@ export class ViewCloseColComponent implements OnInit {
         }
 
   ngOnInit() {
-     this.getLocalizacion();
+     //this.getLocalizacion();
         
   }
 
-  getLocalizacion(){
+  /*getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -50,7 +50,7 @@ export class ViewCloseColComponent implements OnInit {
             }
         );
     };
-  }
+  }*/
 
   getColoniasCercanas(radio){
     let lat=this.geolocationPosition["coords"]["latitude"];
