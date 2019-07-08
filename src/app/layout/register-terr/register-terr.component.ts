@@ -30,8 +30,8 @@ export class RegisterTerrComponent implements OnInit {
 	longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"];
 	latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
 
-	  markers = [
-	  ];
+	  markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
+             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
   	constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
                 private territoriosService: TerritoriosService,
