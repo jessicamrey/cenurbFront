@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
             position => {
                 this.geolocationPosition = position,
                     console.log(position);
-                localStorage.setItem('geoLocationPosition', position);
+                localStorage.setItem('geolocationPosition', position);
             },
             error => {
                 switch (error.code) {
