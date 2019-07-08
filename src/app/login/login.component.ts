@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     url:string="localhost:8000/api/login";
     login1:boolean=false;	
     loading:boolean=false;
+    geolocationPosition:any;
 
     constructor(private translate: TranslateService, 
     			public router: Router,
@@ -40,7 +41,35 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
-
+//08072019--------------------------------------------------------------------------------------------------
+    
+    getLocalizacion(){
+     if (window.navigator && window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+            position => {
+                this.geolocationPosition = position,
+                    console.log(position);
+                localStorage.setItem('geoLocationPosition', position);
+            },
+            error => {
+                switch (error.code) {
+                    case 1:
+                        console.log('Permission Denied');
+                        break;
+                    case 2:
+                        console.log('Position Unavailable');
+                        break;
+                    case 3:
+                        console.log('Timeout');
+                        break;
+                }
+            }
+        );
+    };
+  }
+    
+    
+    
 
     onLoggedin() {
 
@@ -90,14 +119,14 @@ export class LoginComponent implements OnInit {
                 };
          this.authService.login(data).subscribe(
                       message => {
-                          this.loading=false;
+                        this.loading=false;
                         console.log(message);
                         localStorage.setItem('isLoggedin', 'true');
                         localStorage.setItem('token',message["access_token"] );
                         localStorage.setItem('userName', $("#name").val());
                         localStorage.setItem('userId', $("#id").val());
                         localStorage.setItem('userEmail', $("#email").val());
-
+                        this.getLocalizacion();
 
                         this.router.navigate(['/selector']);
                       },
