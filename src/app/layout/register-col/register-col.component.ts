@@ -15,6 +15,9 @@ declare var $:any;
 })
 export class RegisterColComponent implements OnInit {
 
+  isEdit:boolean=false;
+  codColonia:any;
+	
   listaCCAA:any[]= [];
   listaTemporadas:any[]= [];
   listaProv:any[]= [];
@@ -63,6 +66,9 @@ export class RegisterColComponent implements OnInit {
             
         });
   }
+	
+editarColonia(){
+}
 
  /* getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
