@@ -46,10 +46,10 @@ registerFormTerr: FormGroup;
 loading=false;
 isEdit=false;
 
-longitude :any;
-latitude :any;
-markers = [
-    ];
+longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"];
+latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
+markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
+             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
 
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
@@ -78,7 +78,7 @@ markers = [
         });
 
        this.recuperaObservaciones();
-      this.getLocalizacion();
+     // this.getLocalizacion();
   	}
 
     recuperaObservaciones(){
@@ -89,7 +89,7 @@ markers = [
               }
         );
   }
-    getLocalizacion(){
+   /* getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -116,7 +116,7 @@ markers = [
             }
         );
     };
-  }
+  }*/
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
