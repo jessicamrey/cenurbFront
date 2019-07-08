@@ -26,11 +26,11 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 	loading=false;
 	usuario=0;
 	isEdit=false;
-	longitude :any;
-  latitude :any;
+	longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"]
+  latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
   selectedOb:boolean=false;
-  	markers = [
-  	];
+  	markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
+             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
   preFiles:File[]=[];
 
   constructor(private translate: TranslateService,
@@ -56,13 +56,13 @@ export class ViewVisitProfileTerrComponent implements OnInit {
         //TODO: recuperar usuario de localstorage
 
     this.recuperaObservaciones();
-    this.getLocalizacion();
+   // this.getLocalizacion();
 
 
 
   }
 
-getLocalizacion(){
+/*getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -89,7 +89,7 @@ getLocalizacion(){
             }
         );
     };
-  }
+  }*/
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
