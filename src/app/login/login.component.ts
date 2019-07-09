@@ -49,7 +49,9 @@ export class LoginComponent implements OnInit {
             position => {
                 this.geolocationPosition = position,
                     console.log(position);
-                localStorage.setItem('geolocationPosition', position);
+                localStorage.setItem('latitude', ''+position["coords"]["latitude"]);
+                localStorage.setItem('longitude', ''+position["coords"]["longitude"]);
+
             },
             error => {
                 switch (error.code) {
@@ -127,6 +129,7 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem('userId', $("#id").val());
                         localStorage.setItem('userEmail', $("#email").val());
                         this.getLocalizacion();
+
 
                         this.router.navigate(['/selector']);
                       },

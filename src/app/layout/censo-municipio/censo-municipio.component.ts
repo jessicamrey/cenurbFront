@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { Component, OnInit} from '@angular/core';
 import { SeoApisService } from '../../../services/seo-apis.service';
 import { ColoniasService } from '../../../services/colonias.service';
@@ -96,7 +95,7 @@ export class CensoMunicipioComponent implements OnInit {
     
      this.coloniasService.recuperaColoniasFiltered(pageNumber, busqueda).subscribe(
               data => {
-                this.listaColoniasDisponibles=data["hydra:member"];
+                this.listaColDisponibles=data["hydra:member"];
                 let last=data["hydra:view"]["hydra:last"];
 
                 if (last != undefined){

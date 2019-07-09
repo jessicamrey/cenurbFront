@@ -60,8 +60,8 @@ markers = [{ latitude: localStorage.getItem('latitude'),
                 private sharedServices: SharedServicesService) { }
 
   	ngOnInit() {
-  		this.recuperaVisitas(0);
-       this.recuperaVisitasTerritorio(0);
+  		this.recuperaVisitas();
+       this.recuperaVisitasTerritorio();
        this.registerForm = this.formBuilder.group({
             nombre: ['', Validators.required],
             numNidos: ['', Validators.required],
@@ -89,34 +89,7 @@ markers = [{ latitude: localStorage.getItem('latitude'),
               }
         );
   }
-   /* getLocalizacion(){
-     if (window.navigator && window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(
-            position => {
-                this.latitude=position["coords"]["latitude"];
-                this.longitude=position["coords"]["longitude"];
-                console.log(this.latitude);
-                console.log(this.longitude);
-                this.markers=[{ latitude: position["coords"]["latitude"],
-                        longitude: position["coords"]["longitude"]}];
 
-            },
-            error => {
-                switch (error.code) {
-                    case 1:
-                        console.log('Permission Denied');
-                        break;
-                    case 2:
-                        console.log('Position Unavailable');
-                        break;
-                    case 3:
-                        console.log('Timeout');
-                        break;
-                }
-            }
-        );
-    };
-  }*/
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
@@ -177,19 +150,19 @@ exportTerrAsXLSX():void {
 
 
 
-  	recuperaVisitas(user){
+  	recuperaVisitas(){
       this.listaVisitas=[];
-  		this.coloniasService.recuperaVisitasGeneral('?usuario=' + user ).subscribe(
+  		this.coloniasService.recuperaVisitasGeneral('').subscribe(
                         data =>{
+                          console.log(data);
                         	
-
-                          let last=data["hydra:view"]["hydra:last"];
+                         /* let last=data["hydra:view"]["hydra:last"];
                           if (last!=undefined){
                             last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
                           this.totalPages=last*10;
-                          }
+                          }*/
 
-                            for (let item of data["hydra:member"]){
+                            for (let item of data){
                               let date=new Date((item["fecha"]));
                               let y=date.getFullYear();
                               let m=date.getMonth()+1;
@@ -212,18 +185,18 @@ exportTerrAsXLSX():void {
                         });
   	}
 
-    recuperaVisitasTerritorio(user){
+    recuperaVisitasTerritorio(){
       this.listaVisitasTerr=[];
-      this.territoriosService.recuperaVisitasGeneral('?usuario='+user).subscribe(
+      this.territoriosService.recuperaVisitasGeneral('').subscribe(
                         data =>{
 
-                          let last=data["hydra:view"]["hydra:last"];
+                          /*let last=data["hydra:view"]["hydra:last"];
                           if (last!=undefined){
                             last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
                           this.totalPagesTerr=last*10;
-                          }
+                          }*/
 
-                          for (let visita of data["hydra:member"]){
+                          for (let visita of data){
                             let date=new Date((visita["fecha"]));
                             let y=date.getFullYear();
                             let m=date.getMonth()+1;

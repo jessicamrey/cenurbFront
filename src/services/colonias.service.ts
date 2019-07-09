@@ -95,10 +95,6 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     return response;
 
   }
-//Recuperamos las visitas de un solo usuario
-  recuperaVisitas( userId:any, stringBusqueda:any) {
-    return this.http.get<any>(this.url + '/api/usuario/' + userId + '/visitas'+stringBusqueda);
-  }
 
 //Recupera las visitas para una colonia
   recuperaVisitasGeneral( stringBusqueda:any) {

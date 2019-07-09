@@ -10,6 +10,8 @@ import { VisitaTerritorio } from '../../../models/visita-territorio';
 
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedServicesService } from '../../../services/shared-services.service';
+
 declare var $:any;
 @Component({
   selector: 'app-view-visit-profile-terr',
@@ -26,11 +28,11 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 	loading=false;
 	usuario=0;
 	isEdit=false;
-	longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"]
-  latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
+	longitude :any=localStorage.getItem('longitude')
+  latitude :any=localStorage.getItem('latitude');
   selectedOb:boolean=false;
-  	markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
-             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
+  	markers = [{ latitude: localStorage.getItem('latitude'),
+             longitude: localStorage.getItem('longitude')}];
   preFiles:File[]=[];
 
   constructor(private translate: TranslateService,
@@ -38,7 +40,8 @@ export class ViewVisitProfileTerrComponent implements OnInit {
                 public alertService: AlertService,
                 private route:ActivatedRoute,
                 private modalService: NgbModal,
-                private formBuilder: FormBuilder) { }
+                private formBuilder: FormBuilder,
+                private sharedServices: SharedServicesService) { }
 
   ngOnInit() {
 
@@ -61,35 +64,31 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 
 
   }
+exportAsXLSX():void {
 
-/*getLocalizacion(){
-     if (window.navigator && window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(
-            position => {
-                this.latitude=position["coords"]["latitude"];
-                this.longitude=position["coords"]["longitude"];
-                console.log(this.latitude);
-                console.log(this.longitude);
-                this.markers=[{ latitude: position["coords"]["latitude"],
-                				longitude: position["coords"]["longitude"]}];
+       let dataToExport:any=[];
 
-            },
-            error => {
-                switch (error.code) {
-                    case 1:
-                        console.log('Permission Denied');
-                        break;
-                    case 2:
-                        console.log('Position Unavailable');
-                        break;
-                    case 3:
-                        console.log('Timeout');
-                        break;
-                }
-            }
-        );
-    };
-  }*/
+       for (let position in this.listaVisitas){
+
+        
+           let element={
+           "Fecha":this.listaVisitas[position].fecha,
+           "Hora":this.listaVisitas[position].hora,
+           "Huso": this.listaVisitas[position].huso,
+           "Latitud":this.listaVisitas[position].lat,
+           "Longitud":this.listaVisitas[position].lon,
+           "Observación":this.listaVisitas[position].observaciones.tipo
+           }
+           dataToExport.push(element);
+
+         
+         
+
+       }
+       this.sharedServices.exportAsExcelFile(dataToExport, 'sample');
+
+}
+
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
@@ -99,14 +98,14 @@ this.markers=[{ latitude: lat, longitude: lng }];
 }
 
   recuperaVisitas(terrId, pageNumber){
-  		this.territoriosService.recuperaVisitasGeneral('?territorio='+terrId+'&page='+pageNumber).subscribe(
+  		this.territoriosService.recuperaVisitasGeneral('?territorio='+terrId).subscribe(
                         data =>{
 
                         	console.log(data);
 
 
                         	this.listaVisitas=[];
-                        	for (let visita of data["hydra:member"]){
+                        	for (let visita of data){
                         		let date=new Date((visita["fecha"]));
                         		let y=date.getFullYear();
                         		let m=date.getMonth()+1;
@@ -121,10 +120,10 @@ this.markers=[{ latitude: lat, longitude: lng }];
 
                         		this.listaVisitas.push(visita);
                         	}
-                        	let last=data["hydra:view"]["hydra:last"];
+                        	/*let last=data["hydra:view"]["hydra:last"];
 			                last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
 			                this.totalPages=last*10;
-                        	console.log(data);
+                        	console.log(data);*/
                         },
                         error=>{
                             console.log(error);
