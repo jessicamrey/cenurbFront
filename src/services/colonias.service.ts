@@ -194,11 +194,12 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
 //Obtenemos las estadisticas por tipo de edificio para numero de nidos
 
-
-//COMPROBAR QUE EL STRING DE BUSQUED ESTE BIEN FORMADO,. NO SE SI LA FORMA ?& FUNCIONARA
-
   getStatsTipoEdificioCol(especie, busqueda){
     return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsTipoEdificioCol' + busqueda);
+  }
+  
+  getStatsTipoPropiedadCol(especie, busqueda){
+    return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsTipoPropiedadCol' + busqueda);
   }
 
   //Subimos una imagen
