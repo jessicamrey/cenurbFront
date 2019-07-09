@@ -286,11 +286,13 @@
         "mun":          "Municipio",
         "infoMsg1":     "Por favor, seleccione un municipio",
         "infoMsg2":     "¿Los censos de las colonias asignadas forman un censo completo del municipio?",
+        "infoMsg3":     "No se han encontrado datos para este municipio y esta temporada, ¿deseas crear un nuevo censo?",
         "yes":          "Sí",
         "no":           "No",
         "save":         "Guardar",
         "munComplete":  "Censo del municipio completo",
-        "complete":     "Censo completo"
+        "complete":     "Censo completo",
+        "search":       "Buscar"
     },
     "StatisticsNest":{
         "data":         "DATOS en ",
