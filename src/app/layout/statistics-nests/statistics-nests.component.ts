@@ -19,18 +19,22 @@ export class StatisticsNestsComponent implements OnInit {
 	provChartData:any=[];
   munChartData:any=[];
   tipoEdChartData:any=[];
+  tipoPropChartData:any=[];
 
   annoChartDataFiltered:any=[];
   ccaaChartDataFiltered:any=[];
   provChartDataFiltered:any=[];
   munChartDataFiltered:any=[];
   tipoEdChartDataFiltered:any=[];
+  tipoPropChartDataFiltered:any=[];
+	
 
 
 	listaCCAA:any=[];
 	listaProv:any=[];
 	listaMun:any=[];
   listaTipoEd:any[]= [];
+  listaTipoProp:any[]= [];
   listaTemporadas:any=[];
 
 
@@ -66,7 +70,9 @@ export class StatisticsNestsComponent implements OnInit {
     munSelected:any;
     tipoEdFiltered:boolean=false;
     tipoEdSelected:any;
-
+    tipoPropFiltered:boolean=false;
+    tipoPropSelected:any;
+	
     start=1;
     startMun=1;
 
@@ -80,10 +86,14 @@ export class StatisticsNestsComponent implements OnInit {
 
   	this.recuperaCCAA();
   	this.recuperaTipoEd();
+  	this.recuperaTipoProp();
   	this.recuperaTemporadas();
+	  
     this.statsAnno('', 'all');
     this.statsCcaa('','all');
     this.statsTipoEdificio('','all');
+    this.statsTipoPropiedad('','all');
+	  
 
 
     /*this.labels=[this.translate.instant("ViewVisits.numNest"),
@@ -97,6 +107,14 @@ export class StatisticsNestsComponent implements OnInit {
   	this.seoService.getTipoEd().subscribe(
               data => {
                 this.listaTipoEd=data["hydra:member"];
+              }
+        );
+  }
+	
+recuperaTipoProp(){
+  	this.seoService.getTipoProp().subscribe(
+              data => {
+                this.listaTipoProp=data["hydra:member"];
               }
         );
   }
@@ -331,6 +349,34 @@ export class StatisticsNestsComponent implements OnInit {
     }
 
   }
+	
+statsTipoPropiedad(busqueda, tipoProp){
+    if(tipoProp=='all'){
+      this.tipoPropFiltered=false;
+      this.coloniasService.getStatsTipoPropiedadCol(this.especie, busqueda).subscribe(
+      data=>{
+        for (let item of data){
+          let dataList={data: [item[1], item[2], item[3], item[4]], label: this.especieNombre};
+          this.tipoPropChartData[item["Description"]]=[dataList];
+
+                    if (this.start==data.length){
+                      this.showCcaa=true;
+                      this.start=1;
+                      this.loading=false;
+                    }
+                    this.start++;
+        }
+      },
+      error=>{
+        this.loading=false;
+        console.log(error);
+      });
+    }else{
+      this.tipoPropChartDataFiltered=[this.tipoPropChartData[tipoProp]];
+      this.tipoPropFiltered=true;
+    }
+
+  }
 
   filtrar(){
 
@@ -345,11 +391,14 @@ export class StatisticsNestsComponent implements OnInit {
     let temp=$( "#temporada option:selected" ).attr("value");
     let mun=$( "#selectMunicipio option:selected" ).attr("value");
     let tipoEd=$( "#tipoEdificio option:selected" ).attr("value");
+    let tipoProp=$( "#tipoPropiedad option:selected" ).attr("value");
 
     this.ccaaSelected=ccaa;
     this.provSelected=prov;
     this.munSelected=mun;
     this.tipoEdSelected=tipoEd;
+    this.tipoPropSelected=tipoProp;
+	  
     this.annoSelected=temp;
 
 
@@ -359,12 +408,16 @@ export class StatisticsNestsComponent implements OnInit {
     temp!='all' ? busqueda=busqueda+'&temporada='+temp : busqueda;
     mun!='all'&&mun!=undefined ? busqueda=busqueda+'&municipio='+mun : busqueda;
     tipoEd!='all' ? busqueda=busqueda+'&tipoEdificio='+tipoEd : busqueda;
+    tipoProp!='all' ? busqueda=busqueda+'&tipoPropiedad='+tipoProp : busqueda;
+	  
 
     console.log(busqueda);
 
     this.statsAnno(busqueda, temp);
     this.statsCcaa(busqueda,ccaa);
     this.statsTipoEdificio(busqueda,tipoEd);
+    this.statsTipoPropiedad(busqueda,tipoProp);
+	  
 
     if (ccaa!='all'){
       this.disableProv=false;
