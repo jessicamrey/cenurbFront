@@ -4,7 +4,8 @@
         "title":        "Censos urbanos",
         "col":          "Aves coloniales",
         "terr":         "Aves no coloniales",
-        "excel":        "DESCARGAR"
+        "excel":        "DESCARGAR",
+        "admin":        "Administración"
     },
     "Header":{
         "title":        "Censos urbanos",
@@ -31,7 +32,8 @@
         "registerTerr": "Registrar territorio",
         "viewTerr":     "Ver territorios",
         "viewCloseTerr":"Territorios cercanos",
-        "docs":         "Documentación"
+        "docs":         "Documentación",
+        "mun":          "Censo municipio"
     },
     "Login":{
         "welcome":      "BIENVENIDO/A a Censos Urbanos",
@@ -274,6 +276,21 @@
         "all":          "Todas",
         "filter":       "Filtrar por ...",
         "apply":        "Aplicar"
+    },
+  "CensoMunicipio":{
+        "title":        "Completar datos en municipio",
+        "colAv":        "Colonias disponibles",
+        "colAs":        "Colonias asignadas al municipio",
+        "ccaa":         "Comunidad Autónoma",
+        "prov":         "Provincia",
+        "mun":          "Municipio",
+        "infoMsg1":     "Por favor, seleccione un municipio",
+        "infoMsg2":     "¿Los censos de las colonias asignadas forman un censo completo del municipio?",
+        "yes":          "Sí",
+        "no":           "No",
+        "save":         "Guardar",
+        "munComplete":  "Censo del municipio completo",
+        "complete":     "Censo completo"
     },
     "StatisticsNest":{
         "data":         "DATOS en ",
