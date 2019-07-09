@@ -114,7 +114,8 @@ export class CensoMunicipioComponent implements OnInit {
     
   
   }
-  buscarAsignadas(pageNumber){
+  buscarAsignadas(){
+    //recuperar  datos de un unico censo
   }
   
   editar(){
@@ -125,6 +126,6 @@ export class CensoMunicipioComponent implements OnInit {
   
    pageChanged(page) {
     this.buscarDisponibles(page);
-    this.buscarAsignadas(page);
+
   }
 }
