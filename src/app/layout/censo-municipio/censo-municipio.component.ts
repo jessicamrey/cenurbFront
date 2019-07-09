@@ -20,6 +20,8 @@ export class CensoMunicipioComponent implements OnInit {
   listaMun:any[]= [];  
   listaColDisponibles:any[]= [];
   listaColAsignadas:any[]= [];
+  totalPages:any=0;
+  advancedPagination: number;
     
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
@@ -88,14 +90,41 @@ export class CensoMunicipioComponent implements OnInit {
 
   }
   
-  buscar(){
-    //llamar a la api y asignar variables
+  buscarDisponibles(pageNumber){
+    
+    let busqueda="&municipioAsignado=null&temporada="+$("#temporada").val()+"&municipio="+$( "#selectMunicipio option:selected" ).attr("value");
+    
+     this.coloniasService.recuperaColoniasFiltered(pageNumber, busqueda).subscribe(
+              data => {
+                this.listaColoniasDisponibles=data["hydra:member"];
+                let last=data["hydra:view"]["hydra:last"];
+
+                if (last != undefined){
+                  last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
+                  this.totalPages=last*10; 
+                }else{
+                  this.totalPages=0;
+                }
+              },
+              error => {
+                  this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
+                  
+            }
+        );
+    
   
+  }
+  buscarAsignadas(pageNumber){
   }
   
   editar(){
    //cambios en campo completo de cada colonia, por lo que editar colonia
     //cambios de campo completo de municpio, opr lo que editar censomucnipio
     //cambiso en colonias asignadas y disponibles, editar censomunicipio
+  }
+  
+   pageChanged(page) {
+    this.buscarDisponibles(page);
+    this.buscarAsignadas(page);
   }
 }
