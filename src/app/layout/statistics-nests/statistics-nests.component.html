@@ -52,6 +52,13 @@
                         <option *ngFor="let ed of listaTipoEd" value="{{ed.descripcion}}" id="{{ed.id}}">{{ed.descripcion}}</option>
                     </select>
             </div>
+	    <div class="col-sm-4">
+                <label>{{ 'RegisterCol.tipoProp' | translate }} *</label>
+                    <select class="form-control" id="tipoPropiedad"  >
+                        <option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
+                        <option *ngFor="let prop of listaTipoProp" value="{{prop.Description}}" id="{{prop.id}}">{{prop.Description}}</option>
+                    </select>
+            </div>
         </div>
         <div class="row">
         	<div class="col-sm-12">
@@ -670,6 +677,130 @@
                                           
                                             <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
                                            <canvas *ngIf="tipoEdChartDataFiltered['0']!=undefined; else noData" baseChart [datasets]="tipoEdChartDataFiltered['0']" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                            </canvas>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                             
+                            </ng-template>
+                        </ng-template>
+                    </ngb-tab>
+		   <ngb-tab title="{{ 'StatisticsNest.byTipoProp' | translate }}">
+                        <ng-template ngbTabContent>
+                            <div class="row" *ngIf="tipoPropFiltered==false; else filteredTipoProp">
+                                <div class="col-sm-6" *ngFor="let item of listaTipoProp" >
+                                    <div class="card">
+                                        <div class="card-header">
+                                        {{ 'StatisticsNest.dataTipoEd' | translate }} {{item.descripcion}}
+                                        </div>
+                                        <div class="card-body table-responsive">
+                                            <div *ngIf="tipoPropChartData[item.Description]!=undefined; else noData">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{item.Description}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numNest' | translate }}</td>
+                                                            <td>{{tipoPropChartData[item.Description]['0'].data['0']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
+                                                            <td>{{tipoPropChartData[item.Description]['0'].data['1']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
+                                                            <td>{{tipoPropChartData[item.Description]['0'].data['2']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
+                                                            <td>{{tipoPropChartData[item.Description]['0'].data['3']}}</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" >
+                                        <div class="card-header">
+                                            {{ 'StatisticsNest.chart' | translate }} {{item.Description}}
+                                        </div>
+                                        <div class="card-body">
+                                          
+                                            <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+                                           <canvas *ngIf="tipoPropChartData[item.Description]!=undefined; else noData" baseChart [datasets]="tipoPropChartData[item.descripcion]" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                                            </canvas>
+                                            <ng-template #noData>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <ng-template #filteredTipoProp>
+                            <div class="row">
+                                <div class="col-sm-12"  >
+                                    <div class="card">
+                                        <div class="card-header">
+                                        {{ 'StatisticsNest.dataTipoEd' | translate }} {{tipoPropSelected}}
+                                        </div>
+                                        <div class="card-body table-responsive">
+                                            <div *ngIf="tipoPropChartDataFiltered[0]!=undefined; else noDataFiltered">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{{tipoPropSelected}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numNest' | translate }}</td>
+                                                            <td>{{tipoPropChartDataFiltered['0']['0'].data['0']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numTaken' | translate }}</td>
+                                                            <td>{{tipoPropChartDataFiltered['0']['0'].data['1']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numEmpty' | translate }}</td>
+                                                            <td>{{tipoPropChartDataFiltered['0']['0'].data['2']}}</td> 
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ 'StatisticsNest.numSuccess' | translate }}</td>
+                                                            <td>{{tipoPropChartDataFiltered['0']['0'].data['3']}}</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                            <ng-template #noDataFiltered>
+                                              {{ 'StatisticsNest.noData' | translate }}
+                                            </ng-template>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" >
+                                        <div class="card-header">
+                                            {{ 'StatisticsNest.chart' | translate }} {{tipoPropSelected}}
+                                        </div>
+                                        <div class="card-body">
+                                          
+                                            <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+                                           <canvas *ngIf="tipoPropChartDataFiltered['0']!=undefined; else noData" baseChart [datasets]="tipoPropChartDataFiltered['0']" [labels]="labels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeH" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
                                             </canvas>
                                             <ng-template #noData>
                                               {{ 'StatisticsNest.noData' | translate }}
