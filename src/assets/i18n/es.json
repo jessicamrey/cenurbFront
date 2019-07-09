@@ -306,6 +306,7 @@
         "noData":       "SIN DATOS",
         "byMun":        "Por municipio",
         "byTipoEd":     "Por tipo de edificio",
+        "byTipoProp":   "Por tipo de propiedad",
         "infoMsg1":     "Los gráficos de este apartado sólo están disponibles si filtra una provincia",
         "infoMsg2":     "Los gráficos de este apartado sólo están disponibles si filtra un municipio",
         "infoMsg3":     "Este campo sólo es válido en el apartado 'Por tipo de edificio'",
