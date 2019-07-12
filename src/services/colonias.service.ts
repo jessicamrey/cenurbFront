@@ -198,6 +198,24 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/especies/'+especie+'/statsTipoPropiedadCol' + busqueda);
   }
 
+
+//Buscamos un censo de municipio
+  getCensoMunicipio(especie, municipio, temporada){
+    return this.http.get<any>(this.url + '/api/censo-municipios?especie='+especie+'&municipio' + municipio + '&temporada='+temporada);
+  }
+
+  //Registramos un nuevo censo en un municipio
+  nuevoCensoMunicipio(data:any){
+
+
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+
+    let response=this.http.post(this.url + '/api/censo-municipios', JSON.stringify(data), config);
+    return response;
+
+  }
+
+
   //Subimos una imagen
 
   uploadImage(id:number,images: File[]){

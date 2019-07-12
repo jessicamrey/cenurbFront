@@ -21,25 +21,26 @@ export class CensoMunicipioComponent implements OnInit {
   listaColAsignadas:any[]= [];
   totalPages:any=0;
   advancedPagination: number;
-    
+  especie:any=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
+  censo:any;
+  noData:boolean=false;
+  showCenso:boolean=false;
+
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
                 private coloniasService: ColoniasService,
                 public alertService: AlertService) { }
 
   ngOnInit() {
+    this.recuperaTemporadas();
+    this.recuperaCCAA();
   }
   
    recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(
       data=>{
         
-        for (let item of data){
-          
-            this.listaTemporadas.push(item["anno"]);
-          
-        }
-        console.log(this.listaTemporadas);
+        this.listaTemporadas=data;
       },
       error=>{
         console.log(error);
@@ -91,11 +92,23 @@ export class CensoMunicipioComponent implements OnInit {
   
   buscarDisponibles(pageNumber){
     
-    let busqueda="&municipioAsignado=null&temporada="+$("#temporada").val()+"&municipio="+$( "#selectMunicipio option:selected" ).attr("value");
+    let busqueda="&temporada="+$("#temporada option:selected").attr("value")+
+                "&municipio="+$( "#selectMunicipio option:selected" ).attr("value")+
+                "&especie="+this.especie;
     
      this.coloniasService.recuperaColoniasFiltered(pageNumber, busqueda).subscribe(
               data => {
+                console.log(data["hydra:member"]);
                 this.listaColDisponibles=data["hydra:member"];
+
+                for (let colonia of this.listaColDisponibles){
+                  if(colonia.municipioAsignado!=null){
+
+                   this.listaColAsignadas.push(colonia);
+                   this.listaColDisponibles.splice(this.listaColDisponibles.indexOf(colonia), 1);
+
+                  }
+                }
                 let last=data["hydra:view"]["hydra:last"];
 
                 if (last != undefined){
@@ -106,6 +119,7 @@ export class CensoMunicipioComponent implements OnInit {
                 }
               },
               error => {
+                console.log(error);
                   this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
                   
             }
@@ -113,18 +127,91 @@ export class CensoMunicipioComponent implements OnInit {
     
   
   }
-  buscarAsignadas(){
-    //recuperar  datos de un unico censo
-  }
+
   
   editar(){
    //cambios en campo completo de cada colonia, por lo que editar colonia
     //cambios de campo completo de municpio, opr lo que editar censomucnipio
     //cambiso en colonias asignadas y disponibles, editar censomunicipio
   }
+
+  asignar(item){
+    this.listaColDisponibles.splice(this.listaColDisponibles.indexOf(item), 1);
+    this.listaColAsignadas.push(item);
+    console.log(this.listaColDisponibles);
+    console.log(this.listaColAsignadas);
+  }
+
+  desasignar(item){
+    this.listaColAsignadas.splice(this.listaColAsignadas.indexOf(item), 1);
+    this.listaColDisponibles.push(item);
+    console.log(this.listaColDisponibles);
+    console.log(this.listaColAsignadas);
+
+  }
   
    pageChanged(page) {
     this.buscarDisponibles(page);
 
+  }
+
+  buscarCenso(){
+
+    if( $( "#selectMunicipio option:selected" ).attr("value")=='all' || $( "#temporada option:selected" ).attr("id")=='all'){
+      this.alertService.warning(this.translate.instant("CensoMunicipio.infoMsg1"));
+
+    }else{
+        this.coloniasService.getCensoMunicipio(this.especie, $( "#selectMunicipio option:selected" ).attr("value"),$( "#temporada option:selected" ).attr("id")).subscribe(
+              data => {
+                console.log(data);
+               this.censo=data["hydra:member"];
+               if(data["hydra:member"].length<=0){
+                 this.noData=true;
+                 this.showCenso=false;
+               }else{
+                 this.noData=false;
+                 this.showCenso=true;
+                 this.buscarDisponibles(1);
+               }
+                
+              },
+              error => {
+                  this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
+                  
+            }
+        );
+      }
+
+  }
+
+  nuevoCenso(){
+    if( $( "#selectMunicipio option:selected" ).attr("value")=='all' || $( "#temporada option:selected" ).attr("id")=='all'){
+      this.alertService.warning(this.translate.instant("CensoMunicipio.infoMsg1"));
+
+    }else{
+      let newCenso={
+        'especie':     this.especie,
+        'municipio':    $( "#selectMunicipio option:selected" ).attr("value"),
+        'anno':        $( "#temporada option:selected" ).attr("value")
+      }
+
+      this.coloniasService.nuevoCensoMunicipio(newCenso).subscribe(
+              data => {
+                console.log(data);
+                this.censo=data;
+               this.noData=false;
+                 this.showCenso=true;
+                 this.buscarDisponibles(1);
+                
+              },
+              error => {
+                console.log(error);
+                  this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
+                  
+            }
+        );
+
+
+    }
   }
 }
