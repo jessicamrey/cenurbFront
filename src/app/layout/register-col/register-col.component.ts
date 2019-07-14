@@ -33,11 +33,11 @@ export class RegisterColComponent implements OnInit {
   locNidos= new LocNidos();
   registerForm: FormGroup;
   loading=false;
-  longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"];
-  latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
+  longitude :any=localStorage.getItem('longitude');
+  latitude :any=localStorage.getItem('latitude');
 
-  markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
-             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
+  markers = [{ latitude: localStorage.getItem('latitude'),
+             longitude: localStorage.getItem('longitude')}];
 
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,

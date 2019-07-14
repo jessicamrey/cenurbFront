@@ -1,4 +1,5 @@
   <p style="margin-top:60px;"></p>
+  <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 <ngx-alerts></ngx-alerts>
 <div class="card" >
 
@@ -66,13 +67,13 @@
     </div>
 
     <div *ngIf="showCenso==true">
-    	<h4>{{ 'CensoMunicipio.infoMsg4' | translate }}</h4>
+    	<h4>{{ 'CensoMunicipio.infoMsg4' | translate }} {{municipio}}</h4>
     		<div class="row" >
     			
     			<div class="col-sm-6">
     				<h5>{{ 'CensoMunicipio.colAv' | translate }}</h5>
 	    			<p  *ngFor="let coloniaD of listaColDisponibles">
-	    				{{coloniaD.nombre}} 
+	    				{{coloniaD.nombre}}  {{ 'CensoMunicipio.complete' | translate }} {{coloniaD.completo}} 
 	    					<i class="fas fa-arrow-right" (click)="asignar(coloniaD)"></i>
 	    			</p>
     			</div>
@@ -80,7 +81,7 @@
     				<h5>{{ 'CensoMunicipio.colAs' | translate }}</h5>
 	    			<p *ngFor="let colonia of listaColAsignadas">
 	    			<i class="fas fa-arrow-left" (click)="desasignar(colonia)"></i>
-	    				{{colonia.nombre}}
+	    				{{colonia.nombre}} {{ 'CensoMunicipio.complete' | translate }} {{colonia.completo}}
 
 	    			</p>
     			</div>
@@ -88,7 +89,21 @@
     				<button class="btn btn-primary" (click)="editar()">{{ 'CensoMunicipio.save' | translate }}</button>
     			</div>
     		</div>
-
+    		<div class="row">
+    			<div class="col-sm-12">
+		    		<h5>{{ 'CensoMunicipio.munComplete' | translate }}</h5>
+		    		<p>{{censo['0'].completo}}</p>
+		    	</div>
+		    	<div class="col-sm-12">
+		    		<h5>{{ 'CensoMunicipio.infoMsg2' | translate }}</h5>
+    			</div>
+    			<div class="col-sm-6">
+    				<button class="btn btn-primary" (click)="completar(true)">{{ 'CensoMunicipio.yes' | translate }}</button>
+    			</div>
+    			<div class="col-sm-6">
+    				<button class="btn btn-primary" (click)="completar(false)">{{ 'CensoMunicipio.no' | translate }}</button>
+    			</div>
+    		</div>
     </div>
 
 </div>

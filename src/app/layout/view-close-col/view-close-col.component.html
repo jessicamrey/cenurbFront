@@ -23,7 +23,7 @@
 
 	</div>
 	<div class="col-sm-8">
-		<agm-map [latitude]="geolocationPosition.coords.latitude" [longitude]="geolocationPosition.coords.longitude">
+		<agm-map [latitude]="latitude" [longitude]="longitude">
 		  <agm-marker *ngFor="let item of listaColonias" [latitude]="item.locNidos.lat" [longitude]="item.locNidos.lon">
 
 

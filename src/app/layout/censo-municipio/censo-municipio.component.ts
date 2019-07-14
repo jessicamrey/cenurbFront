@@ -25,6 +25,8 @@ export class CensoMunicipioComponent implements OnInit {
   censo:any;
   noData:boolean=false;
   showCenso:boolean=false;
+  loading:boolean=false;
+  municipio:any;
 
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
@@ -91,16 +93,15 @@ export class CensoMunicipioComponent implements OnInit {
   }
   
   buscarDisponibles(pageNumber){
-    
+    this.loading=true;
     let busqueda="&temporada="+$("#temporada option:selected").attr("value")+
                 "&municipio="+$( "#selectMunicipio option:selected" ).attr("value")+
                 "&especie="+this.especie;
     
      this.coloniasService.recuperaColoniasFiltered(pageNumber, busqueda).subscribe(
               data => {
-                console.log(data["hydra:member"]);
+                 this.loading=false;
                 this.listaColDisponibles=data["hydra:member"];
-
                 for (let colonia of this.listaColDisponibles){
                   if(colonia.municipioAsignado!=null){
 
@@ -119,8 +120,8 @@ export class CensoMunicipioComponent implements OnInit {
                 }
               },
               error => {
-                console.log(error);
-                  this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
+                 this.loading=false;
+                  this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
                   
             }
         );
@@ -130,23 +131,74 @@ export class CensoMunicipioComponent implements OnInit {
 
   
   editar(){
-   //cambios en campo completo de cada colonia, por lo que editar colonia
-    //cambios de campo completo de municpio, opr lo que editar censomucnipio
-    //cambiso en colonias asignadas y disponibles, editar censomunicipio
+    this.loading=true;
+    for (let asignada of this.listaColAsignadas){
+      let datos={
+        "municipioAsignado_id":this.censo[0].id
+      }
+      this.coloniasService.modificarColonia(asignada.id,datos).subscribe(
+        data=>{
+          this.loading=false;
+        },
+        error=>{
+          this.loading=false;
+          this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
+
+        });
+    }
+
+    for (let disponible of this.listaColDisponibles){
+
+      let datosD={
+        "municipioAsignado_id": "null"
+      }
+
+      this.coloniasService.modificarColonia(disponible.id,datosD).subscribe(
+        data=>{
+          this.loading=false;
+        },
+        error=>{
+          this.loading=false;
+          this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
+
+        });
+    }
+    
+  }
+
+  completar(param:boolean){
+    this.loading=true;
+    
+      let datos={
+        "completo": param
+      }
+      this.coloniasService.modificarCenso(this.censo[0].id,datos).subscribe(
+        data=>{
+          this.loading=false;
+          this.censo[0]=data;
+          console.log(data);
+          this.alertService.success(this.translate.instant("CensoMunicipio.infoMsg5"));
+        },
+        error=>{
+          this.loading=false;
+          console.log(error);
+          this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
+
+        });
+    
+
+   
+    
   }
 
   asignar(item){
     this.listaColDisponibles.splice(this.listaColDisponibles.indexOf(item), 1);
     this.listaColAsignadas.push(item);
-    console.log(this.listaColDisponibles);
-    console.log(this.listaColAsignadas);
   }
 
   desasignar(item){
     this.listaColAsignadas.splice(this.listaColAsignadas.indexOf(item), 1);
     this.listaColDisponibles.push(item);
-    console.log(this.listaColDisponibles);
-    console.log(this.listaColAsignadas);
 
   }
   
@@ -156,15 +208,18 @@ export class CensoMunicipioComponent implements OnInit {
   }
 
   buscarCenso(){
-
+    this.loading=true;
     if( $( "#selectMunicipio option:selected" ).attr("value")=='all' || $( "#temporada option:selected" ).attr("id")=='all'){
       this.alertService.warning(this.translate.instant("CensoMunicipio.infoMsg1"));
+      this.loading=false;
 
     }else{
         this.coloniasService.getCensoMunicipio(this.especie, $( "#selectMunicipio option:selected" ).attr("value"),$( "#temporada option:selected" ).attr("id")).subscribe(
               data => {
-                console.log(data);
+
+                this.loading=false;
                this.censo=data["hydra:member"];
+               this.municipio=$( "#selectMunicipio option:selected" ).attr("value");
                if(data["hydra:member"].length<=0){
                  this.noData=true;
                  this.showCenso=false;
@@ -176,7 +231,8 @@ export class CensoMunicipioComponent implements OnInit {
                 
               },
               error => {
-                  this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
+                this.loading=false;
+                this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
                   
             }
         );
@@ -185,9 +241,10 @@ export class CensoMunicipioComponent implements OnInit {
   }
 
   nuevoCenso(){
+    this.loading=true;
     if( $( "#selectMunicipio option:selected" ).attr("value")=='all' || $( "#temporada option:selected" ).attr("id")=='all'){
       this.alertService.warning(this.translate.instant("CensoMunicipio.infoMsg1"));
-
+      this.loading=false;
     }else{
       let newCenso={
         'especie':     this.especie,
@@ -197,16 +254,17 @@ export class CensoMunicipioComponent implements OnInit {
 
       this.coloniasService.nuevoCensoMunicipio(newCenso).subscribe(
               data => {
-                console.log(data);
+                this.loading=false;
                 this.censo=data;
                this.noData=false;
                  this.showCenso=true;
                  this.buscarDisponibles(1);
+                 this.alertService.warning(this.translate.instant("CensoMunicipio.infoMsg6"));
                 
               },
               error => {
-                console.log(error);
-                  this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
+                this.loading=false;
+                 this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
                   
             }
         );

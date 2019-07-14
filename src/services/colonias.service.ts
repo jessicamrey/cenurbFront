@@ -70,9 +70,10 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
   }
 
 //Modificamos los datos de una colonia existente
-  modificarColonia(colId:number, colonia: Colonia) {
+  modificarColonia(colId:number, data:any) {
+    console.log(data);
     let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
-    return this.api.put('api/colonias/' + colId, JSON.stringify(colonia), config);
+    return this.api.put('api/putColonia/' + colId, JSON.stringify(data), config);
   }
 
 //Completamos los datos de la colonia con datos de nidos 
@@ -213,6 +214,11 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     let response=this.http.post(this.url + '/api/censo-municipios', JSON.stringify(data), config);
     return response;
 
+  }
+  //Modificamos los datos de un censo
+  modificarCenso(censoId:number, data:any) {
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+    return this.api.put('api/censo-municipios/' + censoId, JSON.stringify(data), config);
   }
 
 

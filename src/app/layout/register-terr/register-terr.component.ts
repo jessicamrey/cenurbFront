@@ -27,11 +27,12 @@ export class RegisterTerrComponent implements OnInit {
 	listaTipoEd:any[]= [];
 	listaNidos:any[]= [];
 	loading=false;
-	longitude :any=localStorage.getItem('geolocationPosition')["coords"]["longitude"];
-	latitude :any=localStorage.getItem('geolocationPosition')["coords"]["latitude"];
+	 longitude :any=parseFloat(localStorage.getItem('longitude'));
+  latitude :any=parseFloat(localStorage.getItem('latitude'));
 
-	  markers = [{ latitude: localStorage.getItem('geolocationPosition')["coords"]["latitude"],
-             longitude: localStorage.getItem('geolocationPosition')["coords"]["longitude"]}];
+  markers = [{ latitude: localStorage.getItem('latitude'),
+             longitude: localStorage.getItem('longitude')}];
+
   	constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
                 private territoriosService: TerritoriosService,

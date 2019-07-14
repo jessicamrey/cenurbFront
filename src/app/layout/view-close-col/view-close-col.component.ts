@@ -12,9 +12,11 @@ import { TranslateService } from '@ngx-translate/core';
 export class ViewCloseColComponent implements OnInit {
 	title: string = 'My first AGM project';
   	lat: number = 51.678418;
-  	lng: number = 7.809007;
-    geolocationPosition:any=localStorage.getItem('geolocationPosition');
+  	lng: number = 7.809007;9
+    longitude :any=parseFloat(localStorage.getItem('longitude');
+    latitude :any=parseFloat(localStorage.getItem('latitude'));
     listaColonias:any[]= [];
+
   constructor( private coloniasService: ColoniasService,
                public alertService: AlertService,
                private translate: TranslateService,
@@ -53,8 +55,8 @@ export class ViewCloseColComponent implements OnInit {
   }*/
 
   getColoniasCercanas(radio){
-    let lat=this.geolocationPosition["coords"]["latitude"];
-    let lon=this.geolocationPosition["coords"]["longitude"];
+    let lat=this.latitude;
+    let lon=this.longitude;
     let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
 
 

@@ -16,6 +16,7 @@ export class Colonia{
   private locNidos: LocNidos;
   private usuario: string;
   private especie: number;
+  public municipioAsignado_id:any;
 
 
 
