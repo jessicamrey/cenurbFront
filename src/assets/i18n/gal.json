@@ -3,13 +3,19 @@
     "Menu":{
         "title":        "Censos urbanos",
         "col":          "Aves coloniales",
-        "terr":         "Aves non coloniales"
+        "terr":         "Aves non coloniales",
+        "excel":        "DESCARGAR"
+    },
+   "Admin":{
+        "title":        "PANEL DE ADMINISTRACIÓN"
     },
     "Header":{
         "title":        "Censos urbanos",
         "infoMsg1":     "Non seleccionaches ningunha especie",
         "infoMsg2":     "Especie seleccionada: ",
-        "language":     "Idioma"
+        "language":     "Idioma",
+        "logout":       "Desconectar",
+        "admin":        "Administración"
     },
     "Sidebar":{
         "col":          "Colonias",
@@ -28,7 +34,9 @@
         "generalTerr":  "Aves non coloniales",
         "registerTerr": "Rexistrar territorio",
         "viewTerr":     "Ver territorios",
-        "viewCloseTerr":"Territorios cercanos"
+        "viewCloseTerr":"Territorios cercanos",
+        "docs":         "Documentación",
+        "mun":          "Censo municipio"
     },
     "Login":{
         "welcome":      "BIENVENIDO/A a Censos Urbanos",
@@ -46,6 +54,12 @@
         "msg4":         "Entrar con usuario",
         "errorLoginAno": "Ocurriu un erro ao intentar acceder. Inténtelo de novo máis tarde"
 
+    },
+    "Selector":{
+        "title":        "SELECCIÓN",
+        "infoMsg1":     "Por favor, seleccione o tipo de ave co que quere traballar",
+        "col":          "Aves coloniales",
+        "noCol":        "Aves non coloniales"
     },
     "Dashboard":{
         "errorGetCol":   "Ocurriu un erro ao intentar recuperar o listado de aves coloniales",
@@ -214,7 +228,8 @@
         "yes":          "Sí",
         "no":           "Non",
         "edit":         "Modificar" ,
-        "delete":       "Eliminar"
+        "delete":       "Eliminar",
+        "upload":       "¿Queres subir algunha fotografía?"
         
     },
     "ViewVisitProfileTerr":{
@@ -252,11 +267,55 @@
     "Statistics":{
         "anno":         "Por ano",
         "ccaa":         "Por Comunidade Autónoma",
-        "prov":         "Por provincia"
+        "prov":         "Por provincia",
+        "table":        "Colonias rexistradas",
+        "tableTerr":    "Territorios rexistrados"
     },
     "GeneralTerr":{
         "all":          "Todas",
         "filter":       "Filtrar por ...",
         "apply":        "Aplicar"
+    },
+  "CensoMunicipio":{
+        "title":        "Completar datos no municipio",
+        "colAv":        "Colonias disponibles",
+        "colAs":        "Colonias asinadas ao municipio",
+        "ccaa":         "Comunidade Autónoma",
+        "prov":         "Provincia",
+        "mun":          "Municipio",
+        "infoMsg1":     "Por favor, seleccione un municipio e unha tempada",
+        "infoMsg2":     "¿Os censos das colonias asinadas forman un censo completo do municipio?",
+        "infoMsg3":     "Non se encontraron datos para este municipio e esta tempada, ¿desexas crear un novo censo?",
+        "infoMsg4":     "Colonias rexistradas en ",
+        "infoMsg5":     "Os datos gardáronse correctamente",
+        "infoMsg6":     "Creouse un novo censo para o municipio",
+        "errorMsg1":    "Ocurriu un erro",
+        "infoMsg5":     "Asinar ao censo de  ",
+        "yes":          "Sí",
+        "no":           "Non",
+        "create":       "Crear",
+        "save":         "Gardar cambios",
+        "munComplete":  "Censo do municipio completo",
+        "complete":     "Censo completo",
+        "search":       "Buscar"
+    },
+    "StatisticsNest":{
+        "data":         "DATOS en ",
+        "dataTipoEd":   "DATOS para ",
+        "chart":        "GRÁFICO para ",
+        "mun":          "Municipio",
+        "numNest":      "Número de niños rexistrados en total",
+        "numTaken":     "Número de niños anotados como ocupados",
+        "numEmpty":     "Número de niños vacíos",
+        "numSuccess":   "Número de niños rexistrados que tiveron éxito",
+        "noData":       "SEN DATOS",
+        "byMun":        "Por municipio",
+        "byTipoEd":     "Por tipo de edificio",
+        "byTipoProp":   "Por tipo de propiedade",
+        "infoMsg1":     "Os gráficos de este apartado só están dispoñibles se filtra unha provincia",
+        "infoMsg2":     "Os gráficos de este apartado só están dispoñibles se filtra un municipio",
+        "infoMsg3":     "Este campo só é válido no apartado 'Por tipo de edificio'",
+        "infoMsg4":     "Debido ao gran volumen de datos, este apartado só estará dispoñible cando filtre unha provincia ou un municipio"
+
     }
 }
