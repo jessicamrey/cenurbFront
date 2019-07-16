@@ -4,15 +4,15 @@
         "title":        "Censos urbanos",
         "col":          "Aves coloniales",
         "terr":         "Aves no coloniales",
-        "excel":        "DESCARGAR",
-        "admin":        "Administración"
+        "excel":        "DESCARGAR"
     },
     "Header":{
         "title":        "Censos urbanos",
         "infoMsg1":     "No has seleccionado ninguna especie",
         "infoMsg2":     "Especie seleccionada: ",
         "language":     "Idioma",
-        "logout":       "Desconectar"
+        "logout":       "Desconectar",
+        "admin":        "Administración"
     },
     "Sidebar":{
         "col":          "Colonias",
