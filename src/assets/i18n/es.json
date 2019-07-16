@@ -6,6 +6,9 @@
         "terr":         "Aves no coloniales",
         "excel":        "DESCARGAR"
     },
+   "Admin":{
+        "title":        "PANEL DE ADMINISTRACIÓN"
+    },
     "Header":{
         "title":        "Censos urbanos",
         "infoMsg1":     "No has seleccionado ninguna especie",
