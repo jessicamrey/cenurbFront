@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
     userName:string='';
     userEmail:string='';
     userId:string='';
+    isAdmin:boolean;
 
 
     constructor(private translate: TranslateService, 
@@ -66,6 +67,11 @@ export class HeaderComponent implements OnInit {
             this.selected=true;
             this.name=JSON.parse(localStorage.getItem('especie'))["especie"];
         }
+    }
+    
+    comprobarAdmin(){
+    //Comprobar si el ususario es admin o no
+    
     }
 
     isToggled(): boolean {
