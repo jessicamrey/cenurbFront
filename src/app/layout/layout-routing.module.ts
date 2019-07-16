@@ -22,6 +22,7 @@ import {StatisticsNestsComponent} from './statistics-nests/statistics-nests.comp
 import {StatisticsObsvComponent} from './statistics-obsv/statistics-obsv.component';
 import {DocsComponent} from './docs/docs.component';
 import {CensoMunicipioComponent} from './censo-municipio/censo-municipio.component';
+import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component';
 
 
 
@@ -51,6 +52,7 @@ const routes: Routes = [
             { path: 'dashboardTerr', component: DashboardTerrComponent },
             { path: 'docs', component: DocsComponent },
             { path: 'censoMunicipio', component: CensoMunicipioComponent },
+            { path: 'admin', component: FormNewVisitComponent },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' }
         ]
     },
