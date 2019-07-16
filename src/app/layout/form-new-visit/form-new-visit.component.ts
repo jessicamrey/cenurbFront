@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-form-new-visit',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-new-visit.component.scss']
 })
 export class FormNewVisitComponent implements OnInit {
-
+  url:any;
   constructor() { }
 
   ngOnInit() {
+    this.url = environment.backendUrl + '/admin';
   }
 
 }
