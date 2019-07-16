@@ -41,6 +41,7 @@ import { StatisticsNestsComponent } from './statistics-nests/statistics-nests.co
 import { StatisticsObsvComponent } from './statistics-obsv/statistics-obsv.component';
 import { DocsComponent } from './docs/docs.component';
 import { CensoMunicipioComponent } from './censo-municipio/censo-municipio.component';
+import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { CensoMunicipioComponent } from './censo-municipio/censo-municipio.compo
      StatisticsObsvComponent,
      DocsComponent,
      CensoMunicipioComponent,
+     FormNewVisitComponent
      ]
 })
 export class LayoutModule {}
