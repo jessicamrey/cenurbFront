@@ -11,11 +11,11 @@
          <a class="navbar-brand" *ngIf="!selected">{{ 'Header.infoMsg1' | translate }} </a>
          <a class="navbar-brand" *ngIf="selected">{{ 'Header.infoMsg2' | translate }} {{name}}</a>
 
-             <li class="nav-item" *ngIf="isAdmin">
-                 <a class="dropdown-item" [routerLink]="['/admin']" ">
-                        <i class="fas fa-user-lock"></i> {{ 'Header.admin' | translate }}
-                    </a>
-              
+             <li class="nav-item" >
+                <a href="{{url}}" class="nav-link" >
+                    <i class="fa fa-user"></i> {{ 'Header.admin' | translate }} <b class="caret"></b>
+                </a>
+                
             </li>
             <li class="nav-item dropdown" ngbDropdown>
                 <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>

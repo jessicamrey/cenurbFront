@@ -13,7 +13,7 @@ export class ViewCloseColComponent implements OnInit {
 	title: string = 'My first AGM project';
   	lat: number = 51.678418;
   	lng: number = 7.809007;9
-    longitude :any=parseFloat(localStorage.getItem('longitude');
+    longitude :any=parseFloat(localStorage.getItem('longitude'));
     latitude :any=parseFloat(localStorage.getItem('latitude'));
     listaColonias:any[]= [];
 

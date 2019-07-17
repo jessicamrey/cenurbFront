@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {environment} from "../environments/environment";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-form-new-visit',
@@ -11,7 +11,10 @@ export class FormNewVisitComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.url = environment.backendUrl + '/admin';
+    this.url = environment.backendUrl + '/login';
+  	console.log(this.url);
+
   }
+
 
 }

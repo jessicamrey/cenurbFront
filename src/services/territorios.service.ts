@@ -190,4 +190,11 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.api.post('api/visitas-territorios/'+id+'/image', formData);
   }
 
+
+  //Recuperamos documentos
+  recuperaDocs( ) {
+    return this.http.get<any>(this.url + '/api/docs/territorios');
+  }
+
+
 }

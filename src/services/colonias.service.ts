@@ -235,6 +235,11 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
   }
 
 
+//Recuperamos documentos
+  recuperaDocs( ) {
+    return this.http.get<any>(this.url + '/api/docs/colonias');
+  }
+
 
 
 

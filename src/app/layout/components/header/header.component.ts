@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ColoniasService } from '../../../../services/colonias.service';
 import { TerritoriosService } from '../../../../services/territorios.service';
-
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-header',
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     userEmail:string='';
     userId:string='';
     isAdmin:boolean;
-
+    url:any;
 
     constructor(private translate: TranslateService, 
                 public router: Router, 
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-
+         this.url = environment.backendUrl + '/login';
         this.userEmail=localStorage.getItem('userEmail');
         this.userName=localStorage.getItem('userName');
         this.userId=localStorage.getItem('userId');
