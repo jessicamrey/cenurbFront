@@ -9,6 +9,12 @@
    "Admin":{
         "title":        "ADMINISTRAZIO-TAULA"
     },
+  "Docs":{
+        "infoMsg1":        "Erlazionatutako dokumentuak aurkitu zituzten hegazti kolonialekin",
+      "infoMsg2":        "Erlazionatutako dokumentuak aurkitu zituzten hegazti ez kolonialekin",
+     "errorMsg2":        "Akatsa erlazionatutako dokumentuak berreskuratzen saiatzerakoan gertatu da hegazti kolonialekin",
+     "errorMsg2":        "Akatsa gertatu da hegaztiekin erlazionatutako dokumentu ez kolonialak berreskuratzen saiatzerakoan",
+    },
     "Header":{
         "title":        "Hiri-erroldak",
         "infoMsg1":     "Ez duzu inongo espezierik aukeratu",
