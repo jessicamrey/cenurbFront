@@ -9,6 +9,12 @@
    "Admin":{
         "title":        "PANEL DE ADMINISTRACIÓN"
     },
+  "Docs":{
+        "infoMsg1":        "Encontráronse documentos relacionados con aves coloniales",
+      "infoMsg2":        "Encontráronse documentos relacionados con aves no coloniales",
+     "errorMsg2":        "Ocurriu un erro ao intentar recuperar os documentos relacionados con aves coloniales",
+     "errorMsg2":        "Ocurriu un erro ao intentar recuperar os documentos relacionados con aves no coloniales",
+    },
     "Header":{
         "title":        "Censos urbanos",
         "infoMsg1":     "Non seleccionaches ningunha especie",
