@@ -9,6 +9,12 @@
    "Admin":{
         "title":        "ADMINISTRATION PANEL"
     },
+  "Docs":{
+        "infoMsg1":        "Documents related to colonial birds were found",
+      "infoMsg2":        "Documents related to non-colonial birds were found",
+     "errorMsg2":        "An error has occurred while trying to retrieve documents related to colonial birds",
+     "errorMsg2":        "An error occurred when trying to retrieve documents related to non-colonial birds",
+    },
     "Header":{
         "title":        "Urban census",
         "infoMsg1":     "You have not selected any specie",
