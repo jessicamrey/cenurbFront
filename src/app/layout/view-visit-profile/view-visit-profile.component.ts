@@ -273,6 +273,12 @@ export class ViewVisitProfileComponent implements OnInit {
                             this.loading=false;
                         });
   	}
+	
+	
+	
+	verFotosModal(content){
+  		this.modalService.open(content, {});
+  	}
 
     recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(
