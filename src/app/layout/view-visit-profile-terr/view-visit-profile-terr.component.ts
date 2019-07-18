@@ -252,7 +252,10 @@ this.markers=[{ latitude: lat, longitude: lng }];
   		this.modalService.open(content, {});
 
   	}
-
+verFotosModal(content){
+  		this.modalService.open(content, {});
+  	}
+	
   	editaVisita(visita){
 
   		//Volvemos a recuperar los datos que han podido ser modificados por el usuario
