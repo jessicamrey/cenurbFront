@@ -31,6 +31,7 @@ export class ViewVisitProfileComponent implements OnInit {
 	usuario=0;
 	isEdit=false;
   filtered=false;
+	public sliders: Array<any> = [];
   	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
                 public alertService: AlertService,
@@ -38,6 +39,27 @@ export class ViewVisitProfileComponent implements OnInit {
                 private modalService: NgbModal,
                 private formBuilder: FormBuilder,
                 private sharedServices: SharedServicesService) { 
+		
+		
+		this.sliders.push(
+            {
+                imagePath: 'assets/images/slider1.jpg',
+                label: 'First slide label',
+                text:
+                    'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+            },
+            {
+                imagePath: 'assets/images/slider2.jpg',
+                label: 'Second slide label',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            },
+            {
+                imagePath: 'assets/images/slider3.jpg',
+                label: 'Third slide label',
+                text:
+                    'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
+            }
+        );
 
   	
 }
