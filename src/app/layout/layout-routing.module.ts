@@ -36,7 +36,7 @@ const routes: Routes = [
             { path: ':colId/visitProfile', component: ViewVisitProfileComponent },
             { path: ':terrId/visitProfileTerr', component: ViewVisitProfileTerrComponent },
             { path: 'registerCol', component: RegisterColComponent },
-            { path: 'generalCol', component: GeneralColComponent },
+            { path: 'generalCol/:colId', component: GeneralColComponent },
             { path: 'generalTerr', component: GeneralTerrComponent },
             { path: 'statistics', component: StatisticsComponent },
             { path: 'registerVisit', component: RegisterVisitComponent },
