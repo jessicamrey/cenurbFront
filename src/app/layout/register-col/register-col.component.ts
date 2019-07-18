@@ -30,12 +30,21 @@ export class RegisterColComponent implements OnInit {
   listaEspeciesNombres:any[]= [];
   otras:boolean =false;
   colonia=new Colonia();
+colId:any;
   locNidos= new LocNidos();
   registerForm: FormGroup;
   loading=false;
   longitude :any=localStorage.getItem('longitude');
   latitude :any=localStorage.getItem('latitude');
-
+type:any=0;
+	
+	/*
+	*type= 0 ->nueva colonia
+	*1->nueva temporada
+	*2->editar existente
+	*/
+	
+	
   markers = [{ latitude: localStorage.getItem('latitude'),
              longitude: localStorage.getItem('longitude')}];
 
@@ -47,6 +56,14 @@ export class RegisterColComponent implements OnInit {
 
   ngOnInit() {
     //this.getLocalizacion();
+	  this.route.params.subscribe(
+  			params=>{
+  				this.colId=params["colId"];
+				this.type=params["type"];
+  				if(params["colId"]!=0){
+				   this.recuperaDatosColonia(params["colId"]);
+				}
+  			});
     this.recuperaTemporadas();
   	this.recuperaCCAA();
   	this.recuperaTipoProp();
@@ -69,6 +86,17 @@ export class RegisterColComponent implements OnInit {
 	
 editarColonia(){
 }
+	
+	recuperaDatosColonia(colId){
+		 this.coloniasService.recuperaColonia(colId).subscribe(
+			      data=>{
+				console.log(data);
+			      },
+			      error=>{
+				console.log(error);
+			      })
+	
+	}
 
  /* getLocalizacion(){
      if (window.navigator && window.navigator.geolocation) {
