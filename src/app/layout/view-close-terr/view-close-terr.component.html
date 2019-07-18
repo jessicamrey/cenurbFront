@@ -30,6 +30,8 @@
 			</div>
 			<div class="card-body">
 				<agm-map [latitude]="latitude" [longitude]="longitude">
+					<agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="radio">
+					</agm-circle>
 				</agm-map>
 			</div>
 		</div>
