@@ -117,6 +117,14 @@ this.markers=[{ latitude: lat, longitude: lng }];
 
                         		visita["fecha"]=d +'/' + m + '/' + y;
                         		visita["hora"]=h +':' + min + ':' + s;
+					for (let photo of visita.visitaTerritorioImages){
+						visita.sliders.push(
+							{
+								imagePath: photo.image,
+								label: photo.fileName,
+								text: ''
+							    });
+					}
 
                         		this.listaVisitas.push(visita);
                         	}
@@ -194,7 +202,7 @@ this.markers=[{ latitude: lat, longitude: lng }];
                         	
                         	data["fecha"]=(d +'/' + m + '/' + y);
                         	data["hora"]=h +':' + min + ':' + s;
-
+				
                         	this.listaVisitas.push(data);
 
                         	console.log(this.listaVisitas);
