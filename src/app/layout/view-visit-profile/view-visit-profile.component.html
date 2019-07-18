@@ -65,6 +65,15 @@
 
 
                         </div>
+                        <ngb-carousel>
+                            <ng-template ngbSlide *ngFor="let slider of sliders">
+                                <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
+                                <div class="carousel-caption">
+                                    <h3>{{slider.label}}</h3>
+                                    <p>{{slider.text}}</p>
+                                </div>
+                            </ng-template>
+                        </ngb-carousel>
                         <div class="modal-footer">
                             <p> (*) {{ 'ViewVisitProfile.infoMsg1' | translate }}</p>
                             <button  type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="registraVisita()" (click)="c('Close click')"> {{ 'ViewVisitProfile.register2' | translate }}</button>
