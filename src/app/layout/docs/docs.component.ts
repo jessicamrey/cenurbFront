@@ -13,6 +13,8 @@ import { AlertService } from 'ngx-alerts';
 export class DocsComponent implements OnInit {
 
   loading=false;
+  listaColoniales:any=[];
+  listaNoColoniales:any=[];
   constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
                 private territoriosService: TerritoriosService,
@@ -29,6 +31,7 @@ export class DocsComponent implements OnInit {
     this.loading=true;
   	this.coloniasService.recuperaDocs().subscribe(
                         data =>{
+                          this.listaColoniales=data;
                           this.alertService.success(this.translate.instant("Docs.infoMsg1"));
                         	console.log(data);
                           this.loading=false;
@@ -46,6 +49,7 @@ export class DocsComponent implements OnInit {
     this.loading=true;
   	this.territoriosService.recuperaDocs().subscribe(
                         data =>{
+                          this.listaNoColoniales=data;
                           this.alertService.success(this.translate.instant("Docs.infoMsg2"));
                         	console.log(data);
                           this.loading=false;
