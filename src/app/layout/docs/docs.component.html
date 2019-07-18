@@ -1,3 +1,22 @@
-<p>
-  docs works!
-</p>
+  <p style="margin-top:80px;"></p>
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+<ngx-alerts></ngx-alerts>
+
+<h4>{{ 'Menu.col' | translate }}</h4>
+
+<div *ngFor="let docCol of listaColoniales">
+  <i class="fas fa-file-download">
+      <a href="{{docCol}}" download>
+  </i>
+</div>
+
+
+
+
+<h4>{{ 'Menu.terr' | translate }}</h4>
+  
+  <div *ngFor="let docNoCol of listaNoColoniales">
+  <i class="fas fa-file-download">
+      <a href="{{docNoCol}}" download>
+  </i>
+</div>
