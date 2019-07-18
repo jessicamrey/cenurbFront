@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     			private alertService: AlertService,
     			public authService: AuthService,
                 public seoApisService: SeoApisService) {
-    	this.translate.addLangs(['en', 'es']);
+    	this.translate.addLangs(['en', 'es', 'cat', 'gal', 'eus']);
         this.translate.setDefaultLang('es');
 
          localStorage.setItem('isLoggedin', 'true');
