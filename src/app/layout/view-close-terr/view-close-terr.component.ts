@@ -17,6 +17,7 @@ title: string = 'My first AGM project';
     longitude :any=parseFloat(localStorage.getItem('longitude'));
     latitude :any=parseFloat(localStorage.getItem('latitude'));
     numTerritorios:any;
+  radio:any=0;
 
 
   constructor(private territoriosService: TerritoriosService,
@@ -55,6 +56,7 @@ title: string = 'My first AGM project';
 
 
   getTerritoriosCercanos(radio){
+    this.radio=radio;
     let lat=this.latitude;
     let lon=this.longitude;
     let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
