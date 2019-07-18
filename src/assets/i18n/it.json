@@ -9,6 +9,12 @@
    "Admin":{
         "title":        "PANELL D'ADMINISTRACIÓ"
     },
+  "Docs":{
+        "infoMsg1":        "Es van trobar documents relacionats amb ocells colonials",
+      "infoMsg2":        "Es van trobar documents relacionats amb ocells no colonials",
+     "errorMsg2":        "Ha ocorregut un error en intentar recuperar els documents relacionats amb ocells colonials",
+     "errorMsg2":        "Ha ocorregut un error en intentar recuperar els documents relacionats amb ocells no colonials",
+    },
     "Header":{
         "title":        "Censos urbans",
         "infoMsg1":     "No has seleccionat cap espècie",
