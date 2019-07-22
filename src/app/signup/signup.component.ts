@@ -11,7 +11,9 @@ declare var $:any;
 export class SignupComponent implements OnInit {
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+    this.abrirVentana(1)
+    ;}
 
 
 
