@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
     login1:boolean=false;	
     loading:boolean=false;
     geolocationPosition:any;
+    madridLat:any=40.417329;
+    madridLon:any=-3.703722;
 
     constructor(private translate: TranslateService, 
     			public router: Router,
@@ -33,12 +35,14 @@ export class LoginComponent implements OnInit {
     	this.translate.addLangs(['en', 'es', 'cat', 'gal', 'eus']);
         this.translate.setDefaultLang('es');
 
-         localStorage.setItem('isLoggedin', 'true');
+         //localStorage.setItem('isLoggedin', 'true');
 
         localStorage.clear();
     }
 
     ngOnInit() {
+        
+        
     }
 
 //08072019--------------------------------------------------------------------------------------------------
@@ -54,6 +58,8 @@ export class LoginComponent implements OnInit {
 
             },
             error => {
+                localStorage.setItem('latitude', this.madridLat);
+                localStorage.setItem('longitude', this.madridLon);
                 switch (error.code) {
                     case 1:
                         console.log('Permission Denied');
