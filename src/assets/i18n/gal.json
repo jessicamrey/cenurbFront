@@ -13,7 +13,7 @@
         "infoMsg1":        "Encontráronse documentos relacionados con aves coloniales",
       "infoMsg2":        "Encontráronse documentos relacionados con aves no coloniales",
      "errorMsg2":        "Ocurriu un erro ao intentar recuperar os documentos relacionados con aves coloniales",
-     "errorMsg2":        "Ocurriu un erro ao intentar recuperar os documentos relacionados con aves no coloniales",
+     "errorMsg2":        "Ocurriu un erro ao intentar recuperar os documentos relacionados con aves non coloniales"
     },
     "Header":{
         "title":        "Censos urbanos",

@@ -21,31 +21,31 @@
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.ccaa' | translate }} *</label>
-                    <select class="form-control" formControlName="ccaa"  (change)="recuperaProvincia()" id="selectCCAA" disabled="isEdit!=false">
+                    <select class="form-control" formControlName="ccaa"  (change)="recuperaProvincia()" id="selectCCAA" [disabled]="isEdit!=false">
                         <option *ngFor="let ccaa of listaCCAA" value="{{ccaa.DEN_COM}}" id="{{ccaa.ID_COM}}">{{ccaa.DEN_COM}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.prov' | translate }} *</label>
-                    <select class="form-control"  formControlName="provincia"  (change)="recuperaMunicipio()" id="selectProvincia"disabled="isEdit!=false" >
+                    <select class="form-control"  formControlName="provincia"  (change)="recuperaMunicipio()" id="selectProvincia" [disabled]="isEdit!=false" >
                       <option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.mun' | translate }} *</label>
-                    <select class="form-control"  formControlName="municipio" disabled="isEdit!=false" >
+                    <select class="form-control"  formControlName="municipio" [disabled]="isEdit!=false" >
                         <option *ngFor="let mun of listaMun" value="{{mun.DEN_POB}}" id="{{mun.ID_POB}}">{{mun.DEN_POB}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.street' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="barrio" disabled="isEdit!=false">
+                    <input class="form-control" placeholder="Enter text" formControlName="barrio" [disabled]="isEdit!=false">
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.address' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso" disabled="isEdit!=false">
+                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso" [disabled]="isEdit!=false">
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.tipoProp' | translate }} *</label>
@@ -63,7 +63,7 @@
 
                  <div class="form-group">
                     <label>{{ 'RegisterCol.temp' | translate }} *</label>
-                    <select class="form-control"  formControlName="temporada" disabled="isEdit!=false">
+                    <select class="form-control"  formControlName="temporada" [disabled]="isEdit!=false">
                         
                         <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
                     </select>

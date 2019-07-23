@@ -241,7 +241,7 @@
 
                             
                             
-                            <td *ngIf="usuario==item.usuario">
+                            <td >
                                 <button class="transparentButton" (click)="verFotosModal(contentFotos)">
                                     <i class="fas fa-images"></i>
                                 </button>
@@ -254,7 +254,7 @@
 
 
                             </td>
-                            <td *ngIf="usuario!=item.usuario"> {{ 'ViewVisitProfile.noAction' | translate }}</td>
+                           <!-- <td *ngIf="usuario!=item.usuario"> {{ 'ViewVisitProfile.noAction' | translate }}</td>-->
 
 
 

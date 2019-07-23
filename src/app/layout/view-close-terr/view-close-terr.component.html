@@ -29,8 +29,10 @@
 				<p style="text-align: center">{{ 'ViewCloseTerr.infoMsg2' | translate }}{{numTerritorios}}</p>
 			</div>
 			<div class="card-body">
-				<agm-map [latitude]="latitude" [longitude]="longitude">
-					<agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="radio">
+				<agm-map [zoom]="12" [latitude]="latitude" [longitude]="longitude">
+					<agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="radio" [fillColor]="'red'"
+				      [circleDraggable]="false"
+				      [editable]="false">
 					</agm-circle>
 				</agm-map>
 			</div>

@@ -17,7 +17,7 @@ title: string = 'My first AGM project';
     longitude :any=parseFloat(localStorage.getItem('longitude'));
     latitude :any=parseFloat(localStorage.getItem('latitude'));
     numTerritorios:any;
-  radio:any=0;
+  radio:any=1500;
 
 
   constructor(private territoriosService: TerritoriosService,

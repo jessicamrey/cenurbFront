@@ -6,6 +6,7 @@ import { AlertService } from 'ngx-alerts';
 import { Colonia } from '../../../models/colonia';
 import { LocNidos } from '../../../models/loc-nidos';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -52,7 +53,8 @@ type:any=0;
                 private seoService: SeoApisService,
                 private coloniasService: ColoniasService,
                 public alertService: AlertService,
-                private formBuilder: FormBuilder) { }
+                private formBuilder: FormBuilder,
+                private route:ActivatedRoute) { }
 
   ngOnInit() {
     //this.getLocalizacion();

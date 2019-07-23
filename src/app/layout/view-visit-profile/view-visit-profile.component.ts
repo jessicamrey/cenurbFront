@@ -28,7 +28,7 @@ export class ViewVisitProfileComponent implements OnInit {
 	registerForm: FormGroup;
 	totalPages:number=0;
 	loading=false;
-	usuario=0;
+	usuario=localStorage.getItem("userId");
 	isEdit=false;
   filtered=false;
 
@@ -62,7 +62,8 @@ export class ViewVisitProfileComponent implements OnInit {
         });
 
       this.recuperaTemporadas();
-        //TODO: recuperar usuario de localstorage
+      console.log(this.usuario);
+      
 
   	}
 
@@ -105,27 +106,29 @@ export class ViewVisitProfileComponent implements OnInit {
   	recuperaVisitas(colId, pageNumber){
   		this.coloniasService.recuperaVisitasGeneral('?colonia='+colId+'&page='+pageNumber).subscribe(
                         data =>{
+                          console.log(data);
                         	this.listaVisitas=[];
-                        	for (let visita of data["hydra:member"]){
-                        		let date=new Date((visita["fecha"]));
+                        	for (let visita of data){
+                            visita["sliders"]=[];
+                            let date=new Date((visita["fecha"]));
                         		let y=date.getFullYear();
                         		let m=date.getMonth()+1;
                         		let d=date.getUTCDate();
                         		visita["fecha"]=d +'/' + m + '/' + y;
-					for (let photo of visita.visitaColoniaImages){
-						visita.sliders.push(
-							{
-								imagePath: photo.image,
-								label: photo.fileName,
-								text: ''
-							    });
-					}
+                  					for (let photo of visita.visitaColoniaImages){
+                  						visita["sliders"].push(
+                  							{
+                  								imagePath: photo.image,
+                  								label: photo.fileName,
+                  								text: ''
+                  							    });
+                  					}
                         		this.listaVisitas.push(visita);
                         	}
-                        	let last=data["hydra:view"]["hydra:last"];
+                        /*	let last=data["hydra:view"]["hydra:last"];
 			                last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
-			                this.totalPages=last*10;
-                        	console.log(data);
+			                this.totalPages=last*10;*/
+                        	
                         },
                         error=>{
                             console.log(error);
@@ -147,12 +150,6 @@ export class ViewVisitProfileComponent implements OnInit {
   		visita.setNumVisita(parseInt(this.registerForm.get("numVisita").value));
       visita.setAnno(parseInt(this.registerForm.get("temporada").value));
   		visita.setFecha(new Date());
-  		//TODO: El usuario tiene que sacarse de localstorage
-  		visita.setUsuario("0");
-
-
-  		//TODO: Falta implementar subida de fotos
-
   		console.log(visita);
   		this.coloniasService.nuevaVisitaColonia(visita,this.colId).subscribe(
                         data =>{
@@ -283,12 +280,12 @@ export class ViewVisitProfileComponent implements OnInit {
     recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(
       data=>{
-        
-        for (let item of data){
+        for (let item of data["hydra:member"]){
           if (item["abierta"]==true){
             this.listaTemporadas.push(item["anno"]);
           }
         }
+        console.log(this.listaTemporadas);
       },
       error=>{
         console.log(error);
