@@ -63,7 +63,11 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let item of listaCol">
-                                                            <td>{{item.DEN_ESP_CAS}}</td>
+                                                            <td *ngIf="translate.currentLang=='es'">{{item.DEN_ESP_CAS}}</td>
+                                                            <td *ngIf="translate.currentLang=='eus'">{{item.DEN_ESP_VAS}}</td>
+                                                            <td *ngIf="translate.currentLang=='cat'">{{item.DEN_ESP_CAT}}</td>
+                                                            <td *ngIf="translate.currentLang=='gal'">{{item.DEN_ESP_GSL}}</td>
+                                                            <td *ngIf="translate.currentLang=='en'">{{item.DEN_ESP_ING}}</td>
                                                             <td > 
                                                                 <div >
                                                                     {{chartData['0'].data[listaCol.indexOf(item)]}}

@@ -120,9 +120,32 @@
                 <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Msg2' | translate }} </p>
                 <div >
                     <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Msg' | translate }}</p> 
+                    <div *ngIf="translate.currentLang=='es'"  >
                     <p style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
                         <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAS}}
+
                     </p>
+                    </div>
+                    <div *ngIf="translate.currentLang=='eus'" >
+                    <p  style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
+                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_VAS}}
+                    </p>
+                    </div>
+                    <div *ngIf="translate.currentLang=='gal'" >
+                     <p  style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
+                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_GAL}}
+                    </p>
+                    </div>
+                    <div *ngIf="translate.currentLang=='cat'">
+                     <p   style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
+                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAT}}
+                    </p>
+                    </div>
+                    <div *ngIf="translate.currentLang=='en'" >
+                     <p  style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
+                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_ING}}
+                    </p>
+                    </div>
                 </div>
                    
                

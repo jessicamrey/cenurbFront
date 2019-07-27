@@ -288,8 +288,21 @@ this.markers=[{ latitude: lat, longitude: lng }];
   		for (let item of this.listaCol){
   			if($("#"+item.ID_ESP).is(":checked")){
   				this.listaEspecies.push(item.ID_ESP);
-  				this.listaEspeciesNombres.push(item.DEN_ESP_CAS);
-
+          if(this.translate.currentLang=='es'){
+  				  this.listaEspeciesNombres.push(item.DEN_ESP_CAS);
+          }
+          if(this.translate.currentLang=='eus'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_VAS);
+          }
+          if(this.translate.currentLang=='gal'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_GAL);
+          }
+          if(this.translate.currentLang=='cat'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_CAT);
+          }
+          if(this.translate.currentLang=='en'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_EN);
+          }
   			}
   		}
 

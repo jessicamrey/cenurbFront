@@ -12,8 +12,8 @@ export class SignupComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
-    this.abrirVentana(1)
-    ;}
+    	this.abrirVentana(1);
+    }
 
 
 

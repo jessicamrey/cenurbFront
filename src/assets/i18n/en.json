@@ -59,6 +59,10 @@
         "error1":       "User or password are incorrect",
         "error2":       "An error occurred while trying to access. Try it again later"
 
+    },"Register":{
+        "title":        "Register new user",
+        "infoMsg1":     "Already have an account?",
+        "infoMsg2":     "Identify yourself"
     },
     "Selector":{
         "title":        "SELECTION",
@@ -73,7 +77,11 @@
         "errorGetProv":  "An error occurred while trying to retrieve the list of provinces",
         "errorGetMun":   "An error occurred while trying to retrieve the list of towns",
         "infoMsg1":      "You have selected ",
-        "errorMsg1":     "An error occurred while trying to select "
+        "errorMsg1":     "An error occurred while trying to select ",
+        "numEspecies":   "Colonial bird species",
+        "numCol":        "Registered colonies in ",
+        "numTerr":       "Registered territories in ",
+        "numUsers":      "Volunteers registered in the application"
 
 
 

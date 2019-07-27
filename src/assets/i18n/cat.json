@@ -59,6 +59,10 @@
         "error1":       "Usuari o contrasenya incorrectes",
         "error2": "Ha ocorregut un error en intentar accedir. Intenti-ho de nou més tard"
 
+    },"Register":{
+        "title":        "Registrar nou usuari",
+        "infoMsg1":     "Ja tens usuari?",
+        "infoMsg2":     "Identificar-se"
     },
     "Selector":{
         "title":        "SELECCIÓ",
@@ -73,7 +77,11 @@
         "errorGetProv":  "Ha ocorregut un error en intentar recuperar el llistat de províncies",
         "errorGetMun":   "Ha ocorregut un error en intentar recuperar el llistat de municipis",
         "infoMsg1":      "S'ha seleccionat ",
-        "errorMsg1":     "Ha ocorregut un error en intentar seleccionar "
+        "errorMsg1":     "Ha ocorregut un error en intentar seleccionar ",
+        "numEspecies":   "Espècies d'ocells colonials",
+        "numCol":        "Colònies registrades en ",
+        "numTerr":       "Territoris registrats en ",
+        "numUsers":      "Voluntaris registrats en l'aplicació"
 
 
 

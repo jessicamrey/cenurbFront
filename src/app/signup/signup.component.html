@@ -1,13 +1,15 @@
-<div class="login-page" [@routerTransition]>
-    <div class="row justify-content-md-center">
-        <div class="col-md-4">
+<div class="login-page" style="background-color: #FFFFFF">
+    <div class="row justify-content-md-center" >
+        <div class="col-md-8">
             <img class="user-avatar" src="assets/images/logo.png" width="150px" />
-            <h1>SB Admin BS4 Angular5</h1>
+            <h1 style="color: blue">{{ 'Register.title' | translate }}</h1>
+            <p style="color: blue">{{ 'Register.infoMsg1' | translate }} <a  [routerLink]="['/login']">{{ 'Register.infoMsg2' | translate }} </a></p>
             
-               
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']"> Register </a>&nbsp;
-                <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
-           
-        </div>
+                
+	          
+
+			<div id="iframe" class="clear" ></div>
+				
+	    </div>
     </div>
 </div>

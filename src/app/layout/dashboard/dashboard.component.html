@@ -1,19 +1,74 @@
-
+  <p style="margin-top:80px;"></p>
     <ngx-alerts></ngx-alerts>
-    <div class="row" style="margin-top:2.5%">
+    <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+
+     <div class="row" >
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'primary'" [icon]="'fa-comments'" count="{{numEspecies}}" label="{{ 'Dashboard.numEspecies' | translate }}" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'warning'" [icon]="'fa-tasks'" count="{{numCol}}" label="{{ 'Dashboard.numCol' | translate }} {{year}}" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'success'" [icon]="'fa-shopping-cart'" count="{{numTerr}}" label="{{ 'Dashboard.numTerr' | translate }} {{year}}" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'danger'" [icon]="'fa-support'" count="{{numUsers}}" label="{{ 'Dashboard.numUsers' | translate }}"></app-stat>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:40px">
        
 
       
         <div class="col-sm-3" style="height: 100px" *ngFor="let item of listaCol" id="{{item.ID_ESP}}">
 
-            <div class="card text-white  mb-3" style="background-color: #1d5d83">
+           <div  *ngIf="translate.currentLang=='es'" class="card text-white  mb-3" style="background-color: #1d5d83">
 
-                <img src= '{{item.image}}' style="max-width:100%;max-height: :100%" (click)="seleccionar(item.DEN_ESP_CAS, item.ID_ESP)"/>
+                <img  src= '{{item.image}}' style="max-width:100%;max-height: :100%" (click)="seleccionar(item.DEN_ESP_CAS, item.ID_ESP)"/>
 
                 <div class="card-footer">
                     {{item.DEN_ESP_CAS}}
                 </div>
             </div>
+
+            <div  *ngIf="translate.currentLang=='en'" class="card text-white  mb-3" style="background-color: #1d5d83">
+
+                <img  src= '{{item.image}}' style="max-width:100%;max-height: :100%" (click)="seleccionar(item.DEN_ESP_ING, item.ID_ESP)"/>
+
+                <div class="card-footer">
+                    {{item.DEN_ESP_ING}}
+                </div>
+            </div>
+
+            <div  *ngIf="translate.currentLang=='cat'" class="card text-white  mb-3" style="background-color: #1d5d83">
+
+                <img  src= '{{item.image}}' style="max-width:100%;max-height: :100%" (click)="seleccionar(item.DEN_ESP_CAT, item.ID_ESP)"/>
+
+                <div class="card-footer">
+                    {{item.DEN_ESP_CAT}}
+                </div>
+            </div>
+
+            <div  *ngIf="translate.currentLang=='gal'" class="card text-white  mb-3" style="background-color: #1d5d83">
+
+                <img  src= '{{item.image}}' style="max-width:100%;max-height: :100%" (click)="seleccionar(item.DEN_ESP_GAL, item.ID_ESP)"/>
+
+                <div class="card-footer">
+                    {{item.DEN_ESP_GAL}}
+                </div>
+            </div>
+
+            <div  *ngIf="translate.currentLang=='eus'" class="card text-white  mb-3" style="background-color: #1d5d83">
+
+                <img  src= '{{item.image}}' style="max-width:100%;max-height: :100%" (click)="seleccionar(item.DEN_ESP_VAS, item.ID_ESP)"/>
+
+                <div class="card-footer">
+                    {{item.DEN_ESP_VAS}}
+                </div>
+            </div>
+
+            
         </div>
    
   

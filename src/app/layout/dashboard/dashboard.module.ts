@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { NgxLoadingModule } from 'ngx-loading';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import {
@@ -16,6 +16,7 @@ import { AlertModule } from 'ngx-alerts';
 
 @NgModule({
     imports: [
+        NgxLoadingModule.forRoot({}),
         CommonModule,
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),

@@ -42,10 +42,12 @@ import { StatisticsObsvComponent } from './statistics-obsv/statistics-obsv.compo
 import { DocsComponent } from './docs/docs.component';
 import { CensoMunicipioComponent } from './censo-municipio/censo-municipio.component';
 import { FormNewVisitComponent } from './form-new-visit/form-new-visit.component';
+import { StatModule } from '../shared';
 
 
 @NgModule({
     imports: [
+        StatModule,
         ArchwizardModule,
         NgxLoadingModule.forRoot({}),
         Ng2Charts,

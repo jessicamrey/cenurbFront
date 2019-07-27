@@ -30,10 +30,10 @@ export class SidebarComponent implements OnInit{
         public router: Router, 
         private coloniasService: ColoniasService,
         private territoriosService: TerritoriosService) {
-        this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
-        this.translate.setDefaultLang('en');
+        this.translate.addLangs(['en', 'es', 'eus', 'cat', 'gal']);
+        this.translate.setDefaultLang('es');
         const browserLang = this.translate.getBrowserLang();
-        this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de/) ? browserLang : 'en');
+        this.translate.use(browserLang.match(/en|es|eus|gal|cat/) ? browserLang : 'es');
 
         this.router.events.subscribe(val => {
             if (

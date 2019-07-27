@@ -124,6 +124,13 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.api.delete('api/visitas-colonias/' + visitaId);
   }
 
+//Obtenemos datos para el dashboard
+
+  getDashboardData(anno){
+    return this.http.get<any>(this.url + '/api/dashboardData?anno=' + anno);
+  }
+
+
 //Obtenemos las estadisticas por año
 
   getStatsAnno(especie, busqueda){

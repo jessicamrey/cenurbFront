@@ -60,6 +60,10 @@
         "msg4":         "Entrar con usuario",
         "errorLoginAno": "Ocurriu un erro ao intentar acceder. Inténtelo de novo máis tarde"
 
+    },"Register":{
+        "title":        "Rexistrar novo usuario",
+        "infoMsg1":     "Xa tes usuario?",
+        "infoMsg2":     "Identificarse"
     },
     "Selector":{
         "title":        "SELECCIÓN",
@@ -74,7 +78,11 @@
         "errorGetProv":  "Ocurriu un erro ao intentar recuperar o listado de provincias",
         "errorGetMun":   "Ocurriu un erro ao intentar recuperar o listado de municipios",
         "infoMsg1":      "Seleccionouse ",
-        "errorMsg1":     "Ocurriu un erro ao intentar seleccionar "
+        "errorMsg1":     "Ocurriu un erro ao intentar seleccionar ",
+        "numEspecies":   "Especies de aves coloniales",
+        "numCol":        "Colonias rexistradas en ",
+        "numTerr":       "Territorios rexistrados en ",
+        "numUsers":      "Voluntarios rexistrados na aplicación"
 
 
 

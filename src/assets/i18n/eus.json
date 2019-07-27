@@ -59,6 +59,10 @@
         "error1":       "Erabiltzailea edo pasahitza okerrak",
         "error2": "Akatsa sartzen saiatzerakoan gertatu da. Berriko beranduago saia zaitez"
 
+    },"Register":{
+        "title":        "Erabiltzaile berriaren izena erregistratu",
+        "infoMsg1":     "Jada erabiltzailea duzu?",
+        "infoMsg2":     " Identifikatu-tzea"
     },
     "Selector":{
         "title":        "SELEKZIOA",
@@ -73,7 +77,11 @@
         "errorGetProv":  "Akatsa gertatu da probintzia-zerrenda berreskuratzen saiatzerakoan",
         "errorGetMun":   "Akatsa gertatu da udal-zerrenda berreskuratzen saiatzerakoan",
         "infoMsg1":      "Aukeratu da",
-        "errorMsg1":     "Akatsa aukeratzen saiatzerakoan gertatu da "
+        "errorMsg1":     "Akatsa aukeratzen saiatzerakoan gertatu da ",
+        "numEspecies":   "Hegazti kolonialeko espezieak",
+        "numCol":        "Erregistratutako koloniak ",
+        "numTerr":       "Erregistratutako lurraldeak ",
+        "numUsers":      "Aplikazioan izena emandako boluntarioak"
 
 
 
@@ -325,7 +333,7 @@
         "infoMsg1":     "Atal honetako grafikoak libre daude soilik probintzia bat iragazten badu",
         "infoMsg2":     "Atal honetako grafikoak libre daude soilik udal bat ezkutuan pasatzen badu",
         "infoMsg3":     "Zelai hau baliozkoa da soilik atalean 'Eraikin-tipotik'",
-        "infoMsg4":     "Datu-bolumen handiagatik, atal hau libre egongo da soilik probintzia bat edo udal bat ezkutuan pasatzen duenean""
+        "infoMsg4":     "Datu-bolumen handiagatik, atal hau libre egongo da soilik probintzia bat edo udal bat ezkutuan pasatzen duenean"
 
     }
 }

@@ -62,9 +62,37 @@ export class GeneralTerrComponent implements OnInit {
 
    for (let position in this.listaNoCol){
      console.log(position);
-     let element={
-       Nombre: this.listaNoCol[position]["DEN_ESP_CAS"],
-       Cantidad: this.chartData[0].data[position]
+     let element:any;
+
+    if(this.translate.currentLang=='es'){
+        element={
+         Nombre: this.listaNoCol[position]["DEN_ESP_CAS"],
+         Cantidad: this.chartData[0].data[position]
+       }
+     }
+     if(this.translate.currentLang=='cat'){
+       element={
+         Nombre: this.listaNoCol[position]["DEN_ESP_CAT"],
+         Cantidad: this.chartData[0].data[position]
+       }
+     }
+     if(this.translate.currentLang=='eus'){
+        element={
+         Nombre: this.listaNoCol[position]["DEN_ESP_EUS"],
+         Cantidad: this.chartData[0].data[position]
+       }
+     }
+     if(this.translate.currentLang=='gal'){
+        element={
+         Nombre: this.listaNoCol[position]["DEN_ESP_GAL"],
+         Cantidad: this.chartData[0].data[position]
+       }
+     }
+     if(this.translate.currentLang=='en'){
+       element={
+         Nombre: this.listaNoCol[position]["DEN_ESP_ING"],
+         Cantidad: this.chartData[0].data[position]
+       }
      }
      dataToExport.push(element);
 
@@ -100,8 +128,27 @@ export class GeneralTerrComponent implements OnInit {
 
                 for (let item of data){
 
-                	this.getStatsEspecie(item["ID_ESP"],data.length, '');
-                	this.chartLabels.push(item["DEN_ESP_CAS"]);
+
+                  if(this.translate.currentLang=='es'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, '');
+                    this.chartLabels.push(item["DEN_ESP_CAS"]);
+                  }
+                  if(this.translate.currentLang=='eus'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, '');
+                    this.chartLabels.push(item["DEN_ESP_VAS"]);
+                  }
+                  if(this.translate.currentLang=='gal'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, '');
+                    this.chartLabels.push(item["DEN_ESP_GAL"]);
+                  }
+                  if(this.translate.currentLang=='cat'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, '');
+                    this.chartLabels.push(item["DEN_ESP_CAT"]);
+                  }
+                  if(this.translate.currentLang=='en'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, '');
+                    this.chartLabels.push(item["DEN_ESP_ING"]);
+                  }
                 }
               },
               error => {
@@ -189,8 +236,30 @@ export class GeneralTerrComponent implements OnInit {
 
                 for (let item of data){
 
-                  this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
-                  this.chartLabels.push(item["DEN_ESP_CAS"]);
+                    if(this.translate.currentLang=='es'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                    this.chartLabels.push(item["DEN_ESP_CAS"]);
+                  }
+
+                  if(this.translate.currentLang=='eus'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                    this.chartLabels.push(item["DEN_ESP_VAS"]);
+                  }
+
+                  if(this.translate.currentLang=='gal'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                    this.chartLabels.push(item["DEN_ESP_GAL"]);
+                  }
+
+                  if(this.translate.currentLang=='cat'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                    this.chartLabels.push(item["DEN_ESP_CAT"]);
+                  }
+
+                  if(this.translate.currentLang=='en'){
+                    this.getStatsEspecie(item["ID_ESP"],data.length, busqueda);
+                    this.chartLabels.push(item["DEN_ESP_ING"]);
+                  }
                 }
               },
               error => {
