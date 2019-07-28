@@ -120,6 +120,7 @@
         "step4Title":   "SUMMARY",
         "step1Msg":     "Fields with * are required",
         "step2Msg":     "Please check all the boxes corresponding to the location of the nests of this colony",
+        "step2Msg2":    "Indicate on the map where the colony is located",
         "step3Msg":     "Mark all those species that are observed in this colony",
         "step3Msg2":    "If not, you can skip this step",
         "step4Msg":     "Please, review the data before registering the colony",

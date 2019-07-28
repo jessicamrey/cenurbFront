@@ -35,9 +35,10 @@ colId:any;
   locNidos= new LocNidos();
   registerForm: FormGroup;
   loading=false;
-  longitude :any=localStorage.getItem('longitude');
-  latitude :any=localStorage.getItem('latitude');
+  longitude :any=parseFloat(localStorage.getItem('longitude'));
+  latitude :any=parseFloat(localStorage.getItem('latitude'));
 type:any=0;
+datos:any={};
 	
 	/*
 	*type= 0 ->nueva colonia
@@ -46,8 +47,8 @@ type:any=0;
 	*/
 	
 	
-  markers = [{ latitude: localStorage.getItem('latitude'),
-             longitude: localStorage.getItem('longitude')}];
+  markers = [{ latitude: parseFloat(localStorage.getItem('latitude')),
+             longitude: parseFloat(localStorage.getItem('longitude'))}];
 
   constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
@@ -61,15 +62,22 @@ type:any=0;
 	  this.route.params.subscribe(
   			params=>{
   				this.colId=params["colId"];
-				this.type=params["type"];
-  				if(params["colId"]!=0){
-				   this.recuperaDatosColonia(params["colId"]);
-				}
+				  this.type=parseInt(params["type"]);
+          console.log(params["type"]);
+  				  if(params["colId"]!=0){
+				       this.recuperaDatosColonia(params["colId"]);
+				    }
+            if(params["type"]==1 || params["type"]==2){
+              this.isEdit=true;
+              console.log(this.isEdit);
+            }else{
+              this.recuperaTemporadas();
+              this.recuperaCCAA();
+              this.recuperaTipoProp();
+              this.recuperaTipoEd();
+            }
   			});
-    this.recuperaTemporadas();
-  	this.recuperaCCAA();
-  	this.recuperaTipoProp();
-  	this.recuperaTipoEd();
+    
   	this.recuperaColoniales();
   	this.registerForm = this.formBuilder.group({
             nombre: ['', Validators.required],
@@ -87,44 +95,54 @@ type:any=0;
   }
 	
 editarColonia(){
+
+  this.coloniasService.modificarColonia(this.colId, this.datos).subscribe(
+    data=>{
+      console.log(data);
+    },
+    error=>{
+      console.log(error);
+    });
 }
 	
 	recuperaDatosColonia(colId){
 		 this.coloniasService.recuperaColonia(colId).subscribe(
 			      data=>{
-				console.log(data);
+				    console.log(data);
+
+            document.getElementById("nombre").value=data["nombre"];
+            document.getElementById("nombreCentro").value=data["nombreCentro"];
+
+            data["locNidos"]["fachada"]==true ? document.getElementById("fachada").setAttribute("checked", "") : undefined;
+            data["locNidos"]["trasera"]==true ? document.getElementById("trasera").setAttribute("checked", ""): undefined;
+            data["locNidos"]["lateralDerecho"]==true ? document.getElementById("latDer").setAttribute("checked", ""): undefined;
+            data["locNidos"]["lateralIzquierdo"]==true ? document.getElementById("latIzq").setAttribute("checked", ""): undefined;
+            data["locNidos"]["patioInferior"]==true ? document.getElementById("patio").setAttribute("checked", ""): undefined;
+
+            document.getElementById("selectCCAA").setAttribute("disabled", "true");
+            document.getElementById("selectProvincia").setAttribute("disabled", "true");
+            document.getElementById("selectMunicipio").setAttribute("disabled", "true");
+            document.getElementById("barrio").setAttribute("disabled", "true");
+            
+            
+            console.log(this.type);
+            if(this.type==2){
+              //No podremos editar la temporada si editamos la colonia
+              document.getElementById("temporada").setAttribute("disabled", "true");
+              document.getElementById("tipoProp").setAttribute("disabled", "true");
+              document.getElementById("tipoEd").setAttribute("disabled", "true");
+              document.getElementById("calleNumPiso").setAttribute("disabled", "true");
+            }
+
+            this.markers=[{ latitude: data["locNidos"]["lat"], longitude: data["locNidos"]["lon"] }];
 			      },
 			      error=>{
-				console.log(error);
+				      console.log(error);
 			      })
 	
 	}
 
- /* getLocalizacion(){
-     if (window.navigator && window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(
-            position => {
-                this.latitude=position["coords"]["latitude"];
-                this.longitude=position["coords"]["longitude"];
-                console.log(this.latitude);
-                console.log(this.longitude);
-            },
-            error => {
-                switch (error.code) {
-                    case 1:
-                        console.log('Permission Denied');
-                        break;
-                    case 2:
-                        console.log('Position Unavailable');
-                        break;
-                    case 3:
-                        console.log('Timeout');
-                        break;
-                }
-            }
-        );
-    };
-  }*/
+
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
@@ -136,13 +154,11 @@ this.markers=[{ latitude: lat, longitude: lng }];
   recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(
       data=>{
-        
-        for (let item of data){
+        for (let item of data["hydra:member"]){
           if (item["abierta"]==true){
             this.listaTemporadas.push(item["anno"]);
           }
         }
-        console.log(this.listaTemporadas);
       },
       error=>{
         console.log(error);
@@ -152,11 +168,14 @@ this.markers=[{ latitude: lat, longitude: lng }];
 
 
   recuperaColoniales(){
+    this.loading=true;
         this.seoService.listaColoniales().subscribe(
               data => {
                 this.listaCol=data;
+                this.loading=false;
               },
               error => {
+                this.loading=false;
                   this.alertService.warning(this.translate.instant("Dashboard.errorGetCol"));
                   
             }
@@ -221,6 +240,74 @@ this.markers=[{ latitude: lat, longitude: lng }];
 
   }
 
+prepararDatosEditar(){
+
+    this.locNidos.setFachada($("#fachada").is(":checked"));
+    this.locNidos.setTrasera($("#trasera").is(":checked"));
+    this.locNidos.setLatDer($("#latDer").is(":checked"));
+    this.locNidos.setLatIzq($("#latIzq").is(":checked"));
+    this.locNidos.setPatio($("#patio").is(":checked"));
+
+    //Para el resumen
+    this.listaNidos=[];
+
+
+    if($("#fachada").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.fachada"));
+    }
+    if($("#trasera").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.trasera"));
+    }
+    if($("#latDer").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.latDer"));
+    }
+    if($("#latIzq").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.latIzq"));
+    }
+    if($("#patio").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.patio"));
+    }
+
+    //PASO 3 -> Información sobre otras especies
+
+    this.listaEspecies=[];
+    this.listaEspeciesNombres=[];
+
+
+      for (let item of this.listaCol){
+        if($("#"+item.ID_ESP).is(":checked")){
+          this.listaEspecies.push(item.ID_ESP);
+          if(this.translate.currentLang=='es'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_CAS);
+          }
+          if(this.translate.currentLang=='eus'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_VAS);
+          }
+          if(this.translate.currentLang=='gal'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_GAL);
+          }
+          if(this.translate.currentLang=='cat'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_CAT);
+          }
+          if(this.translate.currentLang=='en'){
+            this.listaEspeciesNombres.push(item.DEN_ESP_EN);
+          }
+        }
+      }
+
+    this.datos={
+      "nombre":        $( "#nombre" ).val(),
+      "nombreCentro":  $( "#nombreCentro" ).val(),
+      "locNidos":      this.locNidos,
+      "otrasEspecies":  this.listaEspecies
+    }
+
+
+  
+
+}
+
+
   prepararDatos(){
   	
   	//PASO 1 ->Información general de la colonia
@@ -259,6 +346,8 @@ this.markers=[{ latitude: lat, longitude: lng }];
     this.locNidos.setLat(this.markers["0"]["latitude"]);
     this.locNidos.setLon(this.markers["0"]["longitude"]);
 
+
+    //Esta parte es para el resumen
 
   	this.listaNidos=[];
 
@@ -329,6 +418,7 @@ this.markers=[{ latitude: lat, longitude: lng }];
                 		this.loading=false;
                 	},
                 	errorNidos=>{
+                    console.log(errorNidos);
                 			this.alertService.danger(this.translate.instant("RegisterCol.errorMsg2"));
                       this.loading=false;
                 	});
@@ -346,6 +436,7 @@ this.markers=[{ latitude: lat, longitude: lng }];
                     this.loading=false;
                         },
                         errorEspecies=>{
+                          console.log(errorEspecies);
                             this.alertService.danger(this.translate.instant("RegisterCol.errorMsg3"));
                       this.loading=false;
                         });
@@ -356,6 +447,7 @@ this.markers=[{ latitude: lat, longitude: lng }];
 
               },
               error => {
+                console.log(error);
                  this.alertService.danger(this.translate.instant("RegisterCol.errorMsg1"));
                  this.loading=false;
                   

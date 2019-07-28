@@ -122,6 +122,7 @@
         "step4Title":   "RESUMEN",
         "step1Msg":     "Los campos con * son obligatorios",
         "step2Msg":     "Por favor, marque todas las casillas correspondientes a la localización de los nidos de esta colonia",
+        "step2Msg2":    "Indique en el mapa dónde se situa la colonia",
         "step3Msg":     "Marque todas aquellas especies que se observan en esta colonia",
         "step3Msg2":    "En caso negativo, puede saltar este paso",
         "step4Msg":     "Por favor, repase los datos antes de registrar la colonia",
@@ -337,5 +338,8 @@
         "infoMsg3":     "Este campo sólo es válido en el apartado 'Por tipo de edificio'",
         "infoMsg4":     "Debido al gran volumen de datos, este apartado sólo estará disponible cuando filtre una provincia o un municipio"
 
+    },
+    "Tooltip":{
+        "edit":         "Editar"
     }
 }

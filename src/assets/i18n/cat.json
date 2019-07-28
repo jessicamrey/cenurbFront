@@ -120,6 +120,7 @@
         "step4Title":   "RESUM",
         "step1Msg":     "Els camps amb * so obligatoris",
         "step2Msg":     "Si us plau, marqui totes les caselles corresponents a la localització dels nius d'aquesta colònia",
+        "step2Msg2":    "Indiqui en el mapa on es situa la colònia",
         "step3Msg":     "Marqui totes aquelles espècies que s'observen en aquesta colònia",
         "step3Msg2":    "En cas negatiu, pot saltar aquest pas",
         "step4Msg":     "Si us plau, repassi les dades abans de registrar la colònia",

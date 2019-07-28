@@ -1,7 +1,7 @@
   <p style="margin-top:80px;"></p>
 <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 <ngx-alerts></ngx-alerts>
-<form role="form" [formGroup]="registerForm" (ngSubmit)="registrarColonia()">
+
 <aw-wizard #wizard  [navBarLayout]="'large-filled-symbols'">
 
 
@@ -9,68 +9,74 @@
 
 
     <aw-wizard-step stepTitle="{{ 'RegisterCol.step1Title' | translate }}" [navigationSymbol]="{ symbol: '&#xf0ca;', fontFamily: 'FontAwesome' }">
-    
+                <form role="form" [formGroup]="registerForm" (ngSubmit)="registrarColonia()">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <button type="button" class="btn btn-primary" awNextStep>{{ 'RegisterCol.next' | translate }}</button>
+                    </div>
+                </div>
+
                 <div class="form-group"  >
                     <label>{{ 'RegisterCol.name' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="nombre" >
+                    <input class="form-control" placeholder="Enter text" formControlName="nombre" id="nombre">
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.centerName' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="nombreCentro" >
+                    <input class="form-control" placeholder="Enter text" formControlName="nombreCentro" id="nombreCentro">
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.ccaa' | translate }} *</label>
-                    <select class="form-control" formControlName="ccaa"  (change)="recuperaProvincia()" id="selectCCAA" [disabled]="isEdit!=false">
+                    <select class="form-control" formControlName="ccaa"  (change)="recuperaProvincia()" id="selectCCAA" >
                         <option *ngFor="let ccaa of listaCCAA" value="{{ccaa.DEN_COM}}" id="{{ccaa.ID_COM}}">{{ccaa.DEN_COM}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.prov' | translate }} *</label>
-                    <select class="form-control"  formControlName="provincia"  (change)="recuperaMunicipio()" id="selectProvincia" [disabled]="isEdit!=false" >
+                    <select class="form-control"  formControlName="provincia"  (change)="recuperaMunicipio()" id="selectProvincia"  >
                       <option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.mun' | translate }} *</label>
-                    <select class="form-control"  formControlName="municipio" [disabled]="isEdit!=false" >
+                    <select class="form-control"  formControlName="municipio" id="selectMunicipio" >
                         <option *ngFor="let mun of listaMun" value="{{mun.DEN_POB}}" id="{{mun.ID_POB}}">{{mun.DEN_POB}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.street' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="barrio" [disabled]="isEdit!=false">
+                    <input class="form-control" placeholder="Enter text" formControlName="barrio" id="barrio" >
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.address' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso" [disabled]="isEdit!=false">
+                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso" id="calleNumPiso" >
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.tipoProp' | translate }} *</label>
-                    <select class="form-control"  formControlName="tipoPropiedad" >
+                    <select class="form-control"  formControlName="tipoPropiedad" id="tipoProp">
                         <option *ngFor="let prop of listaTipoProp" value="{{prop.id}}" id="{{prop.id}}">{{prop.Description}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.tipoEd' | translate }} *</label>
-                    <select class="form-control"  formControlName="tipoEdificio"  >
+                    <select class="form-control"  formControlName="tipoEdificio" id="tipoEd" >
                         <option *ngFor="let ed of listaTipoEd" value="{{ed.id}}" id="{{ed.id}}">{{ed.descripcion}}</option>
                     </select>
                 </div>
 
                  <div class="form-group">
                     <label>{{ 'RegisterCol.temp' | translate }} *</label>
-                    <select class="form-control"  formControlName="temporada" [disabled]="isEdit!=false">
+                    <select class="form-control"  formControlName="temporada" id="temporada">
                         
                         <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
                     </select>
 
                 </div>
         <p style="color:red">{{ 'RegisterCol.step1Msg' | translate }}</p>
-        <button type="button" awNextStep>{{ 'RegisterCol.next' | translate }}</button>
+        </form>
     </aw-wizard-step>
 
 
@@ -78,32 +84,52 @@
 
                  
     <aw-wizard-step stepTitle="{{ 'RegisterCol.step2Title' | translate }}"  [navigationSymbol]="{ symbol: '&#xf1bb;', fontFamily: 'FontAwesome' }">
-        
-        <div class="form-group">
-                    
-             <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.locNidos' | translate }}</p>
-              <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Msg' | translate }}</p>      
-                   
-            <p style="text-align: left;font-size: large;" >
-                <input type="checkbox" id="fachada">{{ 'RegisterCol.fachada' | translate }}</p>
-            <p style="text-align: left;font-size: large;" >
-                <input type="checkbox" id="trasera">{{ 'RegisterCol.trasera' | translate }}</p>
-            <p style="text-align: left;font-size: large;" >
-                <input type="checkbox" id="latDer">{{ 'RegisterCol.latDer' | translate }}</p>
-            <p style="text-align: left;font-size: large;" >
-                <input type="checkbox" id="latIzq">{{ 'RegisterCol.latIzq' | translate }}</p>
-            <p style="text-align: left;font-size: large;" >
-                <input type="checkbox" id="patio">{{ 'RegisterCol.patio' | translate }}</p>
-        </div>
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <button type="button" class="btn btn-primary" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
+                        <button type="button" class="btn btn-primary" style="margin-left:5px" awNextStep>{{ 'RegisterCol.next' | translate }}</button>
+                    </div>
+                </div>
 
+         <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.locNidos' | translate }}</p>
+                               
+        <div class="row">
 
-<div *ngIf="isEdit!=false"><agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
-  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
-</agm-map>
-      </div>
+            <div class="col-sm-6">
+                        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Msg' | translate }}</p> 
+                        <div class="form-group">
+                                    
+                                 
+                                   
+                            <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="fachada">{{ 'RegisterCol.fachada' | translate }}</p>
+                            <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="trasera">{{ 'RegisterCol.trasera' | translate }}</p>
+                            <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="latDer">{{ 'RegisterCol.latDer' | translate }}</p>
+                            <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="latIzq">{{ 'RegisterCol.latIzq' | translate }}</p>
+                            <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="patio">{{ 'RegisterCol.patio' | translate }}</p>
+                        </div>
+            </div>
+            <div class="col-sm-6">
+                        <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Msg2' | translate }}</p> 
+                        <div *ngIf="isEdit==false">
+                                <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
+                                  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                                </agm-map>
+                        </div>
+                        <div *ngIf="isEdit==true">
+                                <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" >
+                                  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                                </agm-map>
+                        </div>
+            </div>
 
-        <button type="button" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
-        <button type="button" awNextStep>{{ 'RegisterCol.next' | translate }}</button>
+                        
+
+</div>
     </aw-wizard-step>
 
              
@@ -112,6 +138,14 @@
 
                 
     <aw-wizard-step stepTitle="{{ 'RegisterCol.step3Title' | translate }}" [navigationSymbol]="{ symbol: '&#xf067;', fontFamily: 'FontAwesome' }">
+    <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <button type="button" class="btn btn-primary" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
+                        <button *ngIf="isEdit==false" type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatos()">{{ 'RegisterCol.next' | translate }}</button>
+                        <button *ngIf="isEdit==true" type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatosEditar()">{{ 'RegisterCol.next' | translate }}</button>
+                    </div>
+                </div>
 
                  <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.otras' | translate }} </p>
 
@@ -122,44 +156,49 @@
                     <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Msg' | translate }}</p> 
                     <div *ngIf="translate.currentLang=='es'"  >
                     <p style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
-                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAS}}
+                        <input type="checkbox" class="radio" id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAS}}
 
                     </p>
                     </div>
                     <div *ngIf="translate.currentLang=='eus'" >
                     <p  style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
-                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_VAS}}
+                        <input type="checkbox" class="radio" id="{{col.ID_ESP}}" >{{col.DEN_ESP_VAS}}
                     </p>
                     </div>
                     <div *ngIf="translate.currentLang=='gal'" >
                      <p  style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
-                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_GAL}}
+                        <input type="checkbox" class="radio" id="{{col.ID_ESP}}" >{{col.DEN_ESP_GAL}}
                     </p>
                     </div>
                     <div *ngIf="translate.currentLang=='cat'">
                      <p   style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
-                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAT}}
+                        <input type="checkbox" class="radio" id="{{col.ID_ESP}}" >{{col.DEN_ESP_CAT}}
                     </p>
                     </div>
                     <div *ngIf="translate.currentLang=='en'" >
                      <p  style="text-align: left;font-size: large;" *ngFor="let col of listaCol"  >
-                        <input type="checkbox" class="radio"id="{{col.ID_ESP}}" >{{col.DEN_ESP_ING}}
+                        <input type="checkbox" class="radio" id="{{col.ID_ESP}}" >{{col.DEN_ESP_ING}}
                     </p>
                     </div>
                 </div>
                    
-               
 
-
-                 
-        <button type="button" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
-        <button type="button" awNextStep (click)="prepararDatos()">{{ 'RegisterCol.next' | translate }}</button>
     </aw-wizard-step>
                  
 
 
 
     <aw-wizard-step stepTitle="{{ 'RegisterCol.step4Title' | translate }}" [navigationSymbol]="{ symbol: '&#xf15c;', fontFamily: 'FontAwesome' }" >
+     <div class="row" >
+                    <div class="col-md-12" style="text-align: center">
+                        <button type="button" class="btn btn-primary" style="margin-left:5px" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
+                        </div>
+                         <div class="col-md-12" style="text-align: center">
+                         <button *ngIf="isEdit==false" type="submit" [disabled]="registerForm.invalid " class="btn btn-secondary"  (click)="registrarColonia()">{{ 'RegisterCol.submitMsg' | translate }}</button>
+
+                         <button *ngIf="isEdit==true"  (click)="editarColonia()" class="btn btn-secondary" >{{ 'Tooltip.edit' | translate }}</button>
+                    </div>
+                </div>
         <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step4Msg' | translate }} </p>
 
 
@@ -178,23 +217,16 @@
         <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.temp' | translate }} *: {{colonia.temporada}}</p>
           
         <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step2Title' | translate }} </p>      
-        <p style="text-align: left;font-size: large;" *ngFor="let sitio of listaNidos">{{sitio}}</p>      
+        <p style="text-align: center;font-size: large;" *ngFor="let sitio of listaNidos">{{sitio}}</p>      
         
 
         <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step3Title' | translate }} </p>  
-        <p style="text-align: left;font-size: large;" *ngFor="let especie of listaEspeciesNombres">{{especie}}</p> 
+        <p style="text-align: center;font-size: large;" *ngFor="let especie of listaEspeciesNombres">{{especie}}</p> 
 
 
-
-
-
-
-        <button type="submit" [disabled]="registerForm.invalid && markers.length<=0" class="btn btn-secondary" >{{ 'RegisterCol.submitMsg' | translate }}</button>
-
-        <button type="button" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
 
     </aw-wizard-step>
   
 </aw-wizard>
 
-     </form>
+    

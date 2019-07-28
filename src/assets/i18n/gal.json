@@ -121,6 +121,7 @@
         "step4Title":   "RESUMEN",
         "step1Msg":     "Os campos con * son obligatorios",
         "step2Msg":     "Por favor, marque todas as casillas correspondentes á localización dos niños desta colonia",
+        "step2Msg2":    "Indique no mapa onde se situa a colonia",
         "step3Msg":     "Marque todas aquelas especies que se observan nesta colonia",
         "step3Msg2":    "En caso negativo, pode saltar este paso",
         "step4Msg":     "Por favor, repase os datos antes de rexistrar a colonia",

@@ -145,6 +145,7 @@
 
                         </div>
                         <div class="modal-footer">
+                            <a [routerLink]="['/registerCol/', item.id, '2'] " (click)="c('Close click')"><i class="fas fa-edit"></i></a>
                             <button class="transparentButton" (click)="newFavorito(item.id)"><i class="fas fa-heart"></i></button>
                             <a [routerLink]="['/', item.id, 'visitProfile'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
                             <button class="btn btn-secondary" (click)="exportOneAsXLSX(item)">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
