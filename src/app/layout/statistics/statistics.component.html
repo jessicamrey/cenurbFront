@@ -1,5 +1,6 @@
   <p style="margin-top:60px;"></p>
 <ngx-alerts></ngx-alerts>
+  <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 <div class="card" >
 
     <div class="card-header" style="background-color: #A9A9A9">
@@ -43,7 +44,7 @@
             </div>
         </div>
     </div>
-    <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
+  
 
     
 
@@ -55,7 +56,7 @@
                     <ngb-tab title="{{ 'Statistics.anno' | translate }}">
                         <ng-template ngbTabContent>
                         
-                        <button class="btn btn-secondary" (click)="exportYearAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+                        <button class="btn btn-secondary" *ngIf="mostrarDescargar==true" (click)="exportYearAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
 
                         <div class="row" *ngIf="annoFiltered==false; else filteredAnno">
                             <div class="col-sm-12" *ngIf="loading==false">
@@ -131,7 +132,7 @@
                     <ngb-tab title="{{ 'Statistics.ccaa' | translate }}">
                         <ng-template ngbTabContent>
 
-                         <button class="btn btn-secondary" (click)="exportCcaaAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+                         <button class="btn btn-secondary" *ngIf="mostrarDescargar==true" (click)="exportCcaaAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
 
 
                             <div class="row" *ngIf="ccaaFiltered==false; else filteredCcaa">
@@ -216,7 +217,7 @@
                     <ngb-tab title="{{ 'Statistics.prov' | translate }}"  >
                         <ng-template ngbTabContent>
 
-                         <button class="btn btn-secondary" (click)="exportProvinciaAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+                         <button class="btn btn-secondary" *ngIf="mostrarDescargar==true" (click)="exportProvinciaAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
 
 
                             <div class="row" *ngIf="ccaaFiltered==false; else filteredProv">

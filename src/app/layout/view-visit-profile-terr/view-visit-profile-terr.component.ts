@@ -11,6 +11,7 @@ import { VisitaTerritorio } from '../../../models/visita-territorio';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
 
 declare var $:any;
 @Component({
@@ -34,6 +35,8 @@ export class ViewVisitProfileTerrComponent implements OnInit {
   	markers = [{ latitude: localStorage.getItem('latitude'),
              longitude: localStorage.getItem('longitude')}];
   preFiles:File[]=[];
+  mostrarDescargar:boolean=false;
+
 
   constructor(private translate: TranslateService,
                 private territoriosService: TerritoriosService,
@@ -41,10 +44,11 @@ export class ViewVisitProfileTerrComponent implements OnInit {
                 private route:ActivatedRoute,
                 private modalService: NgbModal,
                 private formBuilder: FormBuilder,
-                private sharedServices: SharedServicesService) { }
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { }
 
   ngOnInit() {
-
+    this.isAdmin();
   	this.route.params.subscribe(
   			params=>{
   				this.terrId=params["terrId"];
@@ -64,6 +68,22 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 
 
   }
+
+  isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
+
+
+
+  
 exportAsXLSX():void {
 
        let dataToExport:any=[];

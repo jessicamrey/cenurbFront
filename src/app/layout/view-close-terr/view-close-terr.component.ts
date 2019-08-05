@@ -56,7 +56,8 @@ title: string = 'My first AGM project';
 
 
   getTerritoriosCercanos(radio){
-    this.radio=radio;
+
+    this.radio=radio*100;
     let lat=this.latitude;
     let lon=this.longitude;
     let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);

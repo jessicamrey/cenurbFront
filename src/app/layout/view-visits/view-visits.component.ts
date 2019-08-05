@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VisitaColonia } from '../../../models/visita-colonia';
 import { VisitaTerritorio } from '../../../models/visita-territorio';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 
@@ -45,6 +46,7 @@ registerFormTerr: FormGroup;
 
 loading=false;
 isEdit=false;
+  mostrarDescargar:boolean=false;
 
 longitude :any=localStorage.getItem('longitude');
 latitude :any=localStorage.getItem('latitude');
@@ -57,9 +59,11 @@ markers = [{ latitude: localStorage.getItem('latitude'),
                 public alertService: AlertService,
                 private modalService: NgbModal,
                 private formBuilder: FormBuilder,
-                private sharedServices: SharedServicesService) { }
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { }
 
   	ngOnInit() {
+      this.isAdmin();
   		this.recuperaVisitas();
        this.recuperaVisitasTerritorio();
        this.registerForm = this.formBuilder.group({
@@ -90,6 +94,18 @@ markers = [{ latitude: localStorage.getItem('latitude'),
         );
   }
 
+ isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
+  
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;

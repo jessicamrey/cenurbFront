@@ -14,27 +14,6 @@ private url: string = environment.backendUrl;
   constructor(private api: ApiProvider, private http: HttpClient) {
   }
 
-  /*loginAnonymous(tempUser: TempUser) {
-    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
-
-    let response=this.api.post('api/loginAnonymous', JSON.stringify(tempUser), config);
-    return response;
-  }*/
-
-
-  /*login(username, password) {
-  	let formData: FormData = new FormData();
-  	
-    formData.append('_username', username);
-    formData.append('_password', password);
-
-   
-    return this.api.post('api/login', formData);
-
-  
-
-
-}*/
 
 
    login(accountData: any): any {
@@ -71,6 +50,11 @@ private url: string = environment.backendUrl;
     let response=this.http.post(this.url + '/api/register', JSON.stringify(data), config);
     return response;
   
+  }
+
+  //Guardaremos si es admin
+  isAdmin() {
+    return this.http.get<any>(this.url + '/api/isAdmin');
   }
 
 

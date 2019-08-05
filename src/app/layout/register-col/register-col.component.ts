@@ -17,7 +17,7 @@ declare var $:any;
 export class RegisterColComponent implements OnInit {
 
   isEdit:boolean=false;
-  codColonia:any;
+  codColonia:number;
 	
   listaCCAA:any[]= [];
   listaTemporadas:any[]= [];
@@ -31,14 +31,14 @@ export class RegisterColComponent implements OnInit {
   listaEspeciesNombres:any[]= [];
   otras:boolean =false;
   colonia=new Colonia();
-colId:any;
+  colId:any;
   locNidos= new LocNidos();
   registerForm: FormGroup;
   loading=false;
   longitude :any=parseFloat(localStorage.getItem('longitude'));
   latitude :any=parseFloat(localStorage.getItem('latitude'));
-type:any=0;
-datos:any={};
+  type:any=0;
+  datos:any={};
 	
 	/*
 	*type= 0 ->nueva colonia
@@ -70,15 +70,14 @@ datos:any={};
             if(params["type"]==1 || params["type"]==2){
               this.isEdit=true;
               console.log(this.isEdit);
-            }else{
-              this.recuperaTemporadas();
-              this.recuperaCCAA();
-              this.recuperaTipoProp();
-              this.recuperaTipoEd();
             }
   			});
-    
+    this.recuperaTemporadas();
+    this.recuperaCCAA();
+    this.recuperaTipoProp();
+    this.recuperaTipoEd();
   	this.recuperaColoniales();
+
   	this.registerForm = this.formBuilder.group({
             nombre: ['', Validators.required],
             nombreCentro: ['', Validators.required],
@@ -104,14 +103,22 @@ editarColonia(){
       console.log(error);
     });
 }
-	
+
+
 	recuperaDatosColonia(colId){
 		 this.coloniasService.recuperaColonia(colId).subscribe(
 			      data=>{
 				    console.log(data);
 
-            document.getElementById("nombre").value=data["nombre"];
-            document.getElementById("nombreCentro").value=data["nombreCentro"];
+            //document.getElementById("nombre").value=data["nombre"];
+            //document.getElementById("nombreCentro").value=data["nombreCentro"];
+
+           this.codColonia=data["codColonia"];
+            this.colonia.setCcaa(data["ccaa"]);
+            this.colonia.setProvincia(data["provincia"]);
+            this.colonia.setMunicipio(data["municipio"]);
+            this.colonia.setBarrio(data["barrio"]);
+
 
             data["locNidos"]["fachada"]==true ? document.getElementById("fachada").setAttribute("checked", "") : undefined;
             data["locNidos"]["trasera"]==true ? document.getElementById("trasera").setAttribute("checked", ""): undefined;
@@ -133,6 +140,7 @@ editarColonia(){
               document.getElementById("tipoEd").setAttribute("disabled", "true");
               document.getElementById("calleNumPiso").setAttribute("disabled", "true");
             }
+            
 
             this.markers=[{ latitude: data["locNidos"]["lat"], longitude: data["locNidos"]["lon"] }];
 			      },
@@ -308,27 +316,27 @@ prepararDatosEditar(){
 }
 
 
-  prepararDatos(){
+
+
+  prepararDatos(nuevaTemporada){
   	
   	//PASO 1 ->Información general de la colonia
 
-	
-
-
-  	//Esta info debe ser sacada de localstorage
-  	this.colonia.setUsuario("pruebaUsu");
-    this.locNidos.setUsuario("pruebaUsu");
   	this.colonia.setEspecie(parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]));
   	//
-
+    if(nuevaTemporada==true){
+      this.colonia.setCodColonia(this.codColonia);
+    }else{
+      this.colonia.setCcaa(this.registerForm.get("ccaa").value);
+      this.colonia.setProvincia(this.registerForm.get("provincia").value);
+      this.colonia.setMunicipio(this.registerForm.get("municipio").value);
+      this.colonia.setBarrio(this.registerForm.get("barrio").value);
+    }
   	
   	this.colonia.setNombre(this.registerForm.get("nombre").value);
   	this.colonia.setNombreCentro(this.registerForm.get("nombreCentro").value);
   	this.colonia.setAnno(parseInt(this.registerForm.get("temporada").value, 10));
-  	this.colonia.setCcaa(this.registerForm.get("ccaa").value);
-  	this.colonia.setProvincia(this.registerForm.get("provincia").value);
-  	this.colonia.setMunicipio(this.registerForm.get("municipio").value);
-  	this.colonia.setBarrio(this.registerForm.get("barrio").value);
+  	
   	this.colonia.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
   	this.colonia.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
   	this.colonia.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
@@ -405,6 +413,7 @@ prepararDatosEditar(){
 
   registrarColonia(){
     this.loading=true;
+    console.log(this.colonia);
   		//Empezamos registrando la colonia
   	  	this.coloniasService.nuevaColonia(this.colonia).subscribe(
               data => {

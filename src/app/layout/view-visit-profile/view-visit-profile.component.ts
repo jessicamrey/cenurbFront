@@ -10,6 +10,7 @@ import { VisitaColonia } from '../../../models/visita-colonia';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 
@@ -31,6 +32,8 @@ export class ViewVisitProfileComponent implements OnInit {
 	usuario=localStorage.getItem("userId");
 	isEdit=false;
   filtered=false;
+  mostrarDescargar:boolean=false;
+  
 
 	constructor(private translate: TranslateService,
                 private coloniasService: ColoniasService,
@@ -38,12 +41,13 @@ export class ViewVisitProfileComponent implements OnInit {
                 private route:ActivatedRoute,
                 private modalService: NgbModal,
                 private formBuilder: FormBuilder,
-                private sharedServices: SharedServicesService) { 
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { 
 		 	
 }
 
   	ngOnInit() {
-
+      this.isAdmin();
   		this.route.params.subscribe(
   			params=>{
   				this.colId=params["colId"];
@@ -67,6 +71,18 @@ export class ViewVisitProfileComponent implements OnInit {
 
   	}
 
+ isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
+  
     exportAsXLSX():void {
 
        let dataToExport:any=[];

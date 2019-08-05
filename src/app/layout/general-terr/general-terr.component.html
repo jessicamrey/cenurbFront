@@ -1,5 +1,5 @@
   <p style="margin-top:60px;"></p>
-
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 <div class="card" >
 
     <div class="card-header" style="background-color: #A9A9A9">
@@ -20,7 +20,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label>{{ 'RegisterCol.prov' | translate }}</label>
-                    <select class="form-control"  (change)="recuperaMunicipio()" id="selectProvincia" >
+                    <select class="form-control"   id="selectProvincia" >
                     	<option selected value="all" id="all">{{ 'GeneralTerr.all' | translate }}</option>
                       	<option *ngFor="let prov of listaProv" value="{{prov.DEN_PROV}}" id="{{prov.ID_PROV}}">{{prov.DEN_PROV}}</option>
                     </select>
@@ -51,7 +51,7 @@
         	<div class="col-sm-2">
         		<button class="btn btn-secondary" (click)="filtrar()">{{ 'GeneralTerr.apply' | translate }}</button>
         	</div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" *ngIf="mostrarDescargar==true">
                 <button class="btn btn-secondary" (click)="exportAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
             </div>
         </div>
@@ -95,7 +95,6 @@
                             </div>
 
 <div class="col-sm-12">
-    <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 
     <canvas *ngIf="show==true" baseChart [datasets]="chartData" [labels]="chartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event) ">
     </canvas>

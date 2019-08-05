@@ -1,5 +1,6 @@
  <p style="margin-top:40px;"></p>
 
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 
 <div class="card">
 
@@ -52,7 +53,7 @@
             <div class="col-sm-8" style="text-align: center">
                 <button class="btn btn-primary" (click)="getDatosBusqueda()">{{ 'ViewCol.search' | translate }}</button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" *ngIf="mostrarDescargar==true">
                 <button class="btn btn-secondary" (click)="exportAsXLSX()">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
             </div>
         </div>
@@ -101,7 +102,7 @@
                                             <p style="text-align: right;font-size: 10px">{{item.locNidos.trasera}}</p> 
                                             <p style="text-align: right;font-size: 10px">{{item.locNidos.lateralIzquierdo}}</p> 
                                             <p style="text-align: right;font-size: 10px">{{item.locNidos.lateralDerecho}}</p> 
-                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.patioInferior}}</p> 
+                                            <p style="text-align: right;font-size: 10px">{{item.locNidos.patioInterior}}</p> 
                                             <p style="text-align: right;font-size: 10px">{{item.locNidos.numPiso}}</p> 
                                             <p style="text-align: right;font-size: 10px">{{item.locNidos.emplazamiento.tipo}}</p> 
 
@@ -150,6 +151,8 @@
 
                         </div>
                         <div class="modal-footer">
+                            <a [routerLink]="['/registerTerr/', item.id, '2'] " (click)="c('Close click')"><i class="fas fa-edit"></i></a>
+                            <a [routerLink]="['/registerTerr/', item.id, '1'] " (click)="c('Close click')"><i class="fas fa-plus"></i></a>
                             <button class="transparentButton" (click)="newFavorito(item.id)"><i class="fas fa-heart"></i></button>
                             <a [routerLink]="['/', item.id, 'visitProfileTerr'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
                              <button class="btn btn-secondary" (click)="exportOneAsXLSX(item)">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>

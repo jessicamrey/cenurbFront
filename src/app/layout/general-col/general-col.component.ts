@@ -4,6 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { ColoniasService } from '../../../services/colonias.service';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
+
 
 
 declare var $:any;
@@ -26,6 +28,7 @@ export class GeneralColComponent implements OnInit {
   especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
   show:boolean=false;
   start=1;
+  mostrarDescargar:boolean=false;
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -41,7 +44,8 @@ export class GeneralColComponent implements OnInit {
                 private seoService: SeoApisService,
                 public alertService: AlertService,
                 private coloniasService: ColoniasService,
-                private sharedServices: SharedServicesService) { }
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { }
 
   ngOnInit() {
 
@@ -49,8 +53,21 @@ export class GeneralColComponent implements OnInit {
   	this.recuperaColoniales('Colonias registradas');
   	this.recuperaCCAA();
   	this.recuperaTemporadas();
+    this.isAdmin();
 
 
+  }
+
+  isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
   }
 
   exportAsXLSX():void {
@@ -176,7 +193,6 @@ export class GeneralColComponent implements OnInit {
     getStatsEspecie(especie, cantidad, busqueda){
 
 
-     console.log(this.chartData[0]["data"]);
       this.coloniasService.getStats(especie, busqueda).subscribe(
               data => {
                
@@ -214,6 +230,7 @@ export class GeneralColComponent implements OnInit {
       let ccaa=$( "#selectCCAA option:selected" ).attr("value");
       let prov=$( "#selectProvincia option:selected" ).attr("value");
       let temp=$( "#temporada option:selected" ).attr("value");
+
 
       
       ccaa!='all' ? busqueda=busqueda+'&ccaa='+ccaa : busqueda;
@@ -302,7 +319,7 @@ export class GeneralColComponent implements OnInit {
     this.coloniasService.getTemporadas().subscribe(
       data=>{
         
-        for (let item of data){
+        for (let item of data["hydra:member"]){
           
             this.listaTemporadas.push(item["anno"]);
           

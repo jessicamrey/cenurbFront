@@ -17,6 +17,7 @@ export class Colonia{
   private usuario: string;
   private especie: number;
   public municipioAsignado_id:any;
+  private codColonia:number;
 
 
 
@@ -125,6 +126,14 @@ export class Colonia{
 
   public setEspecie(value: number) {
       this.especie = value;
+    }
+
+  public getCodColonia() {
+      return this.codColonia;
+    }
+
+  public setCodColonia(value: number) {
+      this.codColonia = value;
     }
 
 

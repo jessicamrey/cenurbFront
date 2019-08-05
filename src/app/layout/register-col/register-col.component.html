@@ -142,8 +142,9 @@
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <button type="button" class="btn btn-primary" awPreviousStep>{{ 'RegisterCol.back' | translate }}</button>
-                        <button *ngIf="isEdit==false" type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatos()">{{ 'RegisterCol.next' | translate }}</button>
-                        <button *ngIf="isEdit==true" type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatosEditar()">{{ 'RegisterCol.next' | translate }}</button>
+                        <button *ngIf="isEdit==false " type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatos(false)">{{ 'RegisterCol.next' | translate }}</button>
+                        <button *ngIf="isEdit==true && type==1" type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatos(true)">{{ 'RegisterCol.next' | translate }}</button>
+                        <button *ngIf="isEdit==true && type==2" type="button" class="btn btn-primary" style="margin-left:5px" awNextStep (click)="prepararDatosEditar()">{{ 'RegisterCol.next' | translate }}</button>
                     </div>
                 </div>
 
@@ -196,7 +197,8 @@
                          <div class="col-md-12" style="text-align: center">
                          <button *ngIf="isEdit==false" type="submit" [disabled]="registerForm.invalid " class="btn btn-secondary"  (click)="registrarColonia()">{{ 'RegisterCol.submitMsg' | translate }}</button>
 
-                         <button *ngIf="isEdit==true"  (click)="editarColonia()" class="btn btn-secondary" >{{ 'Tooltip.edit' | translate }}</button>
+                         <button *ngIf="isEdit==true && type==2"  (click)="editarColonia()" class="btn btn-secondary" >{{ 'Tooltip.edit' | translate }}</button>
+                         <button *ngIf="isEdit==true && type==1"  (click)="registrarColonia()" class="btn btn-secondary" >{{ 'Tooltip.new' | translate }}</button>
                     </div>
                 </div>
         <p style="text-align: center;font-size: large;" >{{ 'RegisterCol.step4Msg' | translate }} </p>
@@ -229,4 +231,3 @@
   
 </aw-wizard>
 
-    

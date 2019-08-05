@@ -29,7 +29,12 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/closeTerr?rad=' + radio + '&lat=' + lat + '&lon=' + lon + '&especie=' + especie);
   }
 
-
+//Modificamos los datos de un territorio existente
+  modificarTerritorio(terrId:number, data:any) {
+    console.log(data);
+    let config = {headers: new HttpHeaders().set("Content-Type", 'application/json')};
+    return this.api.put('api/putTerritorio/' + terrId, JSON.stringify(data), config);
+  }
 
    //Registra un nuevo territorio
   nuevoTerritorio(territoio: Territorio) {

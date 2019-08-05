@@ -124,7 +124,7 @@ recuperaTipoProp(){
    recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(
       data=>{
-        for (let item of data){
+        for (let item of data["hydra:member"]){
             this.listaTemporadas.push(item["anno"]);
         }
         console.log(data);

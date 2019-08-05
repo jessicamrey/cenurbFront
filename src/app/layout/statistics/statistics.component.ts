@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { SeoApisService } from '../../../services/seo-apis.service';
 import { SharedServicesService } from '../../../services/shared-services.service';
-
+import { AuthService } from '../../../services/auth.service';
 
 declare var $:any;
 
@@ -63,6 +63,8 @@ export class StatisticsComponent implements OnInit {
     start=1;
     dataList:any=[];
     dataListProv:any=[];
+  mostrarDescargar:boolean=false;
+
 
 
 
@@ -70,7 +72,8 @@ export class StatisticsComponent implements OnInit {
                 private coloniasService: ColoniasService,
                 public alertService: AlertService,
                 private seoService: SeoApisService,
-                private sharedServices: SharedServicesService) { }
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { }
 
   ngOnInit() {
     this.recuperaCCAA();
@@ -79,8 +82,21 @@ export class StatisticsComponent implements OnInit {
     this.statsProvincia('','all', 'all');
     this.statsAnno('','all');
     this.statsCcaa('','all');
-
+    this.isAdmin();
   }
+
+  isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
+  
 
   exportYearAsXLSX():void {
 
@@ -167,7 +183,7 @@ export class StatisticsComponent implements OnInit {
  recuperaTemporadas(){
     this.coloniasService.getTemporadas().subscribe(
       data=>{
-        for (let item of data){
+        for (let item of data["hydra:member"]){
             this.listaTemporadas.push(item["anno"]);
         }
       },

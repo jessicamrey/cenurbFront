@@ -6,6 +6,7 @@ import { AlertService } from 'ngx-alerts';
 import { Territorio } from '../../../models/territorio';
 import { LocNidosTerr } from '../../../models/loc-nidos-terr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -16,7 +17,7 @@ declare var $:any;
 export class RegisterTerrComponent implements OnInit {
 
   	registerForm: FormGroup;
-
+    isEdit:boolean=false;
   	listaEmpl:any=[];
   	listaTipos:any=[];
   	listaCCAA:any[]= [];
@@ -30,17 +31,46 @@ export class RegisterTerrComponent implements OnInit {
 	 longitude :any=parseFloat(localStorage.getItem('longitude'));
   latitude :any=parseFloat(localStorage.getItem('latitude'));
 
-  markers = [{ latitude: localStorage.getItem('latitude'),
-             longitude: localStorage.getItem('longitude')}];
+  codTerritorio:number;
+  type:any=0;
+datos:any={};
+terrId:any;
+territorio:Territorio= new Territorio();
+locNidos:LocNidosTerr= new LocNidosTerr();
+/*
+  *type= 0 ->nueva colonia
+  *1->nueva temporada
+  *2->editar existente
+  */
+
+ markers = [{ latitude: parseFloat(localStorage.getItem('latitude')),
+             longitude: parseFloat(localStorage.getItem('longitude'))}];
 
   	constructor(private translate: TranslateService,
                 private seoService: SeoApisService,
                 private territoriosService: TerritoriosService,
                 public alertService: AlertService,
-                private formBuilder: FormBuilder) { }
+                private formBuilder: FormBuilder,
+                private route:ActivatedRoute) { }
 
   	ngOnInit() {
   		//this.getLocalizacion();
+
+       this.route.params.subscribe(
+        params=>{
+          this.terrId=params["terrId"];
+          this.type=parseInt(params["type"]);
+          
+            if(params["terrId"]!=0){
+               this.recuperaDatosTerritorio(params["terrId"]);
+            }
+            if(params["type"]==1 || params["type"]==2){
+              this.isEdit=true;
+             
+            }
+        });
+
+
   		this.recuperaTemporadas();
 	  	this.recuperaCCAA();
 	  	this.recuperaTipoProp();
@@ -68,11 +98,108 @@ export class RegisterTerrComponent implements OnInit {
   	}
 
 
+editarTerritorio(){
+
+    this.locNidos.setFachada($("#fachada").is(":checked"));
+    this.locNidos.setTrasera($("#trasera").is(":checked"));
+    this.locNidos.setLatDer($("#latDer").is(":checked"));
+    this.locNidos.setLatIzq($("#latIzq").is(":checked"));
+    this.locNidos.setPatio($("#patio").is(":checked"));
+    this.locNidos.setNumPiso(parseInt(this.registerForm.get("numPiso").value));
+    this.locNidos.setEmplazamientoId(this.registerForm.get("emplazamiento").value);
+    //Para el resumen
+    this.listaNidos=[];
+
+
+    if($("#fachada").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.fachada"));
+    }
+    if($("#trasera").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.trasera"));
+    }
+    if($("#latDer").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.latDer"));
+    }
+    if($("#latIzq").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.latIzq"));
+    }
+    if($("#patio").is(":checked")){
+      this.listaNidos.push(this.translate.instant("RegisterCol.patio"));
+    }
+
+
+    this.datos={
+      "nombre":        $( "#nombre" ).val(),
+      "nombreCentro":  $( "#nombreCentro" ).val(),
+      "locNidos":      this.locNidos,
+      "tipoTerritorioId": this.registerForm.get("tipo").value,
+      "amenazada":        JSON.parse(this.registerForm.get("amenazada").value)
+     
+    }
+
+
+  this.territoriosService.modificarTerritorio(this.terrId, this.datos).subscribe(
+    data=>{
+      console.log(data);
+      this.alertService.success(this.translate.instant("Tooltip.successEdit"));
+    },
+    error=>{
+      console.log(error);
+      this.alertService.danger(this.translate.instant("Tooltip.errorEdit"));
+
+    });
+}
+
+
+recuperaDatosTerritorio(terrId){
+     this.territoriosService.recuperaTerritorio(terrId).subscribe(
+            data=>{
+            console.log(data);
+
+
+           this.codTerritorio=data["codTerritorio"];
+            this.territorio.setCcaa(data["ccaa"]);
+            this.territorio.setProvincia(data["provincia"]);
+            this.territorio.setMunicipio(data["municipio"]);
+            this.territorio.setBarrio(data["barrio"]);
+
+
+            data["locNidos"]["fachada"]==true ? document.getElementById("fachada").setAttribute("checked", "") : undefined;
+            data["locNidos"]["trasera"]==true ? document.getElementById("trasera").setAttribute("checked", ""): undefined;
+            data["locNidos"]["lateralDerecho"]==true ? document.getElementById("latDer").setAttribute("checked", ""): undefined;
+            data["locNidos"]["lateralIzquierdo"]==true ? document.getElementById("latIzq").setAttribute("checked", ""): undefined;
+            data["locNidos"]["patioInterior"]==true ? document.getElementById("patio").setAttribute("checked", ""): undefined;
+
+            document.getElementById("selectCCAA").setAttribute("disabled", "true");
+            document.getElementById("selectProvincia").setAttribute("disabled", "true");
+            document.getElementById("selectMunicipio").setAttribute("disabled", "true");
+            document.getElementById("barrio").setAttribute("disabled", "true");
+            
+            
+            if(this.type==2){
+              //No podremos editar la temporada si editamos la colonia
+              document.getElementById("temporada").setAttribute("disabled", "true");
+              document.getElementById("tipoProp").setAttribute("disabled", "true");
+              document.getElementById("tipoEd").setAttribute("disabled", "true");
+              document.getElementById("calleNumPiso").setAttribute("disabled", "true");
+            }
+            
+console.log(this.territorio);
+            //this.markers=[{ latitude: data["locNidos"]["lat"], longitude: data["locNidos"]["lon"] }];
+            },
+            error=>{
+              console.log(error);
+            })
+  
+  }
+
+
+
   	recuperaTemporadas(){
     this.territoriosService.getTemporadas().subscribe(
       data=>{
         
-        for (let item of data){
+        for (let item of data["hydra:member"]){
           if (item["abierta"]==true){
             this.listaTemporadas.push(item["anno"]);
           }
@@ -112,7 +239,6 @@ export class RegisterTerrComponent implements OnInit {
   recuperaTipos(){
   	this.territoriosService.getTipos().subscribe(
               data => {
-              	console.log(data);
                 this.listaTipos=data["hydra:member"];
               }
         );
@@ -162,31 +288,6 @@ export class RegisterTerrComponent implements OnInit {
 
   }
 
-/*getLocalizacion(){
-     if (window.navigator && window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(
-            position => {
-                this.latitude=position["coords"]["latitude"];
-                this.longitude=position["coords"]["longitude"];
-                console.log(this.latitude);
-                console.log(this.longitude);
-            },
-            error => {
-                switch (error.code) {
-                    case 1:
-                        console.log('Permission Denied');
-                        break;
-                    case 2:
-                        console.log('Position Unavailable');
-                        break;
-                    case 3:
-                        console.log('Timeout');
-                        break;
-                }
-            }
-        );
-    };
-  }*/
 //https://mdbootstrap.com/docs/angular/advanced/google-maps/
 placeMarker(position: any) {
 const lat = position.coords.lat;
@@ -195,47 +296,50 @@ const lng = position.coords.lng;
 this.markers=[{ latitude: lat, longitude: lng }];
 }
 
-  registraTerritorio(){
+registraTerritorio(nuevaTemporada){
 
   	//PASO 1 ->Información general del territorio
 
-  	let territorio= new Territorio();
-  	let locNidos= new LocNidosTerr();
 
-  	//Esta info debe ser sacada de localstorage
-  	territorio.setUsuario("pruebaUsu");
-    locNidos.setUsuario("pruebaUsu");
-  	territorio.setEspecie(parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]));
-  	//
+     if(nuevaTemporada==true){
+      this.territorio.setCodTerritorio(this.codTerritorio);
+    }else{
+      this.territorio.setCcaa(this.registerForm.get("ccaa").value);
+      this.territorio.setProvincia(this.registerForm.get("provincia").value);
+      this.territorio.setMunicipio(this.registerForm.get("municipio").value);
+      this.territorio.setBarrio(this.registerForm.get("barrio").value);
+    }
+
+  	this.territorio.setUsuario("pruebaUsu");
+    this.locNidos.setUsuario("pruebaUsu");
+  	this.territorio.setEspecie(parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]));
+  	
 
   	
-  	territorio.setNombre(this.registerForm.get("nombre").value);
-  	territorio.setNombreCentro(this.registerForm.get("nombreCentro").value);
-  	territorio.setAnno(parseInt(this.registerForm.get("temporada").value, 10));
-  	territorio.setCcaa(this.registerForm.get("ccaa").value);
-  	territorio.setProvincia(this.registerForm.get("provincia").value);
-  	territorio.setMunicipio(this.registerForm.get("municipio").value);
-  	territorio.setBarrio(this.registerForm.get("barrio").value);
-  	territorio.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
-  	territorio.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
-  	territorio.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
-  	territorio.setTipoTerritorioId(this.registerForm.get("tipo").value);
-  	territorio.setAmenazada(JSON.parse(this.registerForm.get("amenazada").value));
+  	this.territorio.setNombre(this.registerForm.get("nombre").value);
+  	this.territorio.setNombreCentro(this.registerForm.get("nombreCentro").value);
+  	this.territorio.setAnno(parseInt(this.registerForm.get("temporada").value, 10));
+  	this.territorio.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
+  	this.territorio.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
+  	this.territorio.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
+  	this.territorio.setTipoTerritorioId(this.registerForm.get("tipo").value);
+  	this.territorio.setAmenazada(JSON.parse(this.registerForm.get("amenazada").value));
 
 
   	//PASO 2 -> Información sobre los nidos
 
   	
 
-  	locNidos.setFachada($("#fachada").is(":checked"));
-  	locNidos.setTrasera($("#trasera").is(":checked"));
-  	locNidos.setLatDer($("#latDer").is(":checked"));
-  	locNidos.setLatIzq($("#latIzq").is(":checked"));
-  	locNidos.setPatio($("#patio").is(":checked"));
-    locNidos.setLat(this.markers["0"]["latitude"]);
-    locNidos.setLon(this.markers["0"]["longitude"]);
-    locNidos.setNumPiso(this.registerForm.get("numPiso").value);
-  	locNidos.setEmplazamientoId(this.registerForm.get("emplazamiento").value);
+  	this.locNidos.setFachada($("#fachada").is(":checked"));
+  	this.locNidos.setTrasera($("#trasera").is(":checked"));
+  	this.locNidos.setLatDer($("#latDer").is(":checked"));
+  	this.locNidos.setLatIzq($("#latIzq").is(":checked"));
+  	this.locNidos.setPatio($("#patio").is(":checked"));
+    console.log(this.markers);
+    this.locNidos.setLat(this.markers["0"]["latitude"]);
+    this.locNidos.setLon(this.markers["0"]["longitude"]);
+    this.locNidos.setNumPiso(this.registerForm.get("numPiso").value);
+  	this.locNidos.setEmplazamientoId(this.registerForm.get("emplazamiento").value);
 
 
   	this.listaNidos=[];
@@ -258,19 +362,19 @@ this.markers=[{ latitude: lat, longitude: lng }];
   	}
 
 
-  	console.log(territorio);
-  	console.log(locNidos);
+  	console.log(this.territorio);
+  	console.log(this.locNidos);
 
 
   	 this.loading=true;
   		//Empezamos registrando el territorio
-  	  	this.territoriosService.nuevoTerritorio(territorio).subscribe(
+  	  	this.territoriosService.nuevoTerritorio(this.territorio).subscribe(
               data => {
               	//Cuando el territorio es creado, obtenemos su id para completar los siguientes pasos
                 this.alertService.success(this.translate.instant("RegisterTerr.successMsg1"));
 
                 //Completamos datos de nidos
-                this.territoriosService.completaTerritorioNidos(locNidos,data["id"]).subscribe(
+                this.territoriosService.completaTerritorioNidos(this.locNidos,data["id"]).subscribe(
                 	dataNidos =>{
                     this.alertService.success(this.translate.instant("RegisterCol.successMsg2"));
                 		this.loading=false;

@@ -6,6 +6,7 @@ import { AlertService } from 'ngx-alerts';
 import { Colonia } from '../../../models/colonia';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
 
 declare var $:any;
 
@@ -37,6 +38,7 @@ export class ViewColComponent implements OnInit {
     busqueda:string;
     filtered:boolean=false;
     loading=false;
+  mostrarDescargar:boolean=false;
   
 
   	constructor(private translate: TranslateService,
@@ -44,14 +46,29 @@ export class ViewColComponent implements OnInit {
                 public alertService: AlertService,
                 private modalService: NgbModal,
                 private seoService: SeoApisService,
-                private sharedServices: SharedServicesService) { 
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { 
   		this.advancedPagination = 1;
   	}
 
   	ngOnInit() {
       this.recuperaCCAA();
   		this.recuperaColonias(1);
+      this.isAdmin();
+
   	}
+
+    isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
 
     exportAsXLSX():void {
 
@@ -126,9 +143,11 @@ export class ViewColComponent implements OnInit {
 
 
   	recuperaColonias(pageNumber){
+      this.loading=true;
       let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
   		this.coloniasService.recuperaColonias(pageNumber, especie).subscribe(
               data => {
+                this.loading=false;
                 this.listaColonias=data["hydra:member"];
                 console.log(this.listaColonias);
                 let last=data["hydra:view"]["hydra:last"];
@@ -138,6 +157,7 @@ export class ViewColComponent implements OnInit {
                 
               },
               error => {
+                this.loading=false;
                   this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
                   
             }
@@ -199,7 +219,7 @@ export class ViewColComponent implements OnInit {
 
   }
 
-  getDatosBusqueda(){
+  getDatosBusqueda(codigo, booleanParam){
     let ccaa=$( "#selectCCAA option:selected" ).attr("value");
     let prov=$( "#selectProvincia option:selected" ).attr("value");
     let mun=$( "#selectMunicipio option:selected" ).attr("value");
@@ -207,6 +227,7 @@ export class ViewColComponent implements OnInit {
     let temporada=$("#temporada").val();
     let centro= $("#nombreCentro").val();
     let cod= $("#cod").val();
+    let id= $("#idCol").val();
     let vacio=$("#vacio").is(":checked");
 
      let busqueda='';
@@ -217,25 +238,33 @@ export class ViewColComponent implements OnInit {
     nombre.length > 0 ? busqueda= busqueda + '&nombre=' + nombre : busqueda;
     centro.length > 0 ? busqueda= busqueda + '&nombreCentro=' + centro : busqueda;
     temporada.length > 0 ? busqueda= busqueda + '&temporada=' + temporada : busqueda;
-    cod.length > 0 ? busqueda= busqueda + '&id=' + cod : busqueda;
+    cod.length > 0 ? busqueda= busqueda + '&codColonia=' + cod : busqueda;
+    id.length > 0 ? busqueda= busqueda + '&id=' + id : busqueda;
     vacio != false ? busqueda= busqueda + '&vacio=true' : busqueda;
 
     console.log(busqueda);
 
-    if (busqueda.length>0){ //solo recuperamos cuando haya algun dato para buscar
+   
+    //Buscamos el codigo de la colonia para que nos devuelva todas las temporadas
+    if (booleanParam==true){
+      let searchString='&codColonia='+codigo;
+      this.filtered=true;
+      this.recuperaConFiltros(searchString, 1);
+    }else{
       this.busqueda=busqueda;
       this.filtered=true;
       this.recuperaConFiltros(busqueda, 1);
-    }else{
-      //alertar de introducir datos
     }
 
     
   }
 
   recuperaConFiltros(busqueda, pageNumber){
+    this.loading=true;
    this.coloniasService.recuperaColoniasFiltered(pageNumber, busqueda).subscribe(
               data => {
+                this.loading=false;
+                console.log(data);
                 this.listaColonias=data["hydra:member"];
                 let last=data["hydra:view"]["hydra:last"];
 
@@ -247,6 +276,7 @@ export class ViewColComponent implements OnInit {
                 }
               },
               error => {
+                this.loading=false;
                   this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
                   
             }

@@ -280,7 +280,7 @@
         <div class="col-sm-8">
             <button class="btn btn-primary" (click)="openLg(content)">{{ 'ViewVisitProfile.register' | translate }}</button>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" *ngIf="mostrarDescargar==true">
             <button class="btn btn-secondary" (click)="exportAsXLSX(item)">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
             </div>
 

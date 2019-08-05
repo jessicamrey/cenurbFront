@@ -8,11 +8,11 @@
         <div class="col-sm-6">
                 <div class="form-group"  >
                     <label>{{ 'RegisterCol.name' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="nombre" >
+                    <input class="form-control" placeholder="Enter text" formControlName="nombre" id="nombre">
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.centerName' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="nombreCentro" >
+                    <input class="form-control" placeholder="Enter text" formControlName="nombreCentro" id="nombreCentro" >
                 </div>
 
                 <div class="form-group">
@@ -31,35 +31,35 @@
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.mun' | translate }} *</label>
-                    <select class="form-control"  formControlName="municipio"  >
+                    <select class="form-control"  formControlName="municipio" id="selectMunicipio" >
                         <option *ngFor="let mun of listaMun" value="{{mun.DEN_POB}}" id="{{mun.ID_POB}}">{{mun.DEN_POB}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.street' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="barrio">
+                    <input class="form-control" placeholder="Enter text" formControlName="barrio" id="barrio">
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.address' | translate }} *</label>
-                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso">
+                    <input class="form-control" placeholder="Enter text" formControlName="calleNumPiso" id="calleNumPiso">
                 </div>
                 <div class="form-group">
                     <label>{{ 'RegisterCol.tipoProp' | translate }} *</label>
-                    <select class="form-control"  formControlName="tipoPropiedad" >
+                    <select class="form-control"  formControlName="tipoPropiedad" id="tipoProp">
                         <option *ngFor="let prop of listaTipoProp" value="{{prop.id}}" id="{{prop.id}}">{{prop.Description}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>{{ 'RegisterCol.tipoEd' | translate }} *</label>
-                    <select class="form-control"  formControlName="tipoEdificio"  >
+                    <select class="form-control"  formControlName="tipoEdificio" id="tipoEd" >
                         <option *ngFor="let ed of listaTipoEd" value="{{ed.id}}" id="{{ed.id}}">{{ed.descripcion}}</option>
                     </select>
                 </div>
 
                  <div class="form-group">
                     <label>{{ 'RegisterCol.temp' | translate }} *</label>
-                    <select class="form-control"  formControlName="temporada" >
+                    <select class="form-control"  formControlName="temporada" id="temporada">
                         
                         <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
                     </select>
@@ -115,18 +115,26 @@
                         <option *ngFor="let empl of listaEmpl" value="{{empl.id}}" id="{{empl.id}}">{{empl.tipo}}</option>
                     </select>
                 </div>
-            <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
-              <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
-            </agm-map>
+             <div *ngIf="isEdit==false">
+                                <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" (mapClick)="placeMarker($event)">
+                                  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                                </agm-map>
+                        </div>
+                        <div *ngIf="isEdit==true">
+                                <agm-map [latitude]="latitude" [longitude]="longitude" style="height: 300px" >
+                                  <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+                                </agm-map>
+                        </div>
         </div>
 </div>
+ </form>
+
+     <button *ngIf="isEdit==false  "  (click)="registraTerritorio(false)" [disabled]="registerForm.invalid && markers.length<=0" class="btn btn-primary" >{{ 'RegisterTerr.register' | translate }}</button>
+     <button *ngIf="isEdit==true && type==1"  (click)="registraTerritorio(true)" class="btn btn-primary" >{{ 'RegisterTerr.register' | translate }}</button>
+ 
+     <button *ngIf="isEdit==true && type==2"  (click)="editarTerritorio()" class="btn btn-secondary" >{{ 'Tooltip.edit' | translate }}</button>
 
 
-     <button type="submit" [disabled]="registerForm.invalid && markers.length<=0" class="btn btn-primary" >{{ 'RegisterTerr.register' | translate }}</button>
 
 
-
-
-
-
-     </form>
+   

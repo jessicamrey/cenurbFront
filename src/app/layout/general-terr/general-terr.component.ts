@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'ngx-alerts';
 import { TerritoriosService } from '../../../services/territorios.service';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 declare var $:any;
@@ -27,7 +28,7 @@ export class GeneralTerrComponent implements OnInit {
   	especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
     show:boolean=false;
     show2:boolean=false;
-
+    mostrarDescargar:boolean=false;
     start=1;
 
     public barChartOptions: any = {
@@ -45,15 +46,30 @@ export class GeneralTerrComponent implements OnInit {
                 private seoService: SeoApisService,
                 public alertService: AlertService,
                 private territoriosService: TerritoriosService,
-                private sharedServices: SharedServicesService) { }
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { }
 
   ngOnInit() {
   	this.recuperaNoColoniales('Territorios registrados');
   	this.recuperaCCAA();
   	this.recuperaTemporadas();
     this.recuperaTipos();
-  	
+  	this.isAdmin();
   }
+
+    isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
+
+  
 
   exportAsXLSX():void {
 
@@ -307,7 +323,7 @@ export class GeneralTerrComponent implements OnInit {
     this.territoriosService.getTemporadas().subscribe(
       data=>{
         
-        for (let item of data){
+        for (let item of data["hydra:member"]){
           
             this.listaTemporadas.push(item["anno"]);
           

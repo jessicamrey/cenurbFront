@@ -6,6 +6,7 @@ import { AlertService } from 'ngx-alerts';
 import { Colonia } from '../../../models/colonia';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedServicesService } from '../../../services/shared-services.service';
+import { AuthService } from '../../../services/auth.service';
 
 declare var $:any;
 
@@ -27,23 +28,37 @@ export class ViewTerrComponent implements OnInit {
     listaMun:any[]= [];
     busqueda:string;
     filtered:boolean=false;
+  mostrarDescargar:boolean=false;
 
-
+    loading=false;
   constructor(private translate: TranslateService,
                 private territoriosService: TerritoriosService,
                 public alertService: AlertService,
                 private modalService: NgbModal,
                 private seoService: SeoApisService,
-                private sharedServices: SharedServicesService) { 
+                private sharedServices: SharedServicesService,
+                private authService: AuthService) { 
   		this.advancedPagination = 1;
   }
 
   ngOnInit() {
     this.recuperaCCAA();
   	this.recuperaTerritorios(1);
+    this.isAdmin();
   }
 
-
+isAdmin(){
+    this.authService.isAdmin().subscribe(
+              data => {
+                this.mostrarDescargar=data;
+              },
+              error => {
+                  console.log(error);
+                  
+            }
+        );
+  }
+  
  pageChanged(page) {
     this.recuperaTerritorios(page);
   }
@@ -130,9 +145,11 @@ exportOneAsXLSX(item):void {
     }
 
 	recuperaTerritorios(pageNumber){
+    this.loading=true;
       let especie=parseInt(JSON.parse(localStorage.getItem('especie'))["especie_id"]);
   		this.territoriosService.recuperaTerritorios(pageNumber, especie).subscribe(
               data => {
+                this.loading=false;
                 this.listaTerritorios=data["hydra:member"];
                 let last=data["hydra:view"]["hydra:last"];
                 last=last.substr(last.indexOf('page')+5); //Cogemos el substring a partir de page +5, es decir +4 (numero de letras de page) +1 para no coger el "=", es decir, +5
@@ -141,6 +158,7 @@ exportOneAsXLSX(item):void {
                 console.log(this.listaTerritorios);
               },
               error => {
+                this.loading=false;
                   this.alertService.warning(this.translate.instant("ViewCol.errorMsg1"));
                   
             }

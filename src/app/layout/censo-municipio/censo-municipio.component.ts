@@ -26,6 +26,11 @@ export class CensoMunicipioComponent implements OnInit {
   noData:boolean=false;
   showCenso:boolean=false;
   loading:boolean=false;
+  loadingProv:boolean=false;
+  loadingMun:boolean=false;
+  loadingTemp:boolean=false;
+
+
   municipio:any;
 
   constructor(private translate: TranslateService,
@@ -39,23 +44,29 @@ export class CensoMunicipioComponent implements OnInit {
   }
   
    recuperaTemporadas(){
+     this.loadingTemp=true;
     this.coloniasService.getTemporadas().subscribe(
       data=>{
-        
-        this.listaTemporadas=data;
+     this.loadingTemp=false;
+
+        this.listaTemporadas=data["hydra:member"];
       },
       error=>{
-        console.log(error);
+     this.loadingTemp=false;
+
       })
   }
 
   
    recuperaCCAA(){
+     this.loading=true;
   	this.seoService.getCCAA().subscribe(
               data => {
+                this.loading=false;
                 this.listaCCAA=data;
               },
               error => {
+                this.loading=false;
                   this.alertService.warning(this.translate.instant("Dashboard.errorGetCCAA"));
                   
             }
@@ -63,14 +74,17 @@ export class CensoMunicipioComponent implements OnInit {
   }
   
    recuperaProvincia(){
+     this.loadingProv=true;
   	this.listaProv= [];
   	this.listaMun= [];
   	let id= $( "#selectCCAA option:selected" ).attr("id");
   	this.seoService.getProvincia(id).subscribe(
               data => {
+                this.loadingProv=false;
                 this.listaProv=data;
               },
               error => {
+                this.loadingProv=false;
                   this.alertService.warning(this.translate.instant("Dashboard.errorGetProv"));
                   
             }
@@ -79,12 +93,16 @@ export class CensoMunicipioComponent implements OnInit {
   }
 
   recuperaMunicipio(){
+     this.loadingMun=true;
+
   	let id= $( "#selectProvincia option:selected" ).attr("id");
   	this.seoService.getMunicipio(id).subscribe(
               data => {
+                this.loadingMun=false;
                 this.listaMun=data;
               },
               error => {
+                this.loadingMun=false;
                   this.alertService.warning(this.translate.instant("Dashboard.errorGetMun"));
                   
             }
@@ -94,6 +112,8 @@ export class CensoMunicipioComponent implements OnInit {
   
   buscarDisponibles(pageNumber){
     this.loading=true;
+
+
     let busqueda="&temporada="+$("#temporada option:selected").attr("value")+
                 "&municipio="+$( "#selectMunicipio option:selected" ).attr("value")+
                 "&especie="+this.especie;
@@ -105,8 +125,12 @@ export class CensoMunicipioComponent implements OnInit {
                 for (let colonia of this.listaColDisponibles){
                   if(colonia.municipioAsignado!=null){
 
-                   this.listaColAsignadas.push(colonia);
-                   this.listaColDisponibles.splice(this.listaColDisponibles.indexOf(colonia), 1);
+                    if(this.listaColAsignadas.length<=0){
+                      this.listaColAsignadas.push(colonia);
+                    }
+                    this.listaColDisponibles.splice(this.listaColDisponibles.indexOf(colonia), 1);
+                    
+                   
 
                   }
                 }
@@ -176,12 +200,10 @@ export class CensoMunicipioComponent implements OnInit {
         data=>{
           this.loading=false;
           this.censo[0]=data;
-          console.log(data);
           this.alertService.success(this.translate.instant("CensoMunicipio.infoMsg5"));
         },
         error=>{
           this.loading=false;
-          console.log(error);
           this.alertService.warning(this.translate.instant("CensoMunicipio.errorMsg1"));
 
         });

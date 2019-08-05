@@ -19,11 +19,17 @@ export class Territorio{
   private usuario: string;
   private especie: number;
   private amenazada:boolean;
-
+private codTerritorio:number;
 
 
 	//getters and setters
+public getCodTerritorio() {
+      return this.codTerritorio;
+    }
 
+  public setCodTerritorio(value: number) {
+      this.codTerritorio = value;
+    }
 	public getNombre() {
     	return this.nombre
   	}

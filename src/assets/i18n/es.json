@@ -162,7 +162,8 @@
         "mun":          "Municipio",
         "address":      "Dirección",
         "empty":        "Mostrar sólo colonias vacías",
-        "noData":       "No se han encontrado colonias"
+        "noData":       "No se han encontrado colonias",
+        "id":           "Identificador"
     },
     "ViewCloseCol":{
         "infoMsg1":     "Selecciona el radio de distancia en el que quieres buscar"
@@ -340,6 +341,12 @@
 
     },
     "Tooltip":{
-        "edit":         "Editar"
+        "edit":         "Editar",
+        "view":         "Ver otras temporadas",
+        "new":          "Nueva temporada",
+        "true":         "Sí",
+        "false":        "No",
+        "successEdit":  "Se ha modificado con éxito",
+        "errorEdit":    "Ha ocurrido un error al intentar modificar"
     }
 }
