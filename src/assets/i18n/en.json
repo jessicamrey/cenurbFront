@@ -81,7 +81,7 @@
         "numEspecies":   "Colonial bird species",
         "numCol":        "Registered colonies in ",
         "numTerr":       "Registered territories in ",
-        "numUsers":      "Volunteers registered in the application"
+        "numUsers":      "Volunteers registered"
 
 
 
@@ -336,5 +336,14 @@
         "infoMsg3":     "This field is only valid in the section 'By building type'",
         "infoMsg4":     "Due to the large volume of data, this section will only be available when filtering a province or town"
 
+    },
+    "Tooltip":{
+        "edit":         "Edit",
+        "view":         "See other seasons",
+        "new":          "New seasons",
+        "true":         "Yes",
+        "false":        "No",
+        "successEdit":  "Successfully modified",
+        "errorEdit":    "an error occurred while trying to modify"
     }
 }

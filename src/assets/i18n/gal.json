@@ -82,7 +82,7 @@
         "numEspecies":   "Especies de aves coloniales",
         "numCol":        "Colonias rexistradas en ",
         "numTerr":       "Territorios rexistrados en ",
-        "numUsers":      "Voluntarios rexistrados na aplicación"
+        "numUsers":      "Voluntarios rexistrados "
 
 
 
@@ -332,5 +332,14 @@
         "infoMsg3":     "Este campo só é válido no apartado 'Por tipo de edificio'",
         "infoMsg4":     "Debido ao gran volumen de datos, este apartado só estará dispoñible cando filtre unha provincia ou un municipio"
 
+    },
+    "Tooltip":{
+        "edit":         "Editar",
+        "view":         "Ver otras tempadas",
+        "new":          "Nova tempada",
+        "true":         "Sí",
+        "false":        "Non",
+        "successEdit":  "Modificouse con éxito",
+        "errorEdit":    "Ocurriu un erro ao intentar modificar"
     }
 }

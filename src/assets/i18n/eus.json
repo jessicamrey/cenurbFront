@@ -336,5 +336,14 @@
         "infoMsg3":     "Zelai hau baliozkoa da soilik atalean 'Eraikin-tipotik'",
         "infoMsg4":     "Datu-bolumen handiagatik, atal hau libre egongo da soilik probintzia bat edo udal bat ezkutuan pasatzen duenean"
 
+    },
+    "Tooltip":{
+        "edit":         "Editatzea",
+        "view":         "Beste sasoi batzuk ikustea",
+        "new":          "Sasoi berria",
+        "true":         "Sí",
+        "false":        "Ez",
+        "successEdit":  "Arrakastarekin aldatu da",
+        "errorEdit":    "Akatsa aldatzen saiatzerakoan gertatu da"
     }
 }

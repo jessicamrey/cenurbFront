@@ -81,7 +81,7 @@
         "numEspecies":   "Espècies d'ocells colonials",
         "numCol":        "Colònies registrades en ",
         "numTerr":       "Territoris registrats en ",
-        "numUsers":      "Voluntaris registrats en l'aplicació"
+        "numUsers":      "Voluntaris registrats "
 
 
 
@@ -336,5 +336,14 @@
         "infoMsg3":     "Aquest camp només és vàlid en l'apartat 'Per tipus d'edifici'",
         "infoMsg4":     "A causa del gran volum de dades, aquest apartat només estarà disponible quan filtri una província o un municipi"
 
+    },
+    "Tooltip":{
+        "edit":         "Editar",
+        "view":         "Veure altres temporades",
+        "new":          "Nova temporada",
+        "true":         "Sí",
+        "false":        "No",
+        "successEdit":  "S'ha modificat amb èxit",
+        "errorEdit":    "Ha ocorregut un error en intentar modificar"
     }
 }
