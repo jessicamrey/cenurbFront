@@ -80,6 +80,7 @@ locNidos:LocNidosTerr= new LocNidosTerr();
 
   		this.registerForm = this.formBuilder.group({
             nombre: ['', Validators.required],
+            numPiso: ['', Validators.required],
             nombreCentro: ['', Validators.required],
             barrio: ['', Validators.required],
             calleNumPiso: ['', Validators.required],
@@ -89,9 +90,8 @@ locNidos:LocNidosTerr= new LocNidosTerr();
             tipoPropiedad: ['', Validators.required],
             tipoEdificio: ['', Validators.required],
             temporada: ['', Validators.required],
-            numPiso: [''],
             emplazamiento: ['', Validators.required],
-            tipo:[''],
+            tipo:['', Validators.required],
             amenazada: ['', Validators.required]
         });
 
@@ -99,6 +99,7 @@ locNidos:LocNidosTerr= new LocNidosTerr();
 
 
 editarTerritorio(){
+  this.loading=true;
 
     this.locNidos.setFachada($("#fachada").is(":checked"));
     this.locNidos.setTrasera($("#trasera").is(":checked"));
@@ -137,14 +138,26 @@ editarTerritorio(){
      
     }
 
+    let vacio=$("#yesEmpty").is(":checked");
+    let noVacio=$("#noEmpty").is(":checked");
+
+
+    if (vacio){
+      this.datos["vacio"]=true ;
+     }
+     if (noVacio){
+      this.datos["vacio"]=false ;
+     }
+
+
 
   this.territoriosService.modificarTerritorio(this.terrId, this.datos).subscribe(
     data=>{
-      console.log(data);
+      this.loading=false;
       this.alertService.success(this.translate.instant("Tooltip.successEdit"));
     },
     error=>{
-      console.log(error);
+      this.loading=false;
       this.alertService.danger(this.translate.instant("Tooltip.errorEdit"));
 
     });
@@ -325,7 +338,17 @@ registraTerritorio(nuevaTemporada){
   	this.territorio.setTipoTerritorioId(this.registerForm.get("tipo").value);
   	this.territorio.setAmenazada(JSON.parse(this.registerForm.get("amenazada").value));
 
+    let vacio=$("#yesEmpty").is(":checked");
+    let noVacio=$("#noEmpty").is(":checked");
 
+
+    if (vacio){
+      this.territorio.setVacio(true);
+     }
+     if (noVacio){
+      
+      this.territorio.setVacio(false);
+    }
   	//PASO 2 -> Información sobre los nidos
 
   	
@@ -335,7 +358,6 @@ registraTerritorio(nuevaTemporada){
   	this.locNidos.setLatDer($("#latDer").is(":checked"));
   	this.locNidos.setLatIzq($("#latIzq").is(":checked"));
   	this.locNidos.setPatio($("#patio").is(":checked"));
-    console.log(this.markers);
     this.locNidos.setLat(this.markers["0"]["latitude"]);
     this.locNidos.setLon(this.markers["0"]["longitude"]);
     this.locNidos.setNumPiso(this.registerForm.get("numPiso").value);
@@ -382,6 +404,7 @@ registraTerritorio(nuevaTemporada){
                 	errorNidos=>{
                 			this.alertService.danger(this.translate.instant("RegisterCol.errorMsg2"));
                       this.loading=false;
+                      console.log(errorNidos);
                 	});
 
                 

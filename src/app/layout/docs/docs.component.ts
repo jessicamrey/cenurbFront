@@ -31,14 +31,25 @@ export class DocsComponent implements OnInit {
     this.loading=true;
   	this.coloniasService.recuperaDocs().subscribe(
                         data =>{
-                          this.listaColoniales=data;
+                          for (let item of data){
+                            let lastChar = item.substr(item.length - 1);
+                            if (lastChar!='.'){
+                              let splited=item.split("/");
+                              let name=splited[splited.length-1];
+                              let dato={
+
+                                "direccion":  item,
+                                "name":      name
+                              }
+                              this.listaColoniales.push(dato);
+                            }
+
+                          }
                           this.alertService.success(this.translate.instant("Docs.infoMsg1"));
-                        	console.log(data);
                           this.loading=false;
                         },
                         error=>{
                           this.alertService.success(this.translate.instant("Docs.errorMsg1"));
-                        	console.log(error);
                           this.loading=false;
                         });
 
@@ -49,14 +60,26 @@ export class DocsComponent implements OnInit {
     this.loading=true;
   	this.territoriosService.recuperaDocs().subscribe(
                         data =>{
-                          this.listaNoColoniales=data;
+                          for (let item of data){
+
+                            let lastChar = item.substr(item.length - 1);
+                            if (lastChar!='.'){
+                               let splited=item.split("/");
+                              let name=splited[splited.length-1];
+                              let dato={
+
+                                "direccion":  item,
+                                "name":      name
+                              }
+                              this.listaNoColoniales.push(dato);
+                            }
+
+                          }
                           this.alertService.success(this.translate.instant("Docs.infoMsg2"));
-                        	console.log(data);
                           this.loading=false;
                         },
                         error=>{
                           this.alertService.success(this.translate.instant("Docs.errorMsg2"));
-                        	console.log(error);
                           this.loading=false;
                         });
 

@@ -130,7 +130,9 @@
         "save":         "Registrar colònia",
         "coords":       "Coordenades",
         "lat":          "Latitud",
-        "lon":          "Longitud"
+        "lon":          "Longitud",
+        "empty":        "La colònia ha quedat buida?",
+        "full":         "La colònia forma un cens complet?"
     },
     "RegisterTerr":{
         "threat":       "L'espècie està amenaçada?",

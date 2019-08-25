@@ -130,7 +130,9 @@
         "save":         "Register colony",
         "coords":       "Coordinates",
         "lat":          "Latitude",
-        "lon":          "Longitude"
+        "lon":          "Longitude",
+        "empty":        "Has the colony been empty?",
+        "full":         "Does the colony form a complete census?"
     },
     "RegisterTerr":{
         "threat":       "Is the specie threatened?",

@@ -20,9 +20,19 @@ export class Territorio{
   private especie: number;
   private amenazada:boolean;
 private codTerritorio:number;
+private vacio:boolean;
 
 
 	//getters and setters
+
+  public getVacio() {
+      return this.vacio
+    }
+
+  public setVacio(value: boolean) {
+      this.vacio = value;
+    }
+
 public getCodTerritorio() {
       return this.codTerritorio;
     }

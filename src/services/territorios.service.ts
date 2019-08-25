@@ -20,6 +20,7 @@ public territorioSelectedEvent: EventEmitter<any> = new EventEmitter();
 
   selectTerritorio(data) {
     localStorage.setItem('especie', JSON.stringify(data));
+    localStorage.setItem('especieTipo', 'territorio');
     this.territorioSelectedEvent.emit(data);  
      return data;
   }

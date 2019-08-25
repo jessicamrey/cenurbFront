@@ -168,7 +168,7 @@ exportTerrAsXLSX():void {
 
   	recuperaVisitas(){
       this.listaVisitas=[];
-  		this.coloniasService.recuperaVisitasGeneral('').subscribe(
+  		this.coloniasService.recuperaMisVisitas('').subscribe(
                         data =>{
                           console.log(data);
                         	

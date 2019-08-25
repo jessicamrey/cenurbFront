@@ -2,19 +2,34 @@
 <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '14px'}"></ngx-loading>
 <ngx-alerts></ngx-alerts>
 
-<h4>{{ 'Menu.col' | translate }}</h4>
+<div class="row">
+	<div class="col-sm-6">
 
-<div *ngFor="let docCol of listaColoniales">
-	<a href="{{docCol}}" download><i class="fas fa-file-download"></i></a>
-  	
-</div>
+		<div clas="card">
+				<div class="card-header">
+					<h4>{{ 'Menu.col' | translate }}</h4>
+				</div>
+				
+					<div *ngFor="let docCol of listaColoniales">
+						<a href="{{docCol.direccion}}" download><i class="fas fa-file-download fa-lg"></i></a>
+						<label style="display:inline">{{docCol.name}}</label>
+					  	</div>
+				
+		</div>
+	</div>
 
+	<div class="col-sm-6">
 
+	<div clas="card">
+	<div class="card-header">
+		<h4>{{ 'Menu.terr' | translate }}</h4>
+		  </div>
+		  <div *ngFor="let docNoCol of listaNoColoniales">
+		  <a href="{{docNoCol.direccion}}" download><i class="fas fa-file-download fa-lg"></i></a>
+		  <label style="display:inline">{{docNoCol.name}}</label>
+		  
+		</div>
+	</div>
+	</div>
 
-
-<h4>{{ 'Menu.terr' | translate }}</h4>
-  
-  <div *ngFor="let docNoCol of listaNoColoniales">
-  <a href="{{docNoCol}}" download><i class="fas fa-file-download"></i></a>
-  
 </div>

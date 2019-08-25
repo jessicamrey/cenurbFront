@@ -132,7 +132,9 @@
         "save":         "Registrar colonia",
         "coords":       "Coordenadas",
         "lat":          "Latitud",
-        "lon":          "Longitud"
+        "lon":          "Longitud",
+        "empty":        "¿La colonia ha quedado vacía?",
+        "full":         "¿La colonia forma un censo completo?"
     },
     "RegisterTerr":{
         "threat":       "¿La especie está amenazada?",

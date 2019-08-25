@@ -18,11 +18,27 @@ export class Colonia{
   private especie: number;
   public municipioAsignado_id:any;
   private codColonia:number;
-
+  private vacio:boolean;
+  private completo:boolean;
 
 
 
 	//getters and setters
+  public getCompleto() {
+      return this.completo
+    }
+
+  public setCompleto(value: boolean) {
+      this.completo = value;
+    }
+
+public getVacio() {
+      return this.vacio
+    }
+
+  public setVacio(value: boolean) {
+      this.vacio = value;
+    }
 
 	public getNombre() {
     	return this.nombre

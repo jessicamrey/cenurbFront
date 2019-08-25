@@ -94,13 +94,15 @@ export class RegisterColComponent implements OnInit {
   }
 	
 editarColonia(){
-
+this.loading=true;
   this.coloniasService.modificarColonia(this.colId, this.datos).subscribe(
     data=>{
-      console.log(data);
+      this.loading=false;
+      this.alertService.success(this.translate.instant("Tooltip.successEdit"));
     },
     error=>{
-      console.log(error);
+      this.loading=false;
+      this.alertService.danger(this.translate.instant("Tooltip.errorEdit"));
     });
 }
 
@@ -303,15 +305,37 @@ prepararDatosEditar(){
         }
       }
 
+    
+
+
     this.datos={
       "nombre":        $( "#nombre" ).val(),
       "nombreCentro":  $( "#nombreCentro" ).val(),
       "locNidos":      this.locNidos,
       "otrasEspecies":  this.listaEspecies
-    }
+    };
+
+    let vacio=$("#yesEmpty").is(":checked");
+    let noVacio=$("#noEmpty").is(":checked");
+    let completo=$("#yesFull").is(":checked");
+    let noCompleto=$("#noFull").is(":checked");
 
 
-  
+    if (vacio){
+      this.datos["vacio"]=true ;
+     }
+     if (noVacio){
+      this.datos["vacio"]=false ;
+     }
+
+    if (completo){
+      this.datos["completo"]=true ;
+   }
+   if (noCompleto){
+      this.datos["completo"]=false ;
+   }
+
+  console.log(this.datos);
 
 }
 
@@ -340,6 +364,28 @@ prepararDatosEditar(){
   	this.colonia.setCalleNumPiso(this.registerForm.get("calleNumPiso").value);
   	this.colonia.setTipoEdificio(this.registerForm.get("tipoEdificio").value);
   	this.colonia.setTipoPropiedad(this.registerForm.get("tipoPropiedad").value);
+    
+    let vacio=$("#yesEmpty").is(":checked");
+    let noVacio=$("#noEmpty").is(":checked");
+    let completo=$("#yesFull").is(":checked");
+    let noCompleto=$("#nosFull").is(":checked");
+
+
+    if (vacio){
+      this.colonia.setVacio(true);
+     }
+     if (noVacio){
+      
+      this.colonia.setVacio(false);
+    }
+
+    if (completo){
+      this.colonia.setCompleto(true);
+   }
+   if (noCompleto){
+      this.colonia.setCompleto(false) ;
+   }
+
 
 
   	//PASO 2 -> Información sobre los nidos
@@ -404,16 +450,12 @@ prepararDatosEditar(){
   		}
 
 
-	console.log(this.listaEspecies);
-  	console.log(this.listaEspeciesNombres);
-
 
 
   }
 
   registrarColonia(){
     this.loading=true;
-    console.log(this.colonia);
   		//Empezamos registrando la colonia
   	  	this.coloniasService.nuevaColonia(this.colonia).subscribe(
               data => {

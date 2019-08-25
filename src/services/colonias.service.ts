@@ -102,6 +102,11 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
     return this.http.get<any>(this.url + '/api/visitas-colonias'+stringBusqueda);
   }
 
+
+//Recupera mis visitas
+  recuperaMisVisitas( stringBusqueda:any) {
+    return this.http.get<any>(this.url + '/api/misVisitas'+stringBusqueda);
+  }
 //Registramos una nueva visita en una colonia
   nuevaVisitaColonia(data:any, colId: number){
 
@@ -165,6 +170,7 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
   selectColonia(data) {
     localStorage.setItem('especie', JSON.stringify(data));
+    localStorage.setItem('especieTipo', 'colonia');
     this.coloniaSelectedEvent.emit(data);  
      return data;
   }

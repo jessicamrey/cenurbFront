@@ -16,6 +16,22 @@
                     </div>
                 </div>
 
+                <div class="form-group" *ngIf="type!=0" >
+                    <label>{{ 'RegisterCol.empty' | translate }} *</label>
+                     <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="yesEmpty">{{ 'RegisterCol.yes' | translate }}
+                                <input type="checkbox" id="noEmpty" >{{ 'RegisterCol.no' | translate }}
+                    </p>
+                </div>
+
+                <div class="form-group"  *ngIf="type!=0">
+                    <label>{{ 'RegisterCol.full' | translate }} *</label>
+                     <p style="text-align: left;font-size: large;" >
+                                <input type="checkbox" id="yesFull">{{ 'RegisterCol.yes' | translate }}
+                                <input type="checkbox" id="noFull">{{ 'RegisterCol.no' | translate }}
+                    </p>
+                </div>
+
                 <div class="form-group"  >
                     <label>{{ 'RegisterCol.name' | translate }} *</label>
                     <input class="form-control" placeholder="Enter text" formControlName="nombre" id="nombre">

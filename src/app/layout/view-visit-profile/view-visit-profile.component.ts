@@ -124,7 +124,7 @@ export class ViewVisitProfileComponent implements OnInit {
                         data =>{
                           console.log(data);
                         	this.listaVisitas=[];
-                        	for (let visita of data){
+                        	for (let visita of data["hydra:member"]){
                             visita["sliders"]=[];
                             let date=new Date((visita["fecha"]));
                         		let y=date.getFullYear();

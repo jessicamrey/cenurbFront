@@ -52,6 +52,19 @@ export class SidebarComponent implements OnInit{
         this.userName=localStorage.getItem('userName');
         this.userId=localStorage.getItem('userId');
 
+        let especie=localStorage.getItem('especie');
+        console.log(especie);
+
+        if(especie!=null){
+            if(localStorage.getItem('especieTipo')=='colonia'){
+                this.showCol=true;
+                this.showTerr=false;
+            }
+            if(localStorage.getItem('especieTipo')=='territorio'){
+                this.showCol=false;
+                this.showTerr=true;
+            }
+        }
         
         this.coloniasService.coloniaSelectedEvent.subscribe(
             (data: any) => {

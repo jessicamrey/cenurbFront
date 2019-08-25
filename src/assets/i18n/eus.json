@@ -130,7 +130,9 @@
         "save":         "Kolonia erregistratzea",
         "coords":       "Koordenatuak",
         "lat":          "Latitudea",
-        "lon":          "Luzera"
+        "lon":          "Luzera",
+        "empty":        "Kolonia huts geratu da?",
+        "full":         "Koloniak errolda betea eratzen du?"
     },
     "RegisterTerr":{
         "threat":       "Espeziea mehatxatuta dago?",
