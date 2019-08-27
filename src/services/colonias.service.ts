@@ -240,7 +240,6 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
   uploadImage(id:number,images: File[]){
     let formData: FormData = new FormData();
     for (let image of images){
-      console.log(image);
        formData.append('file[]', image, id+'_image'+new Date().getTime());
     }
    

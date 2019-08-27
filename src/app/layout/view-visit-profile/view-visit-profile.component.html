@@ -55,7 +55,7 @@
 
                                         <div class="form-group">
                                             <label>{{ 'ViewVisitProfile.upload' | translate }} </label>
-                                            <input type="file" name="file" (change)="preUpload($event)" multiple />
+                                            <input type="file" name="file" (change)="preUpload($event)"  />
                                         </div>
 
 
@@ -121,7 +121,7 @@
                                
                                 <div class="col-md-12">
 
-                                    <form role="form" [formGroup]="registerForm" (ngSubmit)="registrarVisita()">
+                                    <form role="form" [formGroup]="registerForm" >
                                         <div class="form-group"  >
                                             <label>{{ 'ViewVisitProfile.th1' | translate }} </label>
                                             <input class="form-control" placeholder="Enter text" formControlName="nombre" >
@@ -147,7 +147,14 @@
                                             <input class="form-control" placeholder="Enter text" formControlName="numVisita" >
                                         </div>
 
+                                         <div class="form-group">
+                                            <label>{{ 'RegisterCol.temp' | translate }} </label>
+                                            <select class="form-control"  formControlName="temporada" >
+                                                
+                                                <option *ngFor="let temp of listaTemporadas" value="{{temp}}" id="{{temp}}">{{temp}}</option>
+                                            </select>
 
+                                        </div>
 
 
                                     </form>
@@ -207,23 +214,12 @@
                         <div class="modal-body" >
 
                             
-                            <div class="row">
-                               
-                                <ngb-carousel>
-                                <ng-template ngbSlide *ngFor="let slider of item.sliders">
-                                    <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
-                                    <div class="carousel-caption">
-                                        <h3>{{slider.label}}</h3>
-                                        <p>{{slider.text}}</p>
-                                    </div>
-                                </ng-template>
-                            </ngb-carousel>
-                            </div>
+                            <img src="{{item.image}}" style="width:100%;height: 100%">
 
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ViewVisitProfile.no' | translate }}</button>
+                            <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
                         </div>
                         </ng-template>
 

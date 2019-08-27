@@ -29,11 +29,11 @@ export class ViewVisitProfileTerrComponent implements OnInit {
 	loading=false;
 	usuario=0;
 	isEdit=false;
-	longitude :any=localStorage.getItem('longitude')
-  latitude :any=localStorage.getItem('latitude');
+	longitude :any=parseFloat(localStorage.getItem('longitude'));
+  latitude :any=parseFloat(localStorage.getItem('latitude'));
   selectedOb:boolean=false;
-  	markers = [{ latitude: localStorage.getItem('latitude'),
-             longitude: localStorage.getItem('longitude')}];
+  	markers = [{ latitude: parseFloat(localStorage.getItem('latitude')),
+             longitude: parseFloat(localStorage.getItem('longitude'))}];
   preFiles:File[]=[];
   mostrarDescargar:boolean=false;
 
@@ -137,14 +137,10 @@ this.markers=[{ latitude: lat, longitude: lng }];
 
                         		visita["fecha"]=d +'/' + m + '/' + y;
                         		visita["hora"]=h +':' + min + ':' + s;
-					for (let photo of visita.visitaTerritorioImages){
-						visita.sliders.push(
-							{
-								imagePath: photo.image,
-								label: photo.fileName,
-								text: ''
-							    });
-					}
+					
+                             if (visita.visitaTerritorioImages.length>0){
+                              visita["image"]=visita.visitaTerritorioImages[0]["fileName"]+visita.visitaTerritorioImages[0]["image"];
+                            }
 
                         		this.listaVisitas.push(visita);
                         	}
@@ -193,37 +189,43 @@ this.markers=[{ latitude: lat, longitude: lng }];
   		console.log(visita);
   		this.territoriosService.nuevaVisitaTerritorio(visita,this.terrId).subscribe(
                         data =>{
-                        	console.log(data);
+                        	let date=new Date((data["fecha"]));
+                          let y=date.getFullYear();
+                          let m=date.getMonth()+1;
+                          let d=date.getUTCDate();
+
+                          let h=date.getHours();
+                          let min=date.getMinutes();
+                          let s=date.getSeconds();
+                          
+                          data["fecha"]=(d +'/' + m + '/' + y);
+                          data["hora"]=h +':' + min + ':' + s;
+        
+                         
+
                         	if(this.preFiles.length > 0)
                           {
-                              console.log(this.preFiles);
+                              
                               this.territoriosService.uploadImage(data["id"],this.preFiles).subscribe(
-                                  (data : any)=>{
+                                  (dataImages : any)=>{
+                                    console.log(dataImages);
+                                    data["image"]=dataImages.visitaTerritorioImages[0]["fileName"]+dataImages.visitaTerritorioImages[0]["image"];
+                                     this.listaVisitas.push(data);
                                       this.loading=false;
                                       this.alertService.success(this.translate.instant("ViewVisitProfile.success4"));
                                   },
                                   error=>{
+                                    this.listaVisitas.push(data);
                                     this.loading=false;
                                     this.alertService.danger(this.translate.instant("ViewVisitProfile.error4"));
                                   }
                                 );      
                           } else{
+                            this.listaVisitas.push(data);
                             this.loading=false;
                           }
 
-                        	let date=new Date((data["fecha"]));
-                        	let y=date.getFullYear();
-                        	let m=date.getMonth()+1;
-                        	let d=date.getUTCDate();
-
-                        	let h=date.getHours();
-                        	let min=date.getMinutes();
-                        	let s=date.getSeconds();
                         	
-                        	data["fecha"]=(d +'/' + m + '/' + y);
-                        	data["hora"]=h +':' + min + ':' + s;
-				
-                        	this.listaVisitas.push(data);
 
                         	console.log(this.listaVisitas);
                         	this.alertService.success(this.translate.instant("ViewVisitProfile.success1"));

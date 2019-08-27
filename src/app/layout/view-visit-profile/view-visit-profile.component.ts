@@ -125,20 +125,18 @@ export class ViewVisitProfileComponent implements OnInit {
                           console.log(data);
                         	this.listaVisitas=[];
                         	for (let visita of data["hydra:member"]){
-                            visita["sliders"]=[];
+                           
                             let date=new Date((visita["fecha"]));
                         		let y=date.getFullYear();
                         		let m=date.getMonth()+1;
                         		let d=date.getUTCDate();
                         		visita["fecha"]=d +'/' + m + '/' + y;
-                  					for (let photo of visita.visitaColoniaImages){
-                  						visita["sliders"].push(
-                  							{
-                  								imagePath: photo.image,
-                  								label: photo.fileName,
-                  								text: ''
-                  							    });
-                  					}
+                  					
+                            if (visita.visitaColoniaImages.length>0){
+                              visita["image"]=visita.visitaColoniaImages[0]["fileName"]+visita.visitaColoniaImages[0]["image"];
+                            }
+                  					
+                  					
                         		this.listaVisitas.push(visita);
                         	}
                         /*	let last=data["hydra:view"]["hydra:last"];
@@ -177,25 +175,28 @@ export class ViewVisitProfileComponent implements OnInit {
                         	data["fecha"]=(d +'/' + m + '/' + y);
                         	data["usuario"]=visita.getUsuario();
                         	data["nombreUsuario"]=visita.getNombreUsuario();
-                        	this.listaVisitas.push(data);
+                        	
 
-                        	console.log(this.listaVisitas);
                         	this.alertService.success(this.translate.instant("ViewVisitProfile.success1"));
 
                           if(this.preFiles.length > 0)
                           {
-                              console.log(this.preFiles);
                               this.coloniasService.uploadImage(data["id"],this.preFiles).subscribe(
-                                  (data : any)=>{
+                                  (dataImages : any)=>{
+                                    console.log(dataImages);
+                                      data["image"]=dataImages.visitaColoniaImages[0]["fileName"]+dataImages.visitaColoniaImages[0]["image"];
+                                      this.listaVisitas.push(data);
                                       this.loading=false;
                                       this.alertService.success(this.translate.instant("ViewVisitProfile.success4"));
                                   },
                                   error=>{
+                                    this.listaVisitas.push(data);
                                     this.loading=false;
                                     this.alertService.danger(this.translate.instant("ViewVisitProfile.error4"));
                                   }
                                 );      
                           } else{
+                            this.listaVisitas.push(data);
                             this.loading=false;
                           }
 
@@ -245,6 +246,7 @@ export class ViewVisitProfileComponent implements OnInit {
   		
   		this.coloniasService.modificarVisita(visita.id, newVisita).subscribe(
                         data =>{
+                          console.log(data);
                         	this.loading=false;
                         	this.isEdit=false;
                         	let date=new Date((data["fecha"]));
