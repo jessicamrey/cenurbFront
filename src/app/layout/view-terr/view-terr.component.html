@@ -120,7 +120,7 @@
                                 <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.nameCenter' | translate }}</p>
                                     <p style="text-align: center">{{item.nombreCentro}}</p>                                
                                 <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.temp' | translate }}</p>
-                                    <p style="text-align: center">{{item.temporada}}</p>  
+                                    <p style="text-align: center">{{item.temporada.anno}}</p>  
                                 <p style="background-color: #A2DBFE; text-align: center; color:#1d5d83">{{ 'ViewCol.loc' | translate }}</p>
                                 <div class="row">
                                     <div class="col-md">
@@ -155,7 +155,7 @@
                             <a [routerLink]="['/registerTerr/', item.id, '1'] " (click)="c('Close click')"><i class="fas fa-plus"></i></a>
                             <button class="transparentButton" (click)="newFavorito(item.id)"><i class="fas fa-heart"></i></button>
                             <a [routerLink]="['/', item.id, 'visitProfileTerr'] " (click)="c('Close click')">{{ 'ColoniaModal.visits' | translate }}</a>
-                             <button class="btn btn-secondary" (click)="exportOneAsXLSX(item)">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
+                             <button class="btn btn-secondary" *ngIf="mostrarDescargar==true" (click)="exportOneAsXLSX(item)">{{ 'Menu.excel' | translate }}<i class="fas fa-cloud-download-alt"></i></button>
                             <button type="button" class="btn btn-secondary" (click)="c('Close click')"> {{ 'ColoniaModal.close' | translate }}</button>
                         </div>
                         </ng-template>
