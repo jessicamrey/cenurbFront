@@ -215,7 +215,7 @@ public coloniaSelectedEvent: EventEmitter<any> = new EventEmitter();
 
 //Buscamos un censo de municipio
   getCensoMunicipio(especie, municipio, temporada){
-    return this.http.get<any>(this.url + '/api/censo-municipios?especie='+especie+'&municipio' + municipio + '&temporada='+temporada);
+    return this.http.get<any>(this.url + '/api/censo-municipios?especie='+especie+'&municipio=' + municipio + '&temporada='+temporada);
   }
 
   //Registramos un nuevo censo en un municipio

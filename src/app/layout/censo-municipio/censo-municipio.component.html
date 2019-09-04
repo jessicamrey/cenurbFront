@@ -68,7 +68,7 @@
 
     <div  *ngIf="noData==true" class="row">
     	<div class="col-sm-12" style="text-align: center">
-    		<h4>{{ 'CensoMunicipio.infoMsg3' | translate }}</h4>
+    		<h4 style="text-align: center; margin-top: 20px; margin-bottom: 20px">{{ 'CensoMunicipio.infoMsg3' | translate }}</h4>
     	</div>
     	<div class="col-sm-12" style="text-align: center">
     		<button class="btn btn-primary" (click)="nuevoCenso()">{{ 'CensoMunicipio.create' | translate }}</button>
@@ -76,11 +76,11 @@
     </div>
 
     <div *ngIf="showCenso==true">
-    	<h4>{{ 'CensoMunicipio.infoMsg4' | translate }} {{municipio}}</h4>
-    		<div class="row" >
+    	<h4 style="text-align: center; margin-top: 20px; margin-bottom: 20px">{{ 'CensoMunicipio.infoMsg4' | translate }} {{municipio}}</h4>
+    		<div class="row" style="margin-bottom: 20px" >
     			
-    			<div class="col-sm-6" style="text-align:center">
-    				<h5>{{ 'CensoMunicipio.colAv' | translate }}</h5>
+    			<div class="col-sm-6" style="text-align:left">
+    				<h5 style="background-color: beige">{{ 'CensoMunicipio.colAv' | translate }}</h5>
 	    			<p  *ngFor="let coloniaD of listaColDisponibles">
 	    				{{coloniaD.nombre}}  {{ 'CensoMunicipio.complete' | translate }} {{coloniaD.completo}} 
 	    					<i class="fas fa-arrow-right" (click)="asignar(coloniaD)"></i>
@@ -92,8 +92,8 @@
                         </ngb-pagination>
                     </div>
     			</div>
-    			<div class="col-sm-6" style="text-align:center">
-    				<h5>{{ 'CensoMunicipio.colAs' | translate }}</h5>
+    			<div class="col-sm-6" style="text-align:right">
+    				<h5 style="background-color: beige">{{ 'CensoMunicipio.colAs' | translate }}</h5>
 	    			<p *ngFor="let colonia of listaColAsignadas">
 	    			<i class="fas fa-arrow-left" (click)="desasignar(colonia)"></i>
 	    				{{colonia.nombre}} {{ 'CensoMunicipio.complete' | translate }} {{colonia.completo}}
@@ -106,11 +106,11 @@
     		</div>
     		<div class="row">
     			<div class="col-sm-12">
-		    		<h5>{{ 'CensoMunicipio.munComplete' | translate }}</h5>
+		    		<h5 style="background-color: beige">{{ 'CensoMunicipio.munComplete' | translate }}</h5>
 		    		<p>{{censo['0'].completo}}</p>
 		    	</div>
 		    	<div class="col-sm-12">
-		    		<h5>{{ 'CensoMunicipio.infoMsg2' | translate }}</h5>
+		    		<h5 style="background-color: beige">{{ 'CensoMunicipio.infoMsg2' | translate }}</h5>
     			</div>
     			<div class="col-sm-6">
     				<button class="btn btn-primary" (click)="completar(true)">{{ 'CensoMunicipio.yes' | translate }}</button>

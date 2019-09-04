@@ -54,6 +54,7 @@ export class CensoMunicipioComponent implements OnInit {
       error=>{
      this.loadingTemp=false;
 
+
       })
   }
 
@@ -114,7 +115,7 @@ export class CensoMunicipioComponent implements OnInit {
     this.loading=true;
 
 
-    let busqueda="&temporada="+$("#temporada option:selected").attr("value")+
+    let busqueda="&temporada="+$("#temporada option:selected").attr("id")+
                 "&municipio="+$( "#selectMunicipio option:selected" ).attr("value")+
                 "&especie="+this.especie;
     
@@ -245,6 +246,7 @@ export class CensoMunicipioComponent implements OnInit {
                if(data["hydra:member"].length<=0){
                  this.noData=true;
                  this.showCenso=false;
+                 console.log("vacio");
                }else{
                  this.noData=false;
                  this.showCenso=true;
@@ -277,11 +279,13 @@ export class CensoMunicipioComponent implements OnInit {
       this.coloniasService.nuevoCensoMunicipio(newCenso).subscribe(
               data => {
                 this.loading=false;
-                this.censo=data;
-               this.noData=false;
+                this.censo[0]=data;
+                 this.noData=false;
+                 this.listaColDisponibles=[];
+                 this.listaColAsignadas=[]
                  this.showCenso=true;
                  this.buscarDisponibles(1);
-                 this.alertService.warning(this.translate.instant("CensoMunicipio.infoMsg6"));
+                 this.alertService.success(this.translate.instant("CensoMunicipio.infoMsg6"));
                 
               },
               error => {
